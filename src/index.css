@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*ACTIVE LINK STYLE*/
+.active {
+	color: orange;
+	font-weight: 500;
+}
+
+.underline-heading {
+	text-decoration-color: orange;
+}
