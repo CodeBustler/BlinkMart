@@ -56,7 +56,7 @@ function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 			></div>
 			{/*SIDEBAR*/}
 			<aside
-				className={`fixed top-0 w-[100%] h-[100vh] z-30  transition flex justify-between ${
+				className={`sideBar_customCSS fixed top-0 w-[100%] h-[100vh]  z-30  transition flex justify-between ${
 					sidebarToggle ? "-translate-x-full  " : "translate-x-0"
 				}`}
 			>

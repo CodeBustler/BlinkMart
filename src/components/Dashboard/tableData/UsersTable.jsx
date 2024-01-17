@@ -1,7 +1,7 @@
 import React from "react";
 
-function UserTable() {
+function UsersTable() {
 	return <div>UserTable</div>;
 }
 
-export default UserTable;
+export default UsersTable;

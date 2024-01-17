@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { MyContext } from "../../App";
+import { useParams } from "react-router-dom";
+import ContainerForCard from "../ProductCard/ContainerForCard";
+import ProductCard from "../ProductCard/ProductCard";
 
 function ProductsCategory() {
-	return <div>ProductsCategory</div>;
+	const { categoryName } = useParams();
+	const { allProducts } = useContext(MyContext);
+
+	const filterProducts = allProducts.filter(
+		(item) => item.category === categoryName,
+	);
+
+	return (
+		<div>
+			<h1 className="text-2xl font-bold my-3 text-center md:text-left capitalize">
+				{categoryName.replace(/_/g, " ")}
+			</h1>
+
+			<ContainerForCard
+				categoryTitle={categoryName}
+				filterProducts={filterProducts}
+			>
+				{filterProducts.map((item) => (
+					<ProductCard key={item.id} item={item} />
+				))}
+			</ContainerForCard>
+		</div>
+	);
 }
 
 export default ProductsCategory;

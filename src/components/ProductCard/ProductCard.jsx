@@ -22,23 +22,21 @@ function ProductCard({ item }) {
 	const addCart = () => {
 		const user = localStorage.getItem("user");
 		if (user) {
-			// Check if the item is already in the cart
-			const isItemInCart = cartItems.some(
-				(cItem) => cItem.id === item.id,
-			);
-
-			if (isItemInCart) {
-				setItemInCart("In Basket");
-			} else {
-				// Use the callback form of setState
-				setLocalItemInCart("Adding");
-
-				dispatch(
-					addToCart(item, () => setLocalItemInCart("In Basket")),
-					toastAddedToCart(),
-				);
-				handleCartAnimate();
-			}
+			// // Check if the item is already in the cart
+			// const isItemInCart = cartItems.some(
+			// 	(cItem) => cItem.id === item.id,
+			// );
+			// if (isItemInCart) {
+			// 	setItemInCart("In Basket");
+			// } else {
+			// 	// Use the callback form of setState
+			// 	setLocalItemInCart("Adding");
+			// 	dispatch(
+			// 		addToCart(item, () => setLocalItemInCart("In Basket")),
+			// 		toastAddedToCart(),
+			// 	);
+			// 	handleCartAnimate();
+			// }
 		} else {
 			navigateTo("/login");
 			toastLoginToAddCart();

@@ -94,8 +94,10 @@ function NavbarFirstRow({
 							currentUser[0]?.cart?.userCartProducts?.length || 0
 						) : (
 							<LuShoppingCart
-								className={`text-3xl cursor-pointer animate-pulse ${
-									userName === "" && "animate-none"
+								className={`text-3xl cursor-pointer  ${
+									userName === ""
+										? "animate-none"
+										: "animate-pulse"
 								}`}
 							/>
 						)}

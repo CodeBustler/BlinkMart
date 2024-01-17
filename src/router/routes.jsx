@@ -70,11 +70,11 @@ const routes = createBrowserRouter(
 					element={<ProductDetail />}
 				/>
 				<Route
-					path="/ProductsCategory/:ProductsCategory"
+					path="/ProductsCategory/:categoryName"
 					element={<ProductsCategory />}
 				/>
 				<Route
-					path="/ProductsSubCategory/:ProductsSubCategory"
+					path="/ProductsSubCategory/:subCategoryName"
 					element={<ProductsSubCategory />}
 				/>
 				<Route path="/customer_service" element={<CustomerService />} />

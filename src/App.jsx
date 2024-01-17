@@ -106,8 +106,7 @@ function App() {
   // console.log(userName);
   // console.log(userUID);
   // console.log(admin);
-  console.log(userDB);
-
+  // console.log(userDB);
   // ------------------------------------------------------
 
   return (

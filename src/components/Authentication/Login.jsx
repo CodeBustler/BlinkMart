@@ -12,6 +12,8 @@ import { toastLoginSuccess } from "../utilities/RequiredFunctions";
 
 function Login() {
 	const { setUserName, setAdmin } = useContext(MyContext);
+	const [submitting, setSubmitting] = useState(false);
+
 	const [errorMsg, setErrorMsg] = useState("");
 	const navigate = useNavigate();
 	const [values, setValues] = useState({
@@ -25,7 +27,7 @@ function Login() {
 		e.preventDefault();
 
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+		setSubmitting(true);
 		try {
 			// VALIDATAING ENTERED DETAILS
 			if (!values.email || !values.password) {
@@ -114,9 +116,10 @@ function Login() {
 					/>
 					<button
 						className="bg-yellow-400 p-2 mt-3 rounded-lg outline-blue-300 hover:bg-yellow-500 active:bg-yellow-400"
-						onClick={(e) => handleSubmit(e)}
+						onClick={(e) => !submitting && handleSubmit(e)}
+						disabled={submitting}
 					>
-						Login
+						{submitting ? "Submitting..." : "Login"}
 					</button>
 					{/*Error Message*/}
 					<span className="text-red-500 font-semibold mt-2 flex items-center gap-2">
