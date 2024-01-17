@@ -24,6 +24,7 @@ function Navbar() {
 		cartAnimate,
 		userCart,
 		currentUser,
+		setCurrentUser,
 	} = useContext(MyContext);
 
 	// HANDLE SIDEBAR TOGGLE
@@ -45,6 +46,7 @@ function Navbar() {
 			<NavbarFirstRow
 				handleSideBar={handleSideBar}
 				admin={admin}
+				userName={userName}
 				// cartItems={cartItems}
 				cartAnimate={cartAnimate}
 				toastLogin={toastLoginToAddCart}
@@ -63,6 +65,7 @@ function Navbar() {
 				admin={admin}
 				setAdmin={setAdmin}
 				setUserName={setUserName}
+				setCurrentUser={setCurrentUser}
 			/>
 		</header>
 	);

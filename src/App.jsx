@@ -69,7 +69,7 @@ function App() {
         setUserUID(user.uid);
         setAdmin(user.email === adminEmail);
       } else {
-        setUserName(null);
+        setUserName("");
         setUserUID(null);
       }
     };
@@ -102,7 +102,6 @@ function App() {
   };
 
   // ------------------------------------------------------
-  // console.log(currentUser?.length > 0 ? currentUser : "Loading");
   // console.log(allProducts);
   // console.log(userName);
   // console.log(userUID);
@@ -125,6 +124,7 @@ function App() {
           handleCartAnimate,
           userCart,
           currentUser,
+          setCurrentUser,
         }}
       >
         <RouterProvider router={routes} />

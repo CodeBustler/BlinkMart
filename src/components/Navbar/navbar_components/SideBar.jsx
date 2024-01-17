@@ -21,7 +21,7 @@ import { auth } from "../../../firebaseConfig/firebase";
 
 // ---------------------------------------------------------------
 
-function SideBar({ handleSideBar, sidebarToggle }) {
+function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 	// CONTEXT
 	const { setUserName, userName, admin, setAdmin } = useContext(MyContext);
 	const navigateTo = useNavigate();
@@ -32,6 +32,7 @@ function SideBar({ handleSideBar, sidebarToggle }) {
 			.then(() => {
 				setUserName(null);
 				setAdmin(false);
+				setCurrentUser(null);
 				userName && toastLogout();
 				localStorage.removeItem("user");
 
