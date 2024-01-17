@@ -9,9 +9,13 @@ export const toastProductAddedToDB = () =>
 export const toastLoginToAddCart = () =>
 	toast.info("Log in to add items to your cart");
 
+export const toastAddedToCart = () => toast.success("Added To Cart !");
 export const toastLoginSuccess = () => toast.success("Login Success !");
 export const toastLogout = () => toast.error("Logout !");
 export const toastSignUpSuccess = () => toast.success("SignUp Success !");
+export const toastItemRemoved = () => toast.error("Item Removed ! ");
+export const toastItemAlreadyInCart = () =>
+	toast.info("Item already in a cart ! ");
 
 // SCROLL TOP TOP
 export const scrollToTop = () => {
@@ -22,3 +26,14 @@ export const scrollToTop = () => {
 export function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+// GET CURRENT USER DETAIL
+// const userLocalData = JSON.parse(localStorage.getItem("user"));
+// const targetUid = userLocalData?.user?.uid;
+// const currentUserDetail = userDB.find((item) => item.uid === targetUid);
+
+// if (currentUserDetail) {
+//   console.log("User found:", currentUserDetail);
+// } else {
+//   console.log("User not found");
+// }

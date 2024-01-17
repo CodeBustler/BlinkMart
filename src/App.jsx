@@ -14,13 +14,16 @@ function App() {
   const [userName, setUserName] = useState("");
   const [admin, setAdmin] = useState(false);
   const [userDB, setUserDB] = useState([]);
+  const [userUID, setUserUID] = useState("");
+  const [currentUser, setCurrentUser] = useState([]);
   const [loading, setLoading] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
+  const [userCart, setUserCart] = useState([]);
+  const [cartAnimate, setCartAnimate] = useState(false);
+
   // ------------------------------------------------------
   // **************** FUNCTIONS FOR SHARE ****************
   // ------------------------------------------------------
-
-  // USERNAME UPDATE
 
   // GET ALL PRODUCTS
   const fetchProducts = async () => {
@@ -55,17 +58,74 @@ function App() {
     fetchUserData();
   }, []);
 
+  // UPDATE USERNAME & ADMIN ON AUTH STATE CHANGE
+  useEffect(() => {
+    const updateUserNameAndAdmin = async (user) => {
+      const env = await import.meta.env;
+      const adminEmail = env.VITE_REACT_APP_ADMIN_EMAIL;
+
+      if (user) {
+        setUserName(user.displayName);
+        setUserUID(user.uid);
+        setAdmin(user.email === adminEmail);
+      } else {
+        setUserName(null);
+        setUserUID(null);
+      }
+    };
+
+    const unsubscribeAuthStateChanged = auth.onAuthStateChanged(
+      updateUserNameAndAdmin,
+    );
+
+    return () => {
+      unsubscribeAuthStateChanged();
+    };
+  }, [userUID, userDB]);
+  useEffect(() => {
+    if (userUID && userDB.length > 0) {
+      const currentUserDetail = userDB.filter((item) => item.uid == userUID);
+      if (currentUserDetail.length > 0) {
+        setCurrentUser(currentUserDetail);
+      } else {
+        setCurrentUser(null);
+      }
+    }
+  }, [userUID, userDB]);
+
+  // HANDLE NAVBAR CART ICON ANIMATION (PRODUCT_CARD & NAVBAR)
+  const handleCartAnimate = () => {
+    setCartAnimate((prevCartAnimate) => !prevCartAnimate);
+    setTimeout(() => {
+      setCartAnimate((prevCartAnimate) => !prevCartAnimate);
+    }, 1500);
+  };
+
   // ------------------------------------------------------
-  // console.log(userDB);
+  // console.log(currentUser?.length > 0 ? currentUser : "Loading");
   // console.log(allProducts);
   // console.log(userName);
+  // console.log(userUID);
   // console.log(admin);
+  console.log(userDB);
+
   // ------------------------------------------------------
 
   return (
     <>
       <MyContext.Provider
-        value={{ allProducts, userName, setUserName, admin, setAdmin, loading }}
+        value={{
+          allProducts,
+          userName,
+          setUserName,
+          admin,
+          setAdmin,
+          loading,
+          cartAnimate,
+          handleCartAnimate,
+          userCart,
+          currentUser,
+        }}
       >
         <RouterProvider router={routes} />
       </MyContext.Provider>

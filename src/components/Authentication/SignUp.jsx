@@ -57,6 +57,10 @@ function SignUp() {
 					name: inputValues.name,
 					email: newUser.user.email,
 					uid: newUser.user.uid,
+					cart: {
+						userCartProducts: [],
+						userCartProductsCount: [],
+					},
 				};
 				const userRef = collection(fireDB, "users");
 				await addDoc(userRef, user);

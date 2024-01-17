@@ -14,22 +14,21 @@ import {
 
 function Navbar() {
 	const [sidebarToggle, setSidebarToggle] = useState(true);
-	const [cartAnimate, setCartAnimate] = useState(false);
 
 	// CONTEXT
-	const { admin, setAdmin, userName, setUserName } = useContext(MyContext);
+	const {
+		admin,
+		setAdmin,
+		userName,
+		setUserName,
+		cartAnimate,
+		userCart,
+		currentUser,
+	} = useContext(MyContext);
 
 	// HANDLE SIDEBAR TOGGLE
 	const handleSideBar = () => {
 		setSidebarToggle(!sidebarToggle);
-	};
-
-	// HANDLE NAVBAR CART ICON ANIMATION
-	const handleCartAnimate = () => {
-		setCartAnimate((prevCartAnimate) => !prevCartAnimate);
-		setTimeout(() => {
-			setCartAnimate((prevCartAnimate) => !prevCartAnimate);
-		}, 1500);
 	};
 
 	function handleCartIcon() {
@@ -51,6 +50,8 @@ function Navbar() {
 				toastLogin={toastLoginToAddCart}
 				scrollToTop={scrollToTop}
 				handleCartIcon={handleCartIcon}
+				userCart={userCart}
+				currentUser={currentUser}
 			/>
 			{/*SECOND ROW*/}
 			<NavbarSecondRow handleSideBar={handleSideBar} />

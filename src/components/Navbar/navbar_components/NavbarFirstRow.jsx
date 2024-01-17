@@ -2,16 +2,32 @@
 import { Link, NavLink } from "react-router-dom";
 // ICONS
 import { RxHamburgerMenu } from "react-icons/rx";
-import { RiShoppingCartFill } from "react-icons/ri";
+import { RiAdminFill, RiShoppingCartFill } from "react-icons/ri";
 import { BsSearch } from "react-icons/bs";
 import { LuShoppingCart } from "react-icons/lu";
 import flag_icon from "../../../assets/flag_icon.png";
 import { useState } from "react";
 import { scrollToTop } from "../../Utilities/RequiredFunctions";
+import Loader from "../../Utilities/Loader";
 
 // ---------------------------------------------------------------
 
-function NavbarFirstRow({ handleSideBar, admin, cartAnimate, handleCartIcon }) {
+function NavbarFirstRow({
+	handleSideBar,
+	admin,
+	cartAnimate,
+	handleCartIcon,
+	userCart,
+	currentUser,
+}) {
+	const [searchBarFocus, setSearchFocus] = useState(false);
+	const handleSideBarOnFocus = () => {
+		setSearchFocus(!searchBarFocus);
+	};
+
+	const handleSideBarOnBlur = () => {
+		setSearchFocus(!searchBarFocus);
+	};
 	// ----------------------------------------------
 	return (
 		<nav className="bg-[#131921] flex items-center justify-between px-4 py-3 gap-3  text-white  ">
@@ -39,14 +55,20 @@ function NavbarFirstRow({ handleSideBar, admin, cartAnimate, handleCartIcon }) {
 					type="text"
 					placeholder="Search "
 					className="bg-transparent outline-none px-4 py-2 text-black text-md w-[100%] "
+					onFocus={handleSideBarOnFocus}
+					onBlur={handleSideBarOnBlur}
 				/>
 				<div className="bg-orange-400 flex items-center rounded-br rounded-tr cursor-pointer">
 					<BsSearch className="text-black text-xl mx-3" />
 				</div>
 			</div>
 			{/* NAV-LINKs */}
-			<ul className="flex items-center gap-5 ">
-				<li className="flex items-center gap-1 hidden lg:flex">
+			<ul
+				className={`flex items-center gap-2 flex-row-reverse md:flex-row md:gap-5 transition ${
+					searchBarFocus ? "hidden md:flex" : "block "
+				} `}
+			>
+				<li className="flex items-center gap-1 hidden  lg:flex ">
 					<img
 						src={flag_icon}
 						alt="indian-flag"
@@ -54,16 +76,6 @@ function NavbarFirstRow({ handleSideBar, admin, cartAnimate, handleCartIcon }) {
 					/>
 					<span className="font-semibold ">EN</span>
 				</li>
-				{admin && (
-					<NavLink
-						to="/dashboard"
-						className={`font-semibold cursor-pointer hidden md:block   ${
-							admin ? "block" : "hidden"
-						}`}
-					>
-						Dashboard
-					</NavLink>
-				)}
 
 				{/* Cart Icon */}
 				<NavLink
@@ -74,12 +86,33 @@ function NavbarFirstRow({ handleSideBar, admin, cartAnimate, handleCartIcon }) {
 					<LuShoppingCart
 						className={`text-3xl cursor-pointer  ${
 							cartAnimate ? "animate-bounce" : ""
-						}  `}
+						}  ${currentUser?.length > 0 ? "block" : "hidden"}  `}
 					/>
 					<span className="text-md md:text-lg font-bold text-orange-400">
-						10
+						{currentUser && currentUser.length > 0 ? (
+							currentUser[0]?.cart?.userCartProducts?.length || 0
+						) : admin ? (
+							<h1></h1>
+						) : (
+							<LuShoppingCart
+								className={`text-3xl cursor-pointer animate-pulse`}
+							/>
+						)}
 					</span>
 				</NavLink>
+				{admin && (
+					<NavLink
+						to="/dashboard"
+						className={`font-semibold cursor-pointer md:border md:p-2  rounded-md hover:border-orange-400 transition   ${
+							admin ? "block" : "hidden"
+						}`}
+					>
+						<span className="flex gap-2">
+							<RiAdminFill className="text-2xl text-orange-400" />
+							<span className="hidden md:inline">Dashboard</span>
+						</span>
+					</NavLink>
+				)}
 			</ul>
 		</nav>
 	);
