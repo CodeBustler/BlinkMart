@@ -22,9 +22,10 @@ function ProductDetail() {
 	const navigateTo = useNavigate();
 	const { productId } = useParams();
 	const { allProducts } = useContext(MyContext);
-	// ---------------------------------------------------------
 
+	// ---------------------------------------------------------
 	useEffect(() => {
+		// FILTER SINGLE PRODUCT
 		const filterProduct = allProducts.filter(
 			(item) => item.id == productId,
 		);
@@ -36,9 +37,9 @@ function ProductDetail() {
 		}
 	}, [productId, displayProduct.id]);
 
-	// FILTER MAIN PRODUCT CATEGORY
-	const filterCategory = allProducts.filter(
-		(item) => item.category === displayProduct.category,
+	// FILTERING MAIN PRODUCT SUB_CATEGORY PRODUCT FOR RELATED PRODUCT
+	const filterSubCategory = allProducts.filter(
+		(item) => item.subCategory === displayProduct.subCategory,
 	);
 
 	// DISCOUNT PERCENTAGE
@@ -53,7 +54,7 @@ function ProductDetail() {
 
 			const discount = ((actualPrice - price) / actualPrice) * 100;
 
-			return discount.toFixed(0); // You can adjust the number of decimal places as needed
+			return discount.toFixed(0);
 		}
 		return "";
 	};
@@ -240,15 +241,13 @@ function ProductDetail() {
 			<div className="mt-10">
 				<ContainerForCard
 					containerTitle={"Related Products"}
-					filterProducts={filterCategory}
+					filterProducts={filterSubCategory[0]?.subCategory}
 				>
-					{filterCategory.map((category, categoryIndex) => (
-						<ProductCard
-							key={categoryIndex}
-							item={category}
-							numberWithCommas={numberWithCommas}
-						/>
-					))}
+					{filterSubCategory.map((category, categoryIndex) => {
+						return (
+							<ProductCard key={categoryIndex} item={category} />
+						);
+					})}
 				</ContainerForCard>
 			</div>
 		</>

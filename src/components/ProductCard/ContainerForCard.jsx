@@ -27,20 +27,21 @@ function ContainerForCard({ containerTitle, filterProducts, children }) {
 		}
 	};
 
-	const handleNavigate = (e) => {
-		navigateTo(`/ProductsSubCategory/${categoryTitle}`);
-		scrollToTop();
-	};
 	// ----------------------------------------------------------------------
 	return (
 		<div className="flex flex-col gap-10 md:mx-8 mt-10 ">
 			{/*CONTAINER*/}
 			<div className="relative bg-gray-100 p-5 md:p-8 rounded-xl border">
 				<div className=" flex justify-between text-2xl mb-5 md:mb-7 font-semibold capitalize ">
-					<div>{containerTitle?.replace(/_/g, " ")}</div>
+					<h2>{containerTitle?.replace(/_/g, " ")}</h2>
 					<IoMdArrowDroprightCircle
-						className="sticky hidden md:block text-3xl text-orange-500 cursor-pointer hover:scale-150 transition "
-						onClick={(e) => handleNavigate(e)}
+						className="sticky  md:block text-3xl text-orange-500 cursor-pointer hover:scale-150 transition "
+						onClick={() => {
+							navigateTo(
+								`/ProductsSubCategory/${filterProducts}`,
+							);
+							scrollToTop();
+						}}
 					/>
 				</div>
 				<div
@@ -51,21 +52,17 @@ function ContainerForCard({ containerTitle, filterProducts, children }) {
 						{children}
 					</div>
 				</div>
-				{filterProducts?.length >= 3 ? (
-					<div>
-						<FaAngleLeft
-							onClick={scrollLeft}
-							className="absolute top-[25%] -left-10 border border-2 text-[32px]  px-2 h-[200px] text-gray-600 bg-gray-100 active:bg-gray-200 rounded-md hidden md:block cursor-pointer"
-						/>
+				<div>
+					<FaAngleLeft
+						onClick={scrollLeft}
+						className="absolute top-[25%] -left-10 border border-2 text-[32px]  px-2 h-[200px] text-gray-600 bg-gray-100 active:bg-gray-200 rounded-md hidden md:block cursor-pointer"
+					/>
 
-						<FaAngleLeft
-							onClick={scrollRight}
-							className="absolute -right-10 top-[25%] rotate-180 border border-2 text-[32px] px-2 h-[200px] text-gray-600 bg-gray-100 active:bg-gray-200 rounded-md hidden md:block cursor-pointer"
-						/>
-					</div>
-				) : (
-					""
-				)}
+					<FaAngleLeft
+						onClick={scrollRight}
+						className="absolute -right-10 top-[25%] rotate-180 border border-2 text-[32px] px-2 h-[200px] text-gray-600 bg-gray-100 active:bg-gray-200 rounded-md hidden md:block cursor-pointer"
+					/>
+				</div>
 			</div>
 		</div>
 	);
