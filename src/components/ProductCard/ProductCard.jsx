@@ -43,15 +43,33 @@ function ProductCard({ item }) {
 		}
 	};
 
+	// DISCOUNT PERCENTAGE
+	const calculateDiscountPercentage = () => {
+		if (item && item.price && item.actualPrice) {
+			const price = parseFloat(item.price);
+			const actualPrice = parseFloat(item.actualPrice);
+
+			const discount = ((actualPrice - price) / actualPrice) * 100;
+
+			return discount.toFixed(0);
+		}
+		return "";
+	};
+
+	const discountPercentage = calculateDiscountPercentage();
 	// ------------------------------------------------------
 
 	return (
-		<div className="border border-gray-300 rounded-md p-5 transition bg-white  flex flex-col justify-between flex-shrink-0 h-[320px] w-[95%] md:w-[240px] hover:border-gray-400 hover:shadow-xl transition">
+		<div className="group border border-gray-300 rounded-md p-5 transition bg-white flex flex-col justify-between flex-shrink-0 h-[320px] w-[95%] md:w-[240px] hover:border-gray-400 hover:shadow-xl transition relative ">
 			{/* PRODUCT IMAGE */}
+			<div className="absolute group-hover:opacity-100 opacity-0 transition duration-300 absolute -top-2 -right-2 font-semibold flex items-center justify-center py-2 px-3 bg-yellow-400 rounded-full text-center shadow-xl z-10 text-sm ">
+				{discountPercentage}% Off
+			</div>
+
 			<img
 				src={item?.img1 || noImage}
 				alt="product-image"
-				className="object-contain w-[100%] h-[60%] cursor-pointer transition hover:scale-105 block"
+				className="object-contain w-[100%] h-[60%] cursor-pointer transition hover:scale-105 block z-0"
 				title="Tap to know more..."
 				onClick={() => {
 					navigateTo(`/ProductDetail/${item.id}`);
@@ -60,7 +78,7 @@ function ProductCard({ item }) {
 			/>
 			{/* PRODUCT DETAILS */}
 			<div className="flex flex-col gap-1">
-				<div className="font-bold text-xl text-gray-500">
+				<div className="font-bold text-xl text-gray-500 flex items-center justify-between">
 					₹ {numberWithCommas(item.price)}
 				</div>
 				<div className="font-bold hover:underline cursor-default">

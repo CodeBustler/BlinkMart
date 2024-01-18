@@ -41,7 +41,7 @@ function Navbar() {
 	// ------------------------------------------------------
 
 	return (
-		<header className="sticky top-0 shadow-xl z-10">
+		<header className="sticky top-0 shadow-xl z-20">
 			{/*FIRST ROW*/}
 			<NavbarFirstRow
 				handleSideBar={handleSideBar}

@@ -29,7 +29,7 @@ function ProductsSubCategory() {
 					<h1 className=" underline underline-offset-8 underline-heading text-2xl font-bold my-3 text-center md:text-left capitalize">
 						{subCategoryName.replace(/_/g, " ")}
 					</h1>
-					<div className="flex flex-wrap justify-center gap-5 mt-5">
+					<div className="flex flex-wrap justify-start gap-5 mt-8">
 						{/*MAPPING PRODUCTS*/}
 						{subCategoryItems.map((item, index) => (
 							<ProductCard key={index} item={item} />

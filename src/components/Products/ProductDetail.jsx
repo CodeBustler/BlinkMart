@@ -166,7 +166,7 @@ function ProductDetail() {
 					</p>
 					<div className="md:flex flex-col md:flex-row items-center justify-between gap-5 my-3 mt-4">
 						<div className="flex flex-wrap items-center  gap-5 md:gap-2 lg:gap-5">
-							<div className="font-bold py-3 text-2xl">
+							<div className="font-bold py-3 text-3xl">
 								₹
 								{displayProduct.price
 									? numberWithCommas(displayProduct.price)
@@ -175,7 +175,7 @@ function ProductDetail() {
 							<div className="line-through mt-2 text-gray-500">
 								₹ {displayProduct.actualPrice}
 							</div>
-							<div className="text-md text-red-500 text-lg font-semibold mt-2">
+							<div className="text-md text-red-500 text-xl font-semibold mt-2">
 								{discountPercentage}% Off
 							</div>
 						</div>
