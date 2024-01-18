@@ -17,9 +17,9 @@ function NavbarFirstRow({
 	admin,
 	cartAnimate,
 	handleCartIcon,
-	userCart,
 	currentUser,
 	userName,
+	userCartItems,
 }) {
 	const [searchBarFocus, setSearchFocus] = useState(false);
 	const handleSideBarOnFocus = () => {
@@ -91,7 +91,7 @@ function NavbarFirstRow({
 					/>
 					<span className="text-md md:text-lg font-bold text-orange-400">
 						{currentUser && currentUser.length > 0 ? (
-							currentUser[0]?.cart?.userCartProducts?.length || 0
+							userCartItems.length || 0
 						) : (
 							<LuShoppingCart
 								className={`text-3xl cursor-pointer  ${

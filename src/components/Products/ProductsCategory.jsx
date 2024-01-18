@@ -12,6 +12,22 @@ function ProductsCategory() {
 		(item) => item.category === categoryName,
 	);
 
+	// SUB_CATEGORY
+	const subCategoryArrays = {};
+
+	filterProducts.forEach((product) => {
+		const { subCategory, ...rest } = product;
+
+		if (!subCategoryArrays[subCategory]) {
+			subCategoryArrays[subCategory] = [];
+		}
+
+		subCategoryArrays[subCategory].push(rest);
+	});
+
+	console.log(subCategoryArrays);
+
+	console.log(filterProducts);
 	return (
 		<div>
 			<h1 className="text-2xl font-bold my-3 text-center md:text-left capitalize">
@@ -19,7 +35,7 @@ function ProductsCategory() {
 			</h1>
 
 			<ContainerForCard
-				categoryTitle={categoryName}
+				containerTitle={"E"}
 				filterProducts={filterProducts}
 			>
 				{filterProducts.map((item) => (

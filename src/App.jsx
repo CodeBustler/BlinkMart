@@ -11,21 +11,23 @@ const MyContext = createContext();
 // ------------------------------------------------------
 
 function App() {
+  // PRODUCTS & LOADING
+  const [loading, setLoading] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
+  // USER RELATED
   const [userName, setUserName] = useState("");
   const [admin, setAdmin] = useState(false);
   const [userDB, setUserDB] = useState([]);
   const [userUID, setUserUID] = useState("");
   const [currentUser, setCurrentUser] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [allProducts, setAllProducts] = useState([]);
-  const [userCart, setUserCart] = useState([]);
+  // CART RELATED
   const [cartAnimate, setCartAnimate] = useState(false);
+  const [userCartItems, setUserCartItems] = useState([]);
+  const [userCartItemsCount, setUserCartItemsCount] = useState([]);
 
   // ------------------------------------------------------
-  // **************** FUNCTIONS FOR SHARE ****************
+  // ***************** GET ALL PRODUCTS *****************
   // ------------------------------------------------------
-
-  // GET ALL PRODUCTS
   const fetchProducts = async () => {
     setLoading(true);
     const data = await getDocs(collection(fireDB, "allProducts"));
@@ -40,25 +42,9 @@ function App() {
     fetchProducts();
   }, []);
 
-  // GET ALL USERDATA
-  const fetchUserData = async () => {
-    setLoading(true);
-    const userData = await getDocs(collection(fireDB, "users"));
-    const userDataArray = [];
-    userData.forEach((doc) => {
-      userDataArray.push({
-        ...doc.data(),
-        id: doc.id,
-      });
-    });
-    setLoading(false);
-    setUserDB(userDataArray);
-  };
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  // UPDATE USERNAME & ADMIN ON AUTH STATE CHANGE
+  // ------------------------------------------------------
+  // ************* UPDATE USER_AUTH & ADMIN *************
+  // ------------------------------------------------------
   useEffect(() => {
     const updateUserNameAndAdmin = async (user) => {
       const env = await import.meta.env;
@@ -82,6 +68,49 @@ function App() {
       unsubscribeAuthStateChanged();
     };
   }, [userUID, userDB]);
+
+  // ------------------------------------------------------
+  // ****************** GET ALL USERDATA ******************
+  // ------------------------------------------------------
+  const fetchUserData = async () => {
+    try {
+      setLoading(true);
+      const userData = await getDocs(collection(fireDB, "users"));
+      const userDataArray = [];
+
+      userData.forEach((doc) => {
+        userDataArray.push({
+          ...doc.data(),
+          id: doc.id,
+        });
+      });
+
+      setLoading(false);
+      setUserDB(userDataArray); // All USER_DATABASE
+
+      // *************** CURRENT USER CART DATA ***************
+      const userCart = userDataArray.filter((item) => item.uid === userUID);
+
+      if (userCart.length > 0 && userCart[0].cart) {
+        setLoading(false);
+        setUserCartItems(userCart[0].cart.userCartProducts);
+        setUserCartItemsCount(userCart[0].cart.userCartProductsCount);
+      } else {
+        // Handle the case when userCart is empty or does not have 'cart' property
+        setLoading(false);
+        setUserCartItems([]);
+        setUserCartItemsCount(0);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, [userUID]);
+
+  // ****************** CURRENT USER DATA ******************
   useEffect(() => {
     if (userUID && userDB.length > 0) {
       const currentUserDetail = userDB.filter((item) => item.uid == userUID);
@@ -93,7 +122,10 @@ function App() {
     }
   }, [userUID, userDB]);
 
-  // HANDLE NAVBAR CART ICON ANIMATION (PRODUCT_CARD & NAVBAR)
+  // ------------------------------------------------------
+  // ****************** OTHER FUNCTIONS ******************
+  // ------------------------------------------------------
+  // CART ICON_ANIMATION (FOR PRODUCT_CARD & NAVBAR)
   const handleCartAnimate = () => {
     setCartAnimate((prevCartAnimate) => !prevCartAnimate);
     setTimeout(() => {
@@ -107,6 +139,8 @@ function App() {
   // console.log(userUID);
   // console.log(admin);
   // console.log(userDB);
+  // console.log(userCartItems);
+  // console.log(userCartItemsCount);
   // ------------------------------------------------------
 
   return (
@@ -119,11 +153,14 @@ function App() {
           admin,
           setAdmin,
           loading,
+          setLoading,
           cartAnimate,
           handleCartAnimate,
-          userCart,
           currentUser,
           setCurrentUser,
+          userUID,
+          userCartItems,
+          userCartItemsCount,
         }}
       >
         <RouterProvider router={routes} />

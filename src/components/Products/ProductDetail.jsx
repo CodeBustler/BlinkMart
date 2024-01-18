@@ -239,7 +239,7 @@ function ProductDetail() {
 
 			<div className="mt-10">
 				<ContainerForCard
-					categoryTitle={""}
+					containerTitle={"Related Products"}
 					filterProducts={filterCategory}
 				>
 					{filterCategory.map((category, categoryIndex) => (

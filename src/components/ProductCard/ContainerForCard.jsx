@@ -7,7 +7,7 @@ import { numberWithCommas, scrollToTop } from "../utilities/RequiredFunctions";
 
 // ----------------------------------------------------------------------
 
-function ContainerForCard({ categoryTitle, filterProducts, children }) {
+function ContainerForCard({ containerTitle, filterProducts, children }) {
 	const containerRef = useRef(null);
 	const navigateTo = useNavigate();
 
@@ -37,7 +37,7 @@ function ContainerForCard({ categoryTitle, filterProducts, children }) {
 			{/*CONTAINER*/}
 			<div className="relative bg-gray-100 p-5 md:p-8 rounded-xl border">
 				<div className=" flex justify-between text-2xl mb-5 md:mb-7 font-semibold capitalize ">
-					<div>{categoryTitle?.replace(/_/g, " ")}</div>
+					<div>{containerTitle?.replace(/_/g, " ")}</div>
 					<IoMdArrowDroprightCircle
 						className="sticky hidden md:block text-3xl text-orange-500 cursor-pointer hover:scale-150 transition "
 						onClick={(e) => handleNavigate(e)}

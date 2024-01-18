@@ -22,9 +22,9 @@ function Navbar() {
 		userName,
 		setUserName,
 		cartAnimate,
-		userCart,
 		currentUser,
 		setCurrentUser,
+		userCartItems,
 	} = useContext(MyContext);
 
 	// HANDLE SIDEBAR TOGGLE
@@ -47,12 +47,11 @@ function Navbar() {
 				handleSideBar={handleSideBar}
 				admin={admin}
 				userName={userName}
-				// cartItems={cartItems}
+				userCartItems={userCartItems}
 				cartAnimate={cartAnimate}
 				toastLogin={toastLoginToAddCart}
 				scrollToTop={scrollToTop}
 				handleCartIcon={handleCartIcon}
-				userCart={userCart}
 				currentUser={currentUser}
 			/>
 			{/*SECOND ROW*/}
