@@ -8,7 +8,7 @@ import { LuShoppingCart } from "react-icons/lu";
 import flag_icon from "../../../assets/flag_icon.png";
 import { useState } from "react";
 import { scrollToTop } from "../../Utilities/RequiredFunctions";
-import Loader from "../../Utilities/Loader";
+import ReactLoading from "react-loading";
 
 // ---------------------------------------------------------------
 
@@ -87,20 +87,12 @@ function NavbarFirstRow({
 					<LuShoppingCart
 						className={`text-3xl cursor-pointer  ${
 							cartAnimate ? "animate-bounce" : ""
-						}  ${currentUser?.length > 0 ? "block" : "hidden"}  `}
+						}  `}
 					/>
 					<span className="text-md md:text-lg font-bold text-orange-400">
-						{currentUser && currentUser.length > 0 ? (
-							userCartItems.length || 0
-						) : (
-							<LuShoppingCart
-								className={`text-3xl cursor-pointer  ${
-									userName === ""
-										? "animate-none"
-										: "animate-pulse"
-								}`}
-							/>
-						)}
+						{currentUser &&
+							currentUser.length > 0 &&
+							(userCartItems.length || 0)}
 					</span>
 				</NavLink>
 				{admin && (
