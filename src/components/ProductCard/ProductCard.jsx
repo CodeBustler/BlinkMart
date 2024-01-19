@@ -9,6 +9,7 @@ import {
 } from "../Utilities/RequiredFunctions";
 import tickIcon from "../../assets/tick_icon.png";
 import noImage from "../../assets/no_image.png";
+import { MdStar, MdStarBorder } from "react-icons/md";
 
 // ------------------------------------------------------
 
@@ -60,12 +61,12 @@ function ProductCard({ item }) {
 	// ------------------------------------------------------
 
 	return (
-		<div className="group border border-gray-300 rounded-md p-5 transition bg-white flex flex-col justify-between flex-shrink-0 h-[320px] w-[95%] md:w-[240px] hover:border-gray-400 hover:shadow-xl transition relative ">
-			{/* PRODUCT IMAGE */}
+		<div className="group border border-gray-300 rounded-md p-5 transition bg-white flex flex-col justify-between flex-shrink-0 h-[330px] w-[95%] md:w-[240px] hover:border-gray-400 hover:shadow-xl transition relative ">
+			{/*FLOAD ICON DISCOUNT PERCENTAGE*/}
 			<div className="absolute group-hover:opacity-100 opacity-0 transition duration-300 absolute -top-2 -right-2 font-semibold flex items-center justify-center py-2 px-3 bg-yellow-400 rounded-full text-center shadow-xl z-10 text-sm ">
 				{discountPercentage}% Off
 			</div>
-
+			{/* PRODUCT IMAGE */}
 			<img
 				src={item?.img1 || noImage}
 				alt="product-image"
@@ -77,16 +78,16 @@ function ProductCard({ item }) {
 				}}
 			/>
 			{/* PRODUCT DETAILS */}
-			<div className="flex flex-col gap-1">
+			<div className="flex flex-col mt-2 ">
 				<div className="font-bold text-xl text-gray-500 flex items-center justify-between">
 					₹ {numberWithCommas(item.price)}
 				</div>
-				<div className="font-bold hover:underline cursor-default">
+				<div className="font-bold hover:underline cursor-default mt-1">
 					{item.title}
 				</div>
 
 				<button
-					className={`bg-orange-400 border  w-full py-1 mt-3 font-semibold rounded  transition ${
+					className={`bg-orange-400 border  w-full py-1 mt-2 font-semibold rounded transition  ${
 						itemInCart === "In Basket"
 							? "bg-white  border-gray-400 "
 							: "bg-orange-400 border-transparent active:bg-orange-300"

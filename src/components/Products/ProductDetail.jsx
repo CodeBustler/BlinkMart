@@ -202,7 +202,7 @@ function ProductDetail() {
 							)}
 						</button>
 					</div>
-					<div className=" text-gray-400 mt-8 md:mt-0">
+					<div className=" text-gray-500 mt-8 md:mt-0">
 						{displayProduct.price > 500
 							? "FREE Delivery By BlinkMart"
 							: "+ ₹20 Delivery Charges"}
