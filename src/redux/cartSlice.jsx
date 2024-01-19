@@ -1,37 +1,30 @@
-// import { createSlice } from "@reduxjs/tooklit";
-// import {
-// 	toastItemRemoved,
-// 	toastItemAlreadyInCart,
-// } from "../components/Utilities/RequiredFunctions";
+import { createSlice } from "@reduxjs/toolkit";
 
-// // REDUX SLICE/REDUCER
-// const initialState = [];
-// const cartSlice = createSlice({
-// 	name: "cart",
-// 	initialState,
-// 	reducers: {
-// 		addToCart(state, action) {
-// 			const itemToAdd = action.payload;
-// 			const isInCart = state.some(
-// 				(cartItem) => cartItem.id === itemToAdd.id,
-// 			);
+const initialState = [];
+const cartSlice = createSlice({
+	name: "cart",
+	initialState,
+	reducers: {
+		addToCart: (state, action) => {
+			const itemToAdd = action.payload;
+			const isInCart = state.some(
+				(cartItem) => cartItem.id === itemToAdd.id,
+			);
 
-// 			if (!isInCart) {
-// 				state.push(itemToAdd);
-// 			} else {
-// 				toastItemAlreadyInCart();
-// 				console.log("%c Item is already in cart", "color:tomato");
-// 			}
-// 		},
-// 		deleteFromCart(state, action) {
-// 			toastItemRemoved();
-// 			return state.filter((item) => item.id != action.payload.id);
-// 		},
-// 		emptyCart(state, action) {
-// 			return [];
-// 		},
-// 	},
-// });
+			if (!isInCart) {
+				state.push(itemToAdd);
+			} else {
+				console.log("%c Item is already in the cart", "color:red");
+			}
+		},
+		deleteFromCart: (state, action) => {
+			return state.filter((item) => item.id != action.payload.id);
+		},
+		emptyCartStore: (state, action) => {
+			return [];
+		},
+	},
+});
 
-// export const { addToCart, deleteFromCart, emptyCart } = cartSlice.actions;
-// export default cartSlice.reducer;
+export const { addToCart, deleteFromCart, emptyCartStore } = cartSlice.actions;
+export default cartSlice.reducer;

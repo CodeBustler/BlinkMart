@@ -35,21 +35,21 @@ function ProductsCategory() {
 		scrollToTop();
 	}, [allProducts, categoryName]);
 
-	console.log(subCategoryTitles);
 	return (
 		<div>
 			<h1 className="underline underline-offset-8 underline-heading text-2xl font-bold my-3 text-center md:text-left capitalize">
 				{categoryName.replace(/_/g, " ")}
 			</h1>
 
-			{subCategoryTitles.map((item_subCategory) => (
+			{subCategoryTitles.map((item_subCategory, index) => (
 				<ContainerForCard
+					key={index}
 					containerTitle={item_subCategory}
 					filterProducts={item_subCategory}
 				>
-					{allProducts.map((item) => {
+					{allProducts.map((item, index) => {
 						if (item.subCategory === item_subCategory) {
-							return <ProductCard item={item} />;
+							return <ProductCard item={item} key={index} />;
 						}
 					})}
 				</ContainerForCard>

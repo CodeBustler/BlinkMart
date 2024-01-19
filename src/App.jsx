@@ -5,6 +5,8 @@ import { routes } from "./router/routes";
 // FIREBASE
 import { auth, fireDB } from "./firebaseConfig/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { useSelector } from "react-redux";
+
 // CONTEXT API
 const MyContext = createContext();
 
@@ -20,11 +22,11 @@ function App() {
   const [userDB, setUserDB] = useState([]);
   const [userUID, setUserUID] = useState("");
   const [currentUser, setCurrentUser] = useState([]);
-  // CART RELATED
+  // CART RELATED (BTN TITLE & CART ANIMATION)
   const [cartAnimate, setCartAnimate] = useState(false);
-  const [userCartItems, setUserCartItems] = useState([]);
-  const [userCartItemsCount, setUserCartItemsCount] = useState([]);
-
+  const [itemInCart, setItemInCart] = useState("Add To Cart");
+  // FETCHING STORE CART DATA
+  const cartItemsRX = useSelector((state) => state.cart);
   // ------------------------------------------------------
   // ***************** GET ALL PRODUCTS *****************
   // ------------------------------------------------------
@@ -88,18 +90,16 @@ function App() {
       setLoading(false);
       setUserDB(userDataArray); // All USER_DATABASE
 
-      // *************** CURRENT USER CART DATA ***************
+      // *********** FIREBASE : CURRENT USER CART DATA FROM  ***********
       const userCart = userDataArray.filter((item) => item.uid === userUID);
-
       if (userCart.length > 0 && userCart[0].cart) {
-        setLoading(false);
-        setUserCartItems(userCart[0].cart.userCartProducts);
-        setUserCartItemsCount(userCart[0].cart.userCartProductsCount);
+        // setLoading(false);
+        // setUserCartItems(userCart[0].cart.userCartProducts);
+        // setUserCartItemsCount(userCart[0].cart.userCartProductsCount);
       } else {
-        // Handle the case when userCart is empty or does not have 'cart' property
-        setLoading(false);
-        setUserCartItems([]);
-        setUserCartItemsCount(0);
+        // setLoading(false);
+        // setUserCartItems([]);
+        // setUserCartItemsCount(0);
       }
     } catch (error) {
       console.error(error);
@@ -123,6 +123,38 @@ function App() {
   }, [userUID, userDB]);
 
   // ------------------------------------------------------
+  // ************* ADDING TO CARD | REDUX ***************
+  // ------------------------------------------------------
+
+  const addCart = (displayProduct) => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      // CHECK DUPLICATE ITEM IN CART (STORE
+      const isItemInCart = cartItemsRX.some(
+        (cItem) => cItem.id === displayProduct.id,
+      );
+      if (isItemInCart) {
+        // Use setItemInCart instead of setLocalItemInCart
+        setItemInCart("In Basket");
+      } else {
+        // ADDING TO CART_STORE
+        // Use setItemInCart instead of setLocalItemInCart
+        setLocalItemInCart("Adding");
+        dispatch(
+          addToCart(displayProduct, () =>
+            // Use setItemInCart instead of setLocalItemInCart
+            setLocalItemInCart("In Basket"),
+          ),
+        );
+        handleCartAnimate();
+      }
+    } else {
+      navigateTo("/login");
+      toastLoginToAddCart();
+    }
+  };
+
+  // ------------------------------------------------------
   // ****************** OTHER FUNCTIONS ******************
   // ------------------------------------------------------
   // CART ICON_ANIMATION (FOR PRODUCT_CARD & NAVBAR)
@@ -139,8 +171,8 @@ function App() {
   // console.log(userUID);
   // console.log(admin);
   // console.log(userDB);
-  // console.log(userCartItems);
-  // console.log(userCartItemsCount);
+  // console.log(currentUser);
+  // console.log(cartItemsRX);
   // ------------------------------------------------------
 
   return (
@@ -159,8 +191,9 @@ function App() {
           currentUser,
           setCurrentUser,
           userUID,
-          userCartItems,
-          userCartItemsCount,
+          itemInCart, // CARD BTN TEXT
+          setItemInCart, // CARD BTN TEXT
+          cartItemsRX, // CART STORE
         }}
       >
         <RouterProvider router={routes} />

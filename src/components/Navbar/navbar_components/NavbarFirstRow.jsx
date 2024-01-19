@@ -19,7 +19,7 @@ function NavbarFirstRow({
 	handleCartIcon,
 	currentUser,
 	userName,
-	userCartItems,
+	cartItemsRX,
 }) {
 	const [searchBarFocus, setSearchFocus] = useState(false);
 	const handleSideBarOnFocus = () => {
@@ -90,9 +90,9 @@ function NavbarFirstRow({
 						}  `}
 					/>
 					<span className="text-md md:text-lg font-bold text-orange-400">
-						{currentUser &&
-							currentUser.length > 0 &&
-							(userCartItems.length || 0)}
+						{currentUser && cartItemsRX.length > 0
+							? cartItemsRX.length
+							: 0}
 					</span>
 				</NavLink>
 				{admin && (

@@ -8,10 +8,15 @@ import { FaArrowRotateLeft } from "react-icons/fa6";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { AiOutlineTrophy } from "react-icons/ai";
 import { GrSecure } from "react-icons/gr";
-import { numberWithCommas } from "../utilities/RequiredFunctions";
+import {
+	numberWithCommas,
+	toastAddedToCart,
+} from "../utilities/RequiredFunctions";
 import noImage from "../../assets/no_image.png";
 // ROUTER
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/cartSlice";
 
 // ---------------------------------------------------------
 
@@ -20,8 +25,10 @@ function ProductDetail() {
 	const [mainImage, setMainImage] = useState("");
 	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
 	const navigateTo = useNavigate();
+	const dispatch = useDispatch();
 	const { productId } = useParams();
-	const { allProducts } = useContext(MyContext);
+	const { allProducts, cartItemsRX, setItemInCart, handleCartAnimate } =
+		useContext(MyContext);
 
 	// ---------------------------------------------------------
 	useEffect(() => {
@@ -41,6 +48,35 @@ function ProductDetail() {
 	const filterSubCategory = allProducts.filter(
 		(item) => item.subCategory === displayProduct.subCategory,
 	);
+
+	// ADDING CARD TO REDUXT CART STORE
+	const addCart = (displayProduct) => {
+		const user = localStorage.getItem("user");
+		if (user) {
+			// CHECK DUPLICATE ITEM IN CART (STORE
+			const isItemInCart = cartItemsRX.some(
+				(cItem) => cItem.id === displayProduct.id,
+			);
+			if (isItemInCart) {
+				// Use setItemInCart instead of setLocalItemInCart
+				setItemInCart("In Basket");
+			} else {
+				// ADDING TO CART_STORE
+				// Use setItemInCart instead of setLocalItemInCart
+				setItemInCart("Adding");
+				dispatch(
+					addToCart(displayProduct, () =>
+						// Use setItemInCart instead of setLocalItemInCart
+						setLocalItemInCart("In Basket"),
+					),
+				);
+				handleCartAnimate();
+			}
+		} else {
+			navigateTo("/login");
+			toastLoginToAddCart();
+		}
+	};
 
 	// DISCOUNT PERCENTAGE
 	const calculateDiscountPercentage = () => {

@@ -1,43 +1,58 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
-import { useNavigate } from "react-router-dom";
 import {
 	numberWithCommas,
 	scrollToTop,
 	toastAddedToCart,
 	toastLoginToAddCart,
 } from "../Utilities/RequiredFunctions";
+// ICONS
 import tickIcon from "../../assets/tick_icon.png";
 import noImage from "../../assets/no_image.png";
 import { MdStar, MdStarBorder } from "react-icons/md";
+// REDUX & ROUTER
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 // ------------------------------------------------------
 
 function ProductCard({ item }) {
-	const navigateTo = useNavigate();
+	const { handleCartAnimate, setItemInCart, cartItemsRX } =
+		useContext(MyContext);
 	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
+	const navigateTo = useNavigate();
+	const dispatch = useDispatch();
 
-	const { handleCartAnimate } = useContext(MyContext);
 	// ------------------------------------------------------
 
+	useEffect(() => {
+		// CHECKS ITEM IS ALREADY IN CART
+		const isItemInCart = cartItemsRX.some((cItem) => cItem.id === item.id);
+
+		// UPDATE CARD BUTTON TEXT BASED ON "isItemInCart"
+		setLocalItemInCart(isItemInCart ? "In Basket" : "Add To Cart");
+	}, [cartItemsRX, item.id]);
+
+	// ADDING CARD TO REDUX CART STORE
 	const addCart = () => {
 		const user = localStorage.getItem("user");
 		if (user) {
-			// // Check if the item is already in the cart
-			// const isItemInCart = cartItems.some(
-			// 	(cItem) => cItem.id === item.id,
-			// );
-			// if (isItemInCart) {
-			// 	setItemInCart("In Basket");
-			// } else {
-			// 	// Use the callback form of setState
-			// 	setLocalItemInCart("Adding");
-			// 	dispatch(
-			// 		addToCart(item, () => setLocalItemInCart("In Basket")),
-			// 		toastAddedToCart(),
-			// 	);
-			// 	handleCartAnimate();
-			// }
+			// CHECK DUPLICATE ITEM IN CART (STORE
+			const isItemInCart = cartItemsRX.some(
+				(cItem) => cItem.id === item.id,
+			);
+			if (isItemInCart) {
+				setItemInCart("In Basket");
+			} else {
+				// ADDING TO CART_STORE
+				setLocalItemInCart("Adding");
+				dispatch(
+					addToCart(item, () => setLocalItemInCart("In Basket")),
+					toastAddedToCart(),
+				);
+				handleCartAnimate();
+			}
 		} else {
 			navigateTo("/login");
 			toastLoginToAddCart();
@@ -49,15 +64,14 @@ function ProductCard({ item }) {
 		if (item && item.price && item.actualPrice) {
 			const price = parseFloat(item.price);
 			const actualPrice = parseFloat(item.actualPrice);
-
+			// DISCOUNT FORMULA
 			const discount = ((actualPrice - price) / actualPrice) * 100;
-
 			return discount.toFixed(0);
 		}
 		return "";
 	};
-
 	const discountPercentage = calculateDiscountPercentage();
+
 	// ------------------------------------------------------
 
 	return (
@@ -66,6 +80,7 @@ function ProductCard({ item }) {
 			<div className="absolute group-hover:opacity-100 opacity-0 transition duration-300 absolute -top-2 -right-2 font-semibold flex items-center justify-center py-2 px-3 bg-yellow-400 rounded-full text-center shadow-xl z-10 text-sm ">
 				{discountPercentage}% Off
 			</div>
+
 			{/* PRODUCT IMAGE */}
 			<img
 				src={item?.img1 || noImage}

@@ -18,13 +18,15 @@ import {
 // FIREBASE
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebaseConfig/firebase";
-
+import { useDispatch } from "react-redux";
+import { emptyCartStore } from "../../../redux/cartSlice";
 // ---------------------------------------------------------------
 
 function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 	// CONTEXT
 	const { setUserName, userName, admin, setAdmin } = useContext(MyContext);
 	const navigateTo = useNavigate();
+	const dispatch = useDispatch();
 
 	// HANDLE LOGOUT FUNCTION
 	const handleLogout = () => {
@@ -37,6 +39,7 @@ function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 				localStorage.removeItem("user");
 
 				navigateTo("/login");
+				dispatch(emptyCartStore());
 				console.log("%c ✔ Signed out successfully", "color:#bada55");
 			})
 			.catch((error) => {

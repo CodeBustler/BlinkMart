@@ -8,6 +8,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig/firebase";
 import { MyContext } from "../../App";
 import { toastLoginSuccess } from "../utilities/RequiredFunctions";
+
 // ------------------------------------------------------
 
 function Login() {
@@ -15,14 +16,15 @@ function Login() {
 	const [submitting, setSubmitting] = useState(false);
 
 	const [errorMsg, setErrorMsg] = useState("");
-	const navigate = useNavigate();
+	const navigateTo = useNavigate();
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
 	});
-	// ------------------------------------------------------
 
-	// HANDLE LOGIN SUBMIT
+	// ------------------------------------------------------
+	// **************** HANDLE LOGIN SUBMIT ****************
+	// ------------------------------------------------------
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -66,7 +68,7 @@ function Login() {
 			localStorage.setItem("user", JSON.stringify(loggedInUser));
 
 			// NAVIGATE TO HOME IF LOGIN SUCCESS
-			navigate("/");
+			navigateTo("/");
 			console.log("%c ✔ Authentication successful", "color: #bada55");
 		} catch (error) {
 			console.error(error);
