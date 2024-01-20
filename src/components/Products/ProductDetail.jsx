@@ -13,12 +13,10 @@ import {
 	toastAddedToCart,
 } from "../utilities/RequiredFunctions";
 import noImage from "../../assets/no_image.png";
-import tickIcon from "../../assets/tick_icon.png";
-
-// REDUX & ROUTER
+// ROUTER
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
-import { useNavigate, useParams } from "react-router-dom";
 
 // ---------------------------------------------------------
 
@@ -29,12 +27,12 @@ function ProductDetail() {
 	const navigateTo = useNavigate();
 	const dispatch = useDispatch();
 	const { productId } = useParams();
-	const { allProducts, cartItemsRX, handleCartAnimate, setItemInCart } =
+	const { allProducts, cartItemsRX, setItemInCart, handleCartAnimate } =
 		useContext(MyContext);
 
 	// ---------------------------------------------------------
 	useEffect(() => {
-		// FILTER SINGLE PRODUCT TO DISPLAY
+		// FILTER SINGLE PRODUCT
 		const filterProduct = allProducts.filter(
 			(item) => item.id == productId,
 		);
@@ -51,7 +49,35 @@ function ProductDetail() {
 		(item) => item.subCategory === displayProduct.subCategory,
 	);
 
-	// ---------------------------------------------------------
+	// ADDING CARD TO REDUXT CART STORE
+	const addCart = (displayProduct) => {
+		const user = localStorage.getItem("user");
+		if (user) {
+			// CHECK DUPLICATE ITEM IN CART (STORE
+			const isItemInCart = cartItemsRX.some(
+				(cItem) => cItem.id === displayProduct.id,
+			);
+			if (isItemInCart) {
+				// Use setItemInCart instead of setLocalItemInCart
+				setItemInCart("In Basket");
+			} else {
+				// ADDING TO CART_STORE
+				// Use setItemInCart instead of setLocalItemInCart
+				setItemInCart("Adding");
+				dispatch(
+					addToCart(displayProduct, () =>
+						// Use setItemInCart instead of setLocalItemInCart
+						setLocalItemInCart("In Basket"),
+					),
+				);
+				handleCartAnimate();
+			}
+		} else {
+			navigateTo("/login");
+			toastLoginToAddCart();
+		}
+	};
+
 	// DISCOUNT PERCENTAGE
 	const calculateDiscountPercentage = () => {
 		if (
@@ -71,44 +97,6 @@ function ProductDetail() {
 
 	const discountPercentage = calculateDiscountPercentage();
 
-	// ---------------------------------------------------------
-	// **************** ADD_TO_CART FUNCTION *****************
-	// ---------------------------------------------------------
-	useEffect(() => {
-		// Check if the item is in the cart
-		const isItemInCart = cartItemsRX.some(
-			(cItem) => cItem.id === displayProduct.id,
-		);
-
-		// Update local state based on the result
-		setLocalItemInCart(isItemInCart ? "In Basket" : "Add To Cart");
-	}, [cartItemsRX, displayProduct.id]);
-
-	const addCart = (productToAdd) => {
-		const user = localStorage.getItem("user");
-		if (user) {
-			// CHECK DUPLICATE ITEM IN CART (STORE
-			const isItemInCart = cartItemsRX.some(
-				(cItem) => cItem.id === productToAdd.id,
-			);
-			if (isItemInCart) {
-				setItemInCart("In Basket");
-			} else {
-				// ADDING TO CART_STORE
-				setLocalItemInCart("Adding");
-				dispatch(
-					addToCart(productToAdd, () =>
-						setLocalItemInCart("In Basket"),
-					),
-				);
-				toastAddedToCart();
-				handleCartAnimate();
-			}
-		} else {
-			navigateTo("/login");
-			toastLoginToAddCart();
-		}
-	};
 	// ---------------------------------------------------------
 
 	return (

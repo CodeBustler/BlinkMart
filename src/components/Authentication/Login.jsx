@@ -8,27 +8,26 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig/firebase";
 import { MyContext } from "../../App";
 import { toastLoginSuccess } from "../utilities/RequiredFunctions";
-import { useDispatch } from "react-redux";
 
 // ------------------------------------------------------
 
 function Login() {
-	const { setUserName, setAdmin, setItemInCart, currentUser } =
-		useContext(MyContext);
+	const { setUserName, setAdmin } = useContext(MyContext);
 	const [submitting, setSubmitting] = useState(false);
-	const navigate = useNavigate();
+
 	const [errorMsg, setErrorMsg] = useState("");
 	const navigateTo = useNavigate();
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
 	});
+
 	// ------------------------------------------------------
 	// **************** HANDLE LOGIN SUBMIT ****************
 	// ------------------------------------------------------
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(currentUser);
+
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		setSubmitting(true);
 		try {
@@ -76,12 +75,6 @@ function Login() {
 			setErrorMsg(error.message);
 			console.log("%c ❌ Authentication Failed", "color: tomato");
 		}
-	};
-
-	const navigateGuestHome = () => {
-		navigate("/");
-		console.log(currentUser);
-		navigate(0);
 	};
 
 	// ------------------------------------------------------
@@ -146,13 +139,9 @@ function Login() {
 							Create account
 						</Link>
 					</p>
-					<div
-						onClick={navigateGuestHome}
-						className="text-md underline opacity-40 mt-1
-					"
-					>
+					<Link to="/" className="text-md underline opacity-40 mt-1">
 						Continue as a guest
-					</div>
+					</Link>
 				</form>
 			</div>
 		</section>

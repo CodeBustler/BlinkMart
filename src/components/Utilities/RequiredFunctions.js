@@ -27,36 +27,13 @@ export function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-// useEffect(() => {
-//   const getCurrentUserCart = async () => {
-//     if (currentUser?.length === 0) {
-//       console.log("Guest");
-//     } else {
-//       console.log(currentUser?.length);
-//     }
+// GET CURRENT USER DETAIL
+// const userLocalData = JSON.parse(localStorage.getItem("user"));
+// const targetUid = userLocalData?.user?.uid;
+// const currentUserDetail = userDB.find((item) => item.uid === targetUid);
 
-//     if (currentUser && currentUser.length > 0) {
-//       const cartFromFB = currentUser[0].cart;
-//       const itemsToAdd = [];
-
-//       try {
-//         // Accumulate items to add
-//         cartFromFB.userCartProducts.forEach((item) => {
-//           itemsToAdd.push(item);
-//         });
-
-//         // Update state outside the loop
-//         setCartItemsFromFB((prevValue) => {
-//           itemsToAdd.forEach((item) => {
-//             dispatchFBCartItem(addToCart(item));
-//           });
-//           return [...prevValue, ...itemsToAdd];
-//         });
-//       } catch (error) {
-//         console.error("Error adding items to cart:", error);
-//       }
-//     }
-//   };
-
-//   getCurrentUserCart();
-// }, [currentUser, dispatchFBCartItem]);
+// if (currentUserDetail) {
+//   console.log("User found:", currentUserDetail);
+// } else {
+//   console.log("User not found");
+// }
