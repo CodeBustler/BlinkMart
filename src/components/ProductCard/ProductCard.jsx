@@ -18,47 +18,13 @@ import { useNavigate } from "react-router-dom";
 // ------------------------------------------------------
 
 function ProductCard({ item }) {
-	const { handleCartAnimate, setItemInCart, cartItemsRX } =
+	const { handleCartAnimate, cartItemsRX, setItemInCart } =
 		useContext(MyContext);
-	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
 	const navigateTo = useNavigate();
 	const dispatch = useDispatch();
+	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
 
 	// ------------------------------------------------------
-
-	useEffect(() => {
-		// CHECKS ITEM IS ALREADY IN CART
-		const isItemInCart = cartItemsRX.some((cItem) => cItem.id === item.id);
-
-		// UPDATE CARD BUTTON TEXT BASED ON "isItemInCart"
-		setLocalItemInCart(isItemInCart ? "In Basket" : "Add To Cart");
-	}, [cartItemsRX, item.id]);
-
-	// ADDING CARD TO REDUX CART STORE
-	const addCart = () => {
-		const user = localStorage.getItem("user");
-		if (user) {
-			// CHECK DUPLICATE ITEM IN CART (STORE
-			const isItemInCart = cartItemsRX.some(
-				(cItem) => cItem.id === item.id,
-			);
-			if (isItemInCart) {
-				setItemInCart("In Basket");
-			} else {
-				// ADDING TO CART_STORE
-				setLocalItemInCart("Adding");
-				dispatch(
-					addToCart(item, () => setLocalItemInCart("In Basket")),
-					toastAddedToCart(),
-				);
-				handleCartAnimate();
-			}
-		} else {
-			navigateTo("/login");
-			toastLoginToAddCart();
-		}
-	};
-
 	// DISCOUNT PERCENTAGE
 	const calculateDiscountPercentage = () => {
 		if (item && item.price && item.actualPrice) {
@@ -71,6 +37,43 @@ function ProductCard({ item }) {
 		return "";
 	};
 	const discountPercentage = calculateDiscountPercentage();
+
+	// ------------------------------------------------------
+	// ************* ADDING TO CARD | REDUX ***************
+	// ------------------------------------------------------
+	useEffect(() => {
+		// Check if the item is in the cart
+		const isItemInCart = cartItemsRX.some((cItem) => cItem.id === item.id);
+
+		// Update local state based on the result
+		setLocalItemInCart(isItemInCart ? "In Basket" : "Add To Cart");
+	}, [cartItemsRX, item.id]);
+
+	const addCart = (productToAdd) => {
+		const user = localStorage.getItem("user");
+		if (user) {
+			// CHECK DUPLICATE ITEM IN CART (STORE
+			const isItemInCart = cartItemsRX.some(
+				(cItem) => cItem.id === productToAdd.id,
+			);
+			if (isItemInCart) {
+				setItemInCart("In Basket");
+			} else {
+				// ADDING TO CART_STORE
+				setLocalItemInCart("Adding");
+				dispatch(
+					addToCart(productToAdd, () =>
+						setLocalItemInCart("In Basket"),
+					),
+				);
+				toastAddedToCart();
+				handleCartAnimate();
+			}
+		} else {
+			navigateTo("/login");
+			toastLoginToAddCart();
+		}
+	};
 
 	// ------------------------------------------------------
 
@@ -107,7 +110,7 @@ function ProductCard({ item }) {
 							? "bg-white  border-gray-400 "
 							: "bg-orange-400 border-transparent active:bg-orange-300"
 					}`}
-					onClick={addCart}
+					onClick={() => addCart(item)}
 				>
 					{itemInCart === "In Basket" ? (
 						<div className="flex items-center justify-center gap-3">

@@ -18,12 +18,14 @@ import { deleteFromCart } from "../../redux/cartSlice";
 // ------------------------------------------------------
 
 function Cart() {
-	const { loading, setLoading, userDB, cartItemsRX } = useContext(MyContext);
+	const { loading, setLoading, userDB, cartItemsRX, userUID, currentUser } =
+		useContext(MyContext);
 	const [totalAmount, setTotalAmout] = useState(0);
 	const [shippingCharge, setShippingCharge] = useState(0);
 	const [specialOff, setSpecialOff] = useState(100);
 	const [scrollY, setScrollY] = useState(0);
 	const dispatch = useDispatch();
+	console.log(currentUser);
 	const [userCartDetails, setUserCartDetails] = useState({
 		userCartProducts: [],
 		userCartProductsCount: [],
@@ -31,8 +33,17 @@ function Cart() {
 	const [productCounts, setProductCounts] = useState(
 		cartItemsRX.map(() => 1), // Initialize counts for each item to 1
 	);
-	console.log(cartItemsRX);
+
 	// ------------------------------------------------------
+
+	// SETUP USER CART IN LOCAL-STATE
+	useEffect(() => {
+		setUserCartDetails((prevUserCart) => ({
+			...prevUserCart,
+			userCartProducts: cartItemsRX,
+			userCartProductsCount: productCounts,
+		}));
+	}, [cartItemsRX, productCounts]);
 
 	useEffect(() => {
 		// DISPLAY TOTAL AMOUNT (MOBILE)
@@ -58,29 +69,21 @@ function Cart() {
 		0,
 	);
 
-	// ADD USER CART
+	// ADD USER CART FIRESTORE
 	let matchingUser = {};
 	useEffect(() => {
-		const getUserCart = async () => {
+		const updateUserCartFireStore = async () => {
 			try {
-				const userLocal = JSON.parse(localStorage.getItem("user"));
-				const targetUid = userLocal.user.uid;
+				matchingUser = userDB?.find((user) => user.uid === userUID);
 
-				console.log("Target UID:", targetUid);
-
-				matchingUser = userDB?.find((user) => user.uid === targetUid);
-
-				console.log(matchingUser);
-
+				// If matchingUser is undefined, set it to an empty object
 				if (!matchingUser) {
-					// If matchingUser is undefined, set it to an empty object
 					matchingUser = {};
 				}
-
 				if (matchingUser.id) {
 					const userRef = doc(fireDB, "users", matchingUser.id);
 					await updateDoc(userRef, {
-						cart: userCart,
+						cart: userCartDetails,
 					});
 
 					console.log("User cart updated successfully!");
@@ -92,17 +95,8 @@ function Cart() {
 			}
 		};
 
-		getUserCart();
-	}, [userDB, cartItemsRX]);
-
-	// SETUP USER CART IN LOCAL-STATE
-	useEffect(() => {
-		setUserCartDetails((prevUserCart) => ({
-			...prevUserCart,
-			userCartProducts: cartItemsRX,
-			userCartProductsCount: productCounts,
-		}));
-	}, [cartItemsRX, productCounts]);
+		updateUserCartFireStore();
+	}, [cartItemsRX, userCartDetails, productCounts]);
 
 	// TOTAL PRICE
 	useEffect(() => {

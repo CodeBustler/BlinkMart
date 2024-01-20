@@ -5,7 +5,8 @@ import { routes } from "./router/routes";
 // FIREBASE
 import { auth, fireDB } from "./firebaseConfig/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart } from "./redux/cartSlice";
 
 // CONTEXT API
 const MyContext = createContext();
@@ -25,8 +26,12 @@ function App() {
   // CART RELATED (BTN TITLE & CART ANIMATION)
   const [cartAnimate, setCartAnimate] = useState(false);
   const [itemInCart, setItemInCart] = useState("Add To Cart");
+  const [cartItemsFromFB, setCartItemsFromFB] = useState([]);
+
   // FETCHING STORE CART DATA
   const cartItemsRX = useSelector((state) => state.cart);
+  const dispatchFBCartItem = useDispatch();
+
   // ------------------------------------------------------
   // ***************** GET ALL PRODUCTS *****************
   // ------------------------------------------------------
@@ -89,18 +94,6 @@ function App() {
 
       setLoading(false);
       setUserDB(userDataArray); // All USER_DATABASE
-
-      // *********** FIREBASE : CURRENT USER CART DATA FROM  ***********
-      const userCart = userDataArray.filter((item) => item.uid === userUID);
-      if (userCart.length > 0 && userCart[0].cart) {
-        // setLoading(false);
-        // setUserCartItems(userCart[0].cart.userCartProducts);
-        // setUserCartItemsCount(userCart[0].cart.userCartProductsCount);
-      } else {
-        // setLoading(false);
-        // setUserCartItems([]);
-        // setUserCartItemsCount(0);
-      }
     } catch (error) {
       console.error(error);
       setLoading(false);
@@ -120,39 +113,7 @@ function App() {
         setCurrentUser(null);
       }
     }
-  }, [userUID, userDB]);
-
-  // ------------------------------------------------------
-  // ************* ADDING TO CARD | REDUX ***************
-  // ------------------------------------------------------
-
-  const addCart = (displayProduct) => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      // CHECK DUPLICATE ITEM IN CART (STORE
-      const isItemInCart = cartItemsRX.some(
-        (cItem) => cItem.id === displayProduct.id,
-      );
-      if (isItemInCart) {
-        // Use setItemInCart instead of setLocalItemInCart
-        setItemInCart("In Basket");
-      } else {
-        // ADDING TO CART_STORE
-        // Use setItemInCart instead of setLocalItemInCart
-        setLocalItemInCart("Adding");
-        dispatch(
-          addToCart(displayProduct, () =>
-            // Use setItemInCart instead of setLocalItemInCart
-            setLocalItemInCart("In Basket"),
-          ),
-        );
-        handleCartAnimate();
-      }
-    } else {
-      navigateTo("/login");
-      toastLoginToAddCart();
-    }
-  };
+  }, [userUID, userDB, cartItemsRX]);
 
   // ------------------------------------------------------
   // ****************** OTHER FUNCTIONS ******************
@@ -165,6 +126,33 @@ function App() {
     }, 1500);
   };
 
+  useEffect(() => {
+    const getCurrentUserCart = async () => {
+      if (currentUser?.length === 0) {
+        console.log("Guest");
+      } else {
+        console.log(currentUser?.length);
+      }
+      if (currentUser && currentUser.length > 0) {
+        const cartFromFB = currentUser[0].cart;
+
+        try {
+          // Dispatch a separate action for each item
+          cartFromFB.userCartProducts.forEach((item) => {
+            setCartItemsFromFB((prevValue) => {
+              dispatchFBCartItem(addToCart(item));
+              return [...prevValue, item];
+            });
+          });
+        } catch (error) {
+          console.error("Error adding items to cart:", error);
+        }
+      }
+    };
+
+    getCurrentUserCart();
+  }, [currentUser, dispatchFBCartItem]);
+
   // ------------------------------------------------------
   // console.log(allProducts);
   // console.log(userName);
@@ -172,7 +160,7 @@ function App() {
   // console.log(admin);
   // console.log(userDB);
   // console.log(currentUser);
-  // console.log(cartItemsRX);
+  // console.log("CartStore ", cartItemsRX);
   // ------------------------------------------------------
 
   return (
@@ -191,6 +179,7 @@ function App() {
           currentUser,
           setCurrentUser,
           userUID,
+          userDB,
           itemInCart, // CARD BTN TEXT
           setItemInCart, // CARD BTN TEXT
           cartItemsRX, // CART STORE
