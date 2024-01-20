@@ -161,6 +161,7 @@ function App() {
           currentUser,
           setCurrentUser,
           userUID,
+          fetchProducts,
           itemInCart, // CARD BTN TEXT
           setItemInCart, // CARD BTN TEXT
           cartItemsRX, // CART STORE

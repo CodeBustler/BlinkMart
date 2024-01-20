@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import NavbarForAdmin from "../Navbar/NavbarForAdmin";
 import { fireDB } from "../../firebaseConfig/firebase";
 import { IoMdSad } from "react-icons/io";
 import { toastProductAddedToDB } from "../utilities/RequiredFunctions";
+import { MyContext } from "../../App";
 
 // ------------------------------------------------------
 
 function AddProduct() {
+	const { fetchProducts } = useContext(MyContext);
 	const [errorMsg, setErrorMsg] = useState("");
 	const [product, setProduct] = useState({
 		title: "",

@@ -3,6 +3,7 @@ import { MyContext } from "../../App";
 import ProductCard from "../ProductCard/ProductCard";
 import { scrollToTop } from "../utilities/RequiredFunctions";
 import { useParams } from "react-router-dom";
+import Loader from "../Utilities/Loader";
 
 function ProductsSubCategory() {
 	const { subCategoryName } = useParams();

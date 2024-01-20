@@ -219,7 +219,12 @@ function ProductDetail() {
 									: ""}
 							</div>
 							<div className="line-through mt-2 text-gray-500">
-								₹ {displayProduct.actualPrice}
+								₹{" "}
+								{displayProduct.actualPrice
+									? numberWithCommas(
+											displayProduct.actualPrice,
+									  )
+									: ""}
 							</div>
 							<div className="text-md text-red-500 text-xl font-semibold mt-2">
 								{discountPercentage}% Off
