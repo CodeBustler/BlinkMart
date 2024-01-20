@@ -92,7 +92,7 @@ const routes = createBrowserRouter(
 				path="/addProduct"
 				element={
 					<ProtectedRouteForAdmin>
-						<addProduct />
+						<AddProduct />
 					</ProtectedRouteForAdmin>
 				}
 			/>

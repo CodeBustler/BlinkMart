@@ -1,5 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
+// ICONS
+import { BsFillBoxSeamFill } from "react-icons/bs";
+import { RiEBike2Fill, RiShoppingCartFill } from "react-icons/ri";
+import { PiUsersThreeFill } from "react-icons/pi";
+import { PiKeyReturnFill } from "react-icons/pi";
+import { FaListUl } from "react-icons/fa";
 // COMPONENTS
 import AnimatedNumber from "../../components/Utilities/AnimateText";
 import NavbarForAdmin from "../../components/Navbar/NavbarForAdmin";
@@ -7,12 +13,6 @@ import ProductsTable from "./tableData/ProductsTable";
 import UsersTable from "./tableData/UsersTable";
 // ROUTER
 import { Link, useNavigate } from "react-router-dom";
-// ICONS
-import { BsFillBoxSeamFill } from "react-icons/bs";
-import { RiEBike2Fill, RiShoppingCartFill } from "react-icons/ri";
-import { PiUsersThreeFill } from "react-icons/pi";
-import { PiKeyReturnFill } from "react-icons/pi";
-import { FaListUl } from "react-icons/fa";
 
 // ---------------------------------------------------------------
 
@@ -115,7 +115,7 @@ function Dashboard() {
 					{renderComponents()}
 				</div>
 			) : (
-				(navigate("/login"), navigate(0))
+				navigate("/login")
 			)}
 		</>
 	);

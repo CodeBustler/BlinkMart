@@ -26,14 +26,3 @@ export const scrollToTop = () => {
 export function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
-// GET CURRENT USER DETAIL
-// const userLocalData = JSON.parse(localStorage.getItem("user"));
-// const targetUid = userLocalData?.user?.uid;
-// const currentUserDetail = userDB.find((item) => item.uid === targetUid);
-
-// if (currentUserDetail) {
-//   console.log("User found:", currentUserDetail);
-// } else {
-//   console.log("User not found");
-// }

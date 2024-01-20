@@ -17,6 +17,7 @@ import noImage from "../../assets/no_image.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
+import tickIcon from "../../assets/tick_icon.png";
 
 // ---------------------------------------------------------
 
@@ -49,6 +50,16 @@ function ProductDetail() {
 		(item) => item.subCategory === displayProduct.subCategory,
 	);
 
+	useEffect(() => {
+		// CHECKS ITEM IS ALREADY IN CART
+		const isItemInCart = cartItemsRX.some(
+			(cItem) => cItem.id === displayProduct.id,
+		);
+
+		// UPDATE CARD BUTTON TEXT BASED ON "isItemInCart"
+		setLocalItemInCart(isItemInCart ? "In Basket" : "Add To Cart");
+	}, [cartItemsRX, displayProduct.id]);
+
 	// ADDING CARD TO REDUXT CART STORE
 	const addCart = (displayProduct) => {
 		const user = localStorage.getItem("user");
@@ -63,10 +74,9 @@ function ProductDetail() {
 			} else {
 				// ADDING TO CART_STORE
 				// Use setItemInCart instead of setLocalItemInCart
-				setItemInCart("Adding");
+				setLocalItemInCart("Adding");
 				dispatch(
 					addToCart(displayProduct, () =>
-						// Use setItemInCart instead of setLocalItemInCart
 						setLocalItemInCart("In Basket"),
 					),
 				);

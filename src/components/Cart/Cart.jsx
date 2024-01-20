@@ -5,14 +5,17 @@ import {
 	toastItemRemoved,
 } from "../utilities/RequiredFunctions";
 import { MyContext } from "../../App";
-import Loader from "../Utilities/Loader";
-import emptyCart from "../../assets/empty_cart.jpg";
-import { Link } from "react-router-dom";
+// ICONS
 import { FaBagShopping } from "react-icons/fa6";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import emptyCart from "../../assets/empty_cart.jpg";
+import Loader from "../Utilities/Loader";
+// FIREBASE
 import { fireDB } from "../../firebaseConfig/firebase";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+// ROUTER & REDUX
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFromCart } from "../../redux/cartSlice";
 // ------------------------------------------------------

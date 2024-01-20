@@ -22,9 +22,11 @@ function App() {
   const [userDB, setUserDB] = useState([]);
   const [userUID, setUserUID] = useState("");
   const [currentUser, setCurrentUser] = useState([]);
+
   // CART RELATED (BTN TITLE & CART ANIMATION)
   const [cartAnimate, setCartAnimate] = useState(false);
   const [itemInCart, setItemInCart] = useState("Add To Cart");
+
   // FETCHING STORE CART DATA
   const cartItemsRX = useSelector((state) => state.cart);
   // ------------------------------------------------------
@@ -121,38 +123,6 @@ function App() {
       }
     }
   }, [userUID, userDB]);
-
-  // ------------------------------------------------------
-  // ************* ADDING TO CARD | REDUX ***************
-  // ------------------------------------------------------
-
-  const addCart = (displayProduct) => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      // CHECK DUPLICATE ITEM IN CART (STORE
-      const isItemInCart = cartItemsRX.some(
-        (cItem) => cItem.id === displayProduct.id,
-      );
-      if (isItemInCart) {
-        // Use setItemInCart instead of setLocalItemInCart
-        setItemInCart("In Basket");
-      } else {
-        // ADDING TO CART_STORE
-        // Use setItemInCart instead of setLocalItemInCart
-        setLocalItemInCart("Adding");
-        dispatch(
-          addToCart(displayProduct, () =>
-            // Use setItemInCart instead of setLocalItemInCart
-            setLocalItemInCart("In Basket"),
-          ),
-        );
-        handleCartAnimate();
-      }
-    } else {
-      navigateTo("/login");
-      toastLoginToAddCart();
-    }
-  };
 
   // ------------------------------------------------------
   // ****************** OTHER FUNCTIONS ******************

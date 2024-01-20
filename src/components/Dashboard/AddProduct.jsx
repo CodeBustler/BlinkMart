@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
+import NavbarForAdmin from "../Navbar/NavbarForAdmin";
+import { fireDB } from "../../firebaseConfig/firebase";
+import { IoMdSad } from "react-icons/io";
+import { toastProductAddedToDB } from "../utilities/RequiredFunctions";
 
 // ------------------------------------------------------
 
@@ -55,7 +59,7 @@ function AddProduct() {
 				product,
 			);
 			console.log("Product added to DB", docRef.id);
-			toastSuccess();
+			toastProductAddedToDB();
 		} catch (e) {
 			console.error("Error adding document: ", e);
 		} finally {
@@ -146,7 +150,7 @@ function AddProduct() {
 	// ------------------------------------------------------
 	return (
 		<>
-			<OnlyHomePageNavbar />
+			<NavbarForAdmin />
 			<div className="flex flex-col items-center ">
 				<form className="flex flex-col md:border px-4 pb-7 md:pt-3 md:px-7  md:mt-8 rounded-lg md:shadow-2xl gap-2 lg:w-[80%]">
 					<h1 className="font-semibold text-2xl my-4 text-gray-600">

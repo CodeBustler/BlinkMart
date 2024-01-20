@@ -17,15 +17,15 @@ import { toastSignUpSuccess } from "../Utilities/RequiredFunctions";
 function SignUp() {
 	const [errorMsg, setErrorMsg] = useState("");
 	const navigateTo = useNavigate();
-
-	// INPUT VALUES (SIGN UP)
 	const [inputValues, setInputValues] = useState({
 		name: "",
 		email: "",
 		password: "",
 	});
 
-	// HANDLE SIGNUP SUBMIT
+	// ---------------------------------------------------------------
+	// ******************** HANDLE SIGNUP SUBMIT *********************
+	// ---------------------------------------------------------------
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -62,6 +62,7 @@ function SignUp() {
 						userCartProductsCount: [],
 					},
 				};
+				// ADDING NEW USER_DOC TO COLLECTION "USERS"
 				const userRef = collection(fireDB, "users");
 				await addDoc(userRef, user);
 			} catch (error) {
