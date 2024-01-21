@@ -15,6 +15,7 @@
 	text-decoration-color: orange;
 }
 
+/*NAVBAR FIRST ROW : ADDED EXTRA OPTIONS FOR LOGOUT*/
 .logoutBTN::before {
 	content: "";
 	position: absolute;
