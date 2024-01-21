@@ -29,3 +29,15 @@ export const scrollToTop = () => {
 export function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+// CALCULATE DISCOUNT PERCENTAGE
+export const calculateDiscountPercentage = (item) => {
+	if (!item || !item.price || !item.actualPrice) {
+		return "";
+	}
+
+	const price = parseFloat(item.price);
+	const actualPrice = parseFloat(item.actualPrice);
+	// DISCOUNT FORMULA
+	return (((actualPrice - price) / actualPrice) * 100).toFixed(0);
+};

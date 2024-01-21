@@ -14,28 +14,36 @@ function ProductsCategory() {
 	const { allProducts, loading } = useContext(MyContext);
 	const { categoryName } = useParams();
 
-	// FILTERING SUB_CATEGORY
-	const subCategoryArrays = {};
+	// ----------------------------------------------------------
+	// ORGANIZE PRODUCTS INTO SUBCATEGORIES & UPDATE SUBCATEGORY
+	// ----------------------------------------------------------
 
 	// FILTERING MAIN_CATEGORY
 	const filterProducts = allProducts.filter(
 		(item) => item.category === categoryName,
 	);
 
+	// FILTERING SUB_CATEGORY
+	const subCategoryArrays = {};
+
 	useEffect(() => {
 		filterProducts.forEach((product) => {
+			// EXTRACT "subCategory" & OTHER PROPERTIES FROM EACH PRODUCT
 			const { subCategory, ...rest } = product;
 
+			// CHECK CURRENT "subCategory" EXISTS, CREATE IF NOT
 			if (!subCategoryArrays[subCategory]) {
 				subCategoryArrays[subCategory] = [];
 			}
 
+			// PUSH PRODUCT INTO ITS SUBCATEGORY ARRAY
 			subCategoryArrays[subCategory].push(rest);
 		});
 
-		// MAKING ARRAY OF SUBTITLES FOR FILTER & MAP WITH ALL PRODUCTS
+		// EXTRACT SUBCATEGORY TITLES FROM KEYS
 		const newSubCategoryTitles = Object.keys(subCategoryArrays);
-		setSubCategoryTitles(newSubCategoryTitles);
+		setSubCategoryTitles(newSubCategoryTitles); //UPDATE
+
 		scrollToTop();
 	}, [allProducts, categoryName]);
 

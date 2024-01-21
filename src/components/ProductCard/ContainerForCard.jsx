@@ -1,22 +1,18 @@
-import { useContext, useRef } from "react";
-import { MyContext } from "../../App";
+import { useRef } from "react";
 import { numberWithCommas, scrollToTop } from "../utilities/RequiredFunctions";
 // ROUTER
 import { useNavigate } from "react-router-dom";
 // ICONS
 import { FaAngleLeft } from "react-icons/fa";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
-
 // -------------------------------------------------------------------
 
 function ContainerForCard({ containerTitle, filterProducts, children }) {
 	const containerRef = useRef(null);
 	const navigateTo = useNavigate();
 
-	const { allProducts, handleCartAnimate } = useContext(MyContext);
-
 	// ----------------------------------------------------------------
-	// **************** SCROLL CONTAINER FUNCTIONS *******************
+	// **************** CONTAINER SCROLL FUNCTIONS *******************
 	// ----------------------------------------------------------------
 	const scrollLeft = () => {
 		if (containerRef.current) {

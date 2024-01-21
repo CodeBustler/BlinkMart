@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 // ICONS
 import { RiShoppingCartFill } from "react-icons/ri";
 import { BsFillQuestionOctagonFill } from "react-icons/bs";
-
 // ---------------------------------------------------------------
 
 function NoPage() {

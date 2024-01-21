@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
 import {
+	// FUNCTIONS
 	numberWithCommas,
 	scrollToTop,
 	toastAddedToCart,
 	toastLoginToAddCart,
+	calculateDiscountPercentage,
 } from "../Utilities/RequiredFunctions";
 // ICONS
 import tickIcon from "../../assets/tick_icon.png";
@@ -14,7 +16,6 @@ import { MdStar, MdStarBorder } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
-
 // ------------------------------------------------------
 
 function ProductCard({ item }) {
@@ -23,9 +24,11 @@ function ProductCard({ item }) {
 	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
 	const navigateTo = useNavigate();
 	const dispatch = useDispatch();
-
 	// ------------------------------------------------------
 
+	// ------------------------------------------------------
+	// ******************* CART RELATED *******************
+	// ------------------------------------------------------
 	useEffect(() => {
 		// CHECKS ITEM IS ALREADY IN CART
 		const isItemInCart = cartItemsRX.some((cItem) => cItem.id === item.id);
@@ -59,20 +62,14 @@ function ProductCard({ item }) {
 		}
 	};
 
-	// DISCOUNT PERCENTAGE
-	const calculateDiscountPercentage = () => {
-		if (item && item.price && item.actualPrice) {
-			const price = parseFloat(item.price);
-			const actualPrice = parseFloat(item.actualPrice);
-			// DISCOUNT FORMULA
-			const discount = ((actualPrice - price) / actualPrice) * 100;
-			return discount.toFixed(0);
-		}
-		return "";
-	};
-	const discountPercentage = calculateDiscountPercentage();
+	// -------------------------------------------------------
+	// ******************* OTHER FUNCTIONS *******************
+	// -------------------------------------------------------
 
-	// ------------------------------------------------------
+	// DISCOUNT PERCENTAGE
+	const discountPercentage = calculateDiscountPercentage(item);
+
+	// -------------------------------------------------------
 
 	return (
 		<div className="group border border-gray-300 rounded-md p-5 transition bg-white flex flex-col justify-between flex-shrink-0 h-[330px] w-[95%] md:w-[240px] hover:border-gray-400 hover:shadow-xl transition relative ">

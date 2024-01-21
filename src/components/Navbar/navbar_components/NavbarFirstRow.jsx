@@ -9,29 +9,40 @@ import { LuShoppingCart } from "react-icons/lu";
 import { LuMapPin } from "react-icons/lu";
 import { scrollToTop } from "../../Utilities/RequiredFunctions";
 import flag_icon from "../../../assets/flag_icon.png";
-import ReactLoading from "react-loading";
+import { VscAccount } from "react-icons/vsc";
+import { FiBox } from "react-icons/fi";
+import { TbLogout } from "react-icons/tb";
 
+import ReactLoading from "react-loading";
 // ---------------------------------------------------------------
 
 function NavbarFirstRow({
+	// PROPS
 	handleSideBar,
 	admin,
+	userName,
 	cartAnimate,
 	handleCartIcon,
 	currentUser,
-	userName,
 	cartItemsRX,
+	handleLogout,
 }) {
 	const [searchBarFocus, setSearchFocus] = useState(false);
+	const [logoutBTN, setLogoutBTN] = useState();
+	const [isHovered, setIsHovered] = useState(false);
+	// -------------------------------------------------------
+	// ************** HANDLING SEARCHBAR WIDTH ***************
+	// -------------------------------------------------------
+	// ON FOCUS
 	const handleSideBarOnFocus = () => {
 		setSearchFocus(!searchBarFocus);
 	};
-
+	// ON BLUR
 	const handleSideBarOnBlur = () => {
 		setSearchFocus(!searchBarFocus);
 	};
 
-	// ----------------------------------------------
+	// -------------------------------------------------------
 	return (
 		<nav className="bg-[#131921] flex items-center justify-between px-4 py-3 gap-3 md:gap-10 text-white  ">
 			<div
@@ -104,11 +115,44 @@ function NavbarFirstRow({
 
 				{/* DISPLAY USERNAME */}
 				{userName ? (
-					<li className="hidden lg:flex items-start flex-col font-bold leading-none whitespace-nowrap">
+					<li
+						className="group hidden lg:flex items-start flex-col  leading-none whitespace-nowrap relative cursor-pointer select-none "
+						onMouseEnter={() => setIsHovered(true)}
+						onMouseLeave={() => setIsHovered(false)}
+					>
 						<small className="text-gray-300 font-semibold">
 							Hello,{" "}
 						</small>
-						<div className="uppercase pt-[4px]">{userName}</div>
+						<div className="uppercase pt-[4px] font-bold">
+							{userName}
+						</div>
+						{isHovered && (
+							<div
+								className="absolute transition top-14 -left-12 text-gray-800 rounded font-semibold logoutBTN bg-white shadow-2xl flex flex-col  z-20"
+								onMouseEnter={() => setIsHovered(true)}
+								onMouseLeave={() => setIsHovered(false)}
+							>
+								<Link className="px-5 mt-1 py-5 hover:bg-gray-100 flex items-center gap-3 z-30">
+									<VscAccount className="scale-125" />
+									Your Account
+								</Link>
+								<Link className="px-5  py-5 hover:bg-gray-100 flex items-center gap-3">
+									<FiBox className="scale-125" />
+									Your Orders
+								</Link>
+								<Link className="px-5 py-5  hover:bg-gray-100 flex items-center gap-3 ">
+									<LuShoppingCart className="scale-125" />
+									Your Cart Items
+								</Link>
+								<div
+									onClick={handleLogout}
+									className="rounded px-5 py-5 bg-yellow-400 flex items-center gap-3 "
+								>
+									<TbLogout className="scale-125" />
+									Logout
+								</div>
+							</div>
+						)}
 					</li>
 				) : (
 					""

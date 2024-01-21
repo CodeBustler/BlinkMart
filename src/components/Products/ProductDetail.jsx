@@ -9,31 +9,33 @@ import { RiMotorbikeFill } from "react-icons/ri";
 import { AiOutlineTrophy } from "react-icons/ai";
 import { GrSecure } from "react-icons/gr";
 import {
-	numberWithCommas,
+	calculateDiscountPercentage,
 	toastAddedToCart,
-} from "../utilities/RequiredFunctions";
+	numberWithCommas,
+} from "../Utilities/RequiredFunctions";
 import noImage from "../../assets/no_image.png";
 // ROUTER
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 import tickIcon from "../../assets/tick_icon.png";
-
 // ---------------------------------------------------------
 
 function ProductDetail() {
 	const [displayProduct, setDisplayProduct] = useState([]);
 	const [mainImage, setMainImage] = useState("");
 	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
-	const navigateTo = useNavigate();
+	const { productId } = useParams(); //EXTRACT PRODUCT ID TO DISPLAY
 	const dispatch = useDispatch();
-	const { productId } = useParams();
+	const navigateTo = useNavigate();
 	const { allProducts, cartItemsRX, setItemInCart, handleCartAnimate } =
 		useContext(MyContext);
 
-	// ---------------------------------------------------------
+	// --------------------------------------------------------
+	// ****************** FILTERING PRODUCT ******************
+	// --------------------------------------------------------
+	// FILTER SINGLE PRODUCT
 	useEffect(() => {
-		// FILTER SINGLE PRODUCT
 		const filterProduct = allProducts.filter(
 			(item) => item.id == productId,
 		);
@@ -45,11 +47,17 @@ function ProductDetail() {
 		}
 	}, [productId, displayProduct.id]);
 
-	// FILTERING MAIN PRODUCT SUB_CATEGORY PRODUCT FOR RELATED PRODUCT
+	// FILTER RELATED PRODUCTS
 	const filterSubCategory = allProducts.filter(
 		(item) => item.subCategory === displayProduct.subCategory,
 	);
 
+	// DISCOUNT PERCENTAGE
+	const discountPercentage = calculateDiscountPercentage(displayProduct);
+
+	// --------------------------------------------------------
+	// ******************* CART RELATED  *******************
+	// --------------------------------------------------------
 	useEffect(() => {
 		// CHECKS ITEM IS ALREADY IN CART
 		const isItemInCart = cartItemsRX.some(
@@ -88,27 +96,7 @@ function ProductDetail() {
 		}
 	};
 
-	// DISCOUNT PERCENTAGE
-	const calculateDiscountPercentage = () => {
-		if (
-			displayProduct &&
-			displayProduct.price &&
-			displayProduct.actualPrice
-		) {
-			const price = parseFloat(displayProduct.price);
-			const actualPrice = parseFloat(displayProduct.actualPrice);
-
-			const discount = ((actualPrice - price) / actualPrice) * 100;
-
-			return discount.toFixed(0);
-		}
-		return "";
-	};
-
-	const discountPercentage = calculateDiscountPercentage();
-
 	// ---------------------------------------------------------
-
 	return (
 		<>
 			<div className="grid grid-cols-1 md:grid-cols-2 place-items-center md:place-items-start  gap-10 md:gap-0 ">

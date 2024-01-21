@@ -1,8 +1,5 @@
-import { useContext } from "react";
-import { MyContext } from "../../../App";
-import { toastLogout } from "../../utilities/RequiredFunctions";
 // ROUTER
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 // ICONS
 import { AiOutlineClose } from "react-icons/ai";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -15,37 +12,16 @@ import {
 	IoLogoFacebook,
 	IoLogoYoutube,
 } from "react-icons/io";
-// FIREBASE
-import { signOut } from "firebase/auth";
-import { auth } from "../../../firebaseConfig/firebase";
-import { emptyCartStore } from "../../../redux/cartSlice";
 // ---------------------------------------------------------------
 
-function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
-	// CONTEXT
-	const { setUserName, userName, admin, setAdmin } = useContext(MyContext);
-	const navigateTo = useNavigate();
-
-	// ---------------------------------------------------------------
-
-	// HANDLE LOGOUT FUNCTION
-	const handleLogout = () => {
-		signOut(auth)
-			.then(() => {
-				setUserName(null);
-				setAdmin(false);
-				setCurrentUser(null);
-				userName && toastLogout();
-				localStorage.removeItem("user");
-
-				navigateTo("/login");
-				console.log("%c ✔ Signed out successfully", "color:#bada55");
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-
+function SideBar({
+	// PROPS
+	handleSideBar,
+	sidebarToggle,
+	handleLogout,
+	userName,
+	admin,
+}) {
 	// ---------------------------------------------------------------
 	return (
 		<>

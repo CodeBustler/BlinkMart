@@ -1,20 +1,19 @@
+import { useContext } from "react";
+import { MyContext } from "../../App";
 import { toastLogout } from "../utilities/RequiredFunctions";
 // ROUTER
 import { Link, useNavigate } from "react-router-dom";
 // ICONS
 import { RiShoppingCartFill } from "react-icons/ri";
 import { RiAdminFill } from "react-icons/ri";
+// FIREBASE
 import { auth } from "../../firebaseConfig/firebase";
 import { signOut } from "firebase/auth";
-import { MyContext } from "../../App";
-import { useContext } from "react";
-import { toast } from "react-toastify";
-
 // ---------------------------------------------------------------
 
 function NavbarForAdmin() {
-	const navigate = useNavigate();
-	const { userName, setUserName, admin, setAdmin } = useContext(MyContext);
+	const { userName, setUserName, setAdmin } = useContext(MyContext);
+	const navigateTo = useNavigate();
 
 	// ---------------------------------------------------------------
 	// ********* HANDLE LOGOUT FROM ADMIN PANEL DASHBOARD ***********
@@ -26,7 +25,7 @@ function NavbarForAdmin() {
 				setAdmin(false);
 				userName && toastLogout();
 				localStorage.removeItem("user");
-				navigate("/login");
+				navigateTo("/login");
 				console.log(
 					"%c ✔ Signed out successfully From DASHBOARD",
 					"color:#bada55",

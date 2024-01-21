@@ -1,7 +1,6 @@
-// IMPORT REDUX FUNCTIONALITY
 import { configureStore } from "@reduxjs/toolkit";
-// IMPORT REDUX CART SLICE
 import cartSlice from "./cartSlice";
+//-----------------------------------------------
 
 // CONFIGURE REDUX STORE
 const store = configureStore({

@@ -91,18 +91,6 @@ function App() {
 
       setLoading(false);
       setUserDB(userDataArray); // All USER_DATABASE
-
-      // *********** FIREBASE : CURRENT USER CART DATA FROM  ***********
-      const userCart = userDataArray.filter((item) => item.uid === userUID);
-      if (userCart.length > 0 && userCart[0].cart) {
-        // setLoading(false);
-        // setUserCartItems(userCart[0].cart.userCartProducts);
-        // setUserCartItemsCount(userCart[0].cart.userCartProductsCount);
-      } else {
-        // setLoading(false);
-        // setUserCartItems([]);
-        // setUserCartItemsCount(0);
-      }
     } catch (error) {
       console.error(error);
       setLoading(false);

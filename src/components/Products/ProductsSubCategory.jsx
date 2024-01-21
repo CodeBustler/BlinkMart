@@ -11,7 +11,10 @@ function ProductsSubCategory() {
 	const { subCategoryName } = useParams();
 	const { allProducts, loading } = useContext(MyContext);
 	const [subCategoryItems, setSubCategoryItems] = useState([]);
+	// ------------------------------------------------------
 
+	// ------------------------------------------------------
+	//  ************ FILTER SUB-CATEGORY ITEMS *************
 	// ------------------------------------------------------
 	useEffect(() => {
 		const filterSubCategoryItems = allProducts.filter(

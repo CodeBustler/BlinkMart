@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+/*html {
 	scroll-behavior: smooth;
-}
+}*/
 
 .active {
 	color: orange;
@@ -13,4 +13,14 @@ html {
 
 .underline-heading {
 	text-decoration-color: orange;
+}
+
+.logoutBTN::before {
+	content: "";
+	position: absolute;
+	top: -30px;
+	border: 20px solid;
+	transform: translateX(90%);
+	z-index: 2;
+	border-color: #0000 #0000 #fff #0000;
 }
