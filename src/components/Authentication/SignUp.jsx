@@ -20,9 +20,12 @@ function SignUp() {
 	const [inputValues, setInputValues] = useState({
 		name: "",
 		email: "",
+		city: "",
+		areaPinCode: "",
 		password: "",
 	});
 
+	console.log(inputValues);
 	// ---------------------------------------------------------------
 	// ******************** HANDLE SIGNUP SUBMIT *********************
 	// ---------------------------------------------------------------
@@ -57,6 +60,8 @@ function SignUp() {
 					name: inputValues.name,
 					email: newUser.user.email,
 					uid: newUser.user.uid,
+					city: inputValues.city,
+					areaPinCode: inputValues.areaPinCode,
 					cart: {
 						userCartProducts: [],
 						userCartProductsCount: [],
@@ -98,6 +103,33 @@ function SignUp() {
 							}))
 						}
 					/>
+
+					<div className="flex gap-5 w-full ">
+						<input
+							type="text"
+							placeholder="City name"
+							className="border py-2 px-3 mt-2 rounded-lg  outline-blue-300 w-full"
+							required
+							onChange={(event) =>
+								setInputValues((prev) => ({
+									...prev,
+									city: event.target.value,
+								}))
+							}
+						/>
+						<input
+							type="text"
+							placeholder="ZIP Code"
+							className="border py-2 px-3 mt-2 rounded-lg outline-blue-300 w-full"
+							required
+							onChange={(event) =>
+								setInputValues((prev) => ({
+									...prev,
+									areaPinCode: event.target.value,
+								}))
+							}
+						/>
+					</div>
 					<input
 						type="email"
 						placeholder="Email Id"

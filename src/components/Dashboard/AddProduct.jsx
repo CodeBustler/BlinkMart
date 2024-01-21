@@ -161,7 +161,7 @@ function AddProduct() {
 					{/*CONTAINER*/}
 					<div className="container">
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-							{/*------------------------------------------------------------------*/}
+							{/*---------------------------------------------------------*/}
 
 							{/*PRODUCT DETAIL*/}
 							<div>

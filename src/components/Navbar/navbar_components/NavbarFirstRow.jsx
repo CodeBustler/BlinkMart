@@ -1,3 +1,4 @@
+import { useState } from "react";
 // ROUTER
 import { Link, NavLink } from "react-router-dom";
 // ICONS
@@ -5,9 +6,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { RiAdminFill, RiShoppingCartFill } from "react-icons/ri";
 import { BsSearch } from "react-icons/bs";
 import { LuShoppingCart } from "react-icons/lu";
-import flag_icon from "../../../assets/flag_icon.png";
-import { useState } from "react";
+import { LuMapPin } from "react-icons/lu";
 import { scrollToTop } from "../../Utilities/RequiredFunctions";
+import flag_icon from "../../../assets/flag_icon.png";
 import ReactLoading from "react-loading";
 
 // ---------------------------------------------------------------
@@ -29,9 +30,10 @@ function NavbarFirstRow({
 	const handleSideBarOnBlur = () => {
 		setSearchFocus(!searchBarFocus);
 	};
+
 	// ----------------------------------------------
 	return (
-		<nav className="bg-[#131921] flex items-center justify-between px-4 py-3 gap-3 text-white  ">
+		<nav className="bg-[#131921] flex items-center justify-between px-4 py-3 gap-3 md:gap-10 text-white  ">
 			<div
 				className="font-semibold text-sm flex gap-2 md:hidden"
 				onClick={() => {
@@ -50,12 +52,33 @@ function NavbarFirstRow({
 				<span className="hidden md:flex">BlinkMart</span>
 			</Link>
 
+			{/* LOCATION */}
+			{admin ? (
+				""
+			) : userName ? (
+				<div className="group hidden lg:flex items-start flex-col font-bold leading-none whitespace-nowrap">
+					<small className="text-gray-300 font-semibold">
+						Deliver to {userName}
+					</small>
+					<div className="capitalize pt-[4px] flex gap-1 text-[15px]">
+						<LuMapPin />
+						{currentUser && currentUser.length > 0
+							? `${currentUser[0]?.city || ""} ${
+									currentUser[0]?.areaPinCode || ""
+							  }`
+							: ""}
+					</div>
+				</div>
+			) : (
+				""
+			)}
+
 			{/* SEARCH BAR */}
-			<div className="flex items-stretch justify-between bg-white rounded w-[75%] md:w-[55%]  ">
+			<div className="flex items-stretch justify-between bg-white rounded w-full ">
 				<input
 					type="text"
-					placeholder="Search BlinkMart.in "
-					className="bg-transparent outline-none px-4 py-2 text-black text-md w-[100%] "
+					placeholder="Search BlinkMart.in"
+					className="flex-grow bg-transparent outline-none px-4 py-2 text-black text-md"
 					onFocus={handleSideBarOnFocus}
 					onBlur={handleSideBarOnBlur}
 				/>
@@ -63,13 +86,14 @@ function NavbarFirstRow({
 					<BsSearch className="text-black text-xl mx-3" />
 				</div>
 			</div>
-			{/* NAV-LINKs */}
+
+			{/* LEFT LINKS */}
 			<ul
-				className={`flex items-center gap-2 flex-row-reverse md:flex-row md:gap-5 transition ${
+				className={`flex items-center  flex-row-reverse md:flex-row md:gap-5 transition ${
 					searchBarFocus ? "hidden md:flex" : "block "
 				} `}
 			>
-				<li className="hidden lg:flex items-center gap-1  ">
+				<li className="hidden md:flex items-center gap-1 w-[55px]  ">
 					<img
 						src={flag_icon}
 						alt="indian-flag"
@@ -78,14 +102,14 @@ function NavbarFirstRow({
 					<span className="font-semibold ">EN</span>
 				</li>
 
-				{/*DISPLAY USERNAME */}
+				{/* DISPLAY USERNAME */}
 				{userName ? (
-					<div className="hidden lg:flex items-start flex-col font-bold leading-none">
+					<li className="hidden lg:flex items-start flex-col font-bold leading-none whitespace-nowrap">
 						<small className="text-gray-300 font-semibold">
 							Hello,{" "}
 						</small>
-						<div className="uppercase pt-[2px]">{userName}</div>
-					</div>
+						<div className="uppercase pt-[4px]">{userName}</div>
+					</li>
 				) : (
 					""
 				)}
