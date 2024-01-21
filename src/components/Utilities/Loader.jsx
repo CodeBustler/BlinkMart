@@ -3,7 +3,7 @@ import ReactLoading from "react-loading";
 
 function Loader() {
 	return (
-		<div className="grid place-items-center mt-10">
+		<div className="grid place-items-center mt-16 w-full">
 			<ReactLoading
 				type={"spin"}
 				color={"orange"}

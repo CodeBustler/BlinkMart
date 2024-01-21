@@ -1,11 +1,13 @@
-import React, { useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import { MyContext } from "../../App";
+import { numberWithCommas, scrollToTop } from "../utilities/RequiredFunctions";
+// ROUTER
+import { useNavigate } from "react-router-dom";
+// ICONS
 import { FaAngleLeft } from "react-icons/fa";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import { numberWithCommas, scrollToTop } from "../utilities/RequiredFunctions";
 
-// ----------------------------------------------------------------------
+// -------------------------------------------------------------------
 
 function ContainerForCard({ containerTitle, filterProducts, children }) {
 	const containerRef = useRef(null);
@@ -13,21 +15,22 @@ function ContainerForCard({ containerTitle, filterProducts, children }) {
 
 	const { allProducts, handleCartAnimate } = useContext(MyContext);
 
-	// ----------------------------------------------------------------------
-	// SCROLL CONTAINER FUNCTIONS
+	// ----------------------------------------------------------------
+	// **************** SCROLL CONTAINER FUNCTIONS *******************
+	// ----------------------------------------------------------------
 	const scrollLeft = () => {
 		if (containerRef.current) {
-			containerRef.current.scrollLeft -= 200;
+			containerRef.current.scrollLeft -= 500;
 		}
 	};
 
 	const scrollRight = () => {
 		if (containerRef.current) {
-			containerRef.current.scrollLeft += 200;
+			containerRef.current.scrollLeft += 500;
 		}
 	};
 
-	// ----------------------------------------------------------------------
+	// ----------------------------------------------------------------
 	return (
 		<div className="flex flex-col gap-10 md:mx-8 mt-10 ">
 			{/*CONTAINER*/}

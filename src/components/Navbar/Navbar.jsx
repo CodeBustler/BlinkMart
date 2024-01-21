@@ -9,12 +9,10 @@ import {
 	toastLoginToAddCart,
 	toastLogout,
 } from "../utilities/RequiredFunctions";
-
 // ------------------------------------------------------
 
 function Navbar() {
 	const [sidebarToggle, setSidebarToggle] = useState(true);
-
 	// CONTEXT
 	const {
 		admin,
@@ -26,12 +24,14 @@ function Navbar() {
 		setCurrentUser,
 		cartItemsRX,
 	} = useContext(MyContext);
+	// ------------------------------------------------------
 
 	// HANDLE SIDEBAR TOGGLE
 	const handleSideBar = () => {
 		setSidebarToggle(!sidebarToggle);
 	};
 
+	// HANDLE FOR FOR GUEST (PROTECTED CART COMPONENTS)
 	function handleCartIcon() {
 		const user = localStorage.getItem("user");
 		!user && toastLoginToAddCart();
@@ -39,7 +39,6 @@ function Navbar() {
 	}
 
 	// ------------------------------------------------------
-
 	return (
 		<header className="sticky top-0 shadow-xl z-20">
 			{/*FIRST ROW*/}
@@ -56,6 +55,7 @@ function Navbar() {
 			/>
 			{/*SECOND ROW*/}
 			<NavbarSecondRow handleSideBar={handleSideBar} />
+
 			{/*SIDEBAR*/}
 			<SideBar
 				sidebarToggle={sidebarToggle}

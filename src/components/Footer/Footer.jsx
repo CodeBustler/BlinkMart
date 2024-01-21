@@ -12,7 +12,6 @@ import { RiShoppingCartFill } from "react-icons/ri";
 import { FaAnglesLeft } from "react-icons/fa6";
 // OTHER
 import { scrollToTop } from "../Utilities/RequiredFunctions";
-
 // ------------------------------------------------------
 
 function Footer() {

@@ -3,20 +3,16 @@ import { MyContext } from "../App";
 import { scrollToTop } from "../components/Utilities/RequiredFunctions";
 import ProductCard from "../components/ProductCard/ProductCard";
 import Loader from "../components/Utilities/Loader";
-
 // ------------------------------------------------------
 
 function HomePage() {
 	const { allProducts, loading } = useContext(MyContext);
-
-	// ------------------------------------------------------
 
 	useEffect(() => {
 		scrollToTop();
 	}, []);
 
 	// ------------------------------------------------------
-
 	return (
 		<>
 			{loading ? (

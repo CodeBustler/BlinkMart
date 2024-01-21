@@ -2,13 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/*ACTIVE LINK STYLE*/
+html {
+	scroll-behavior: smooth;
+}
+
 .active {
 	color: orange;
 	font-weight: 500;
 }
 
-/**/
 .underline-heading {
 	text-decoration-color: orange;
 }

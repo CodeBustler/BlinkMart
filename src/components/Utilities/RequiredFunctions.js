@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 
 // ------------------------------------------------------
-
-// TOAST FUNCTIONS
+// ****************** TOAST FUNCTIONS ******************
+// ------------------------------------------------------
 export const toastProductAddedToDB = () =>
 	toast.success("Product Added To Database !");
 
@@ -17,6 +17,9 @@ export const toastItemRemoved = () => toast.error("Item Removed ! ");
 export const toastItemAlreadyInCart = () =>
 	toast.info("Item already in a cart ! ");
 
+// ------------------------------------------------------
+// ****************** OTHER FUNCTIONS ******************
+// ------------------------------------------------------
 // SCROLL TOP TOP
 export const scrollToTop = () => {
 	window.scrollTo(0, 0);

@@ -2,7 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-// FIREBASE CONFIG
+// -----------------------------------------------------------
+// ****************** FIREBASE CONFIG ******************
+// -----------------------------------------------------------
 const firebaseConfig = {
   apiKey: "AIzaSyDqYxXweVaaBQhug3w81Wk6NirkvyaxVPs",
   authDomain: "blinkmart-ecommerce-project.firebaseapp.com",

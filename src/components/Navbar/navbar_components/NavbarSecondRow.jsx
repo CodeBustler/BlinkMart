@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 // ICONS
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaPhoneAlt } from "react-icons/fa";
-
 // ---------------------------------------------------------------
 
 function NavbarSecondRow({ handleSideBar }) {

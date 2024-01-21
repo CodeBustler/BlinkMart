@@ -1,14 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
-import { useParams } from "react-router-dom";
+import { scrollToTop } from "../utilities/RequiredFunctions";
+// COMPONENTS
 import ContainerForCard from "../ProductCard/ContainerForCard";
 import ProductCard from "../ProductCard/ProductCard";
-import { scrollToTop } from "../utilities/RequiredFunctions";
+import Loader from "../Utilities/Loader";
+// ROUTER
+import { useParams } from "react-router-dom";
+// ----------------------------------------------------------
 
 function ProductsCategory() {
-	const { categoryName } = useParams();
 	const [subCategoryTitles, setSubCategoryTitles] = useState([]);
-	const { allProducts } = useContext(MyContext);
+	const { allProducts, loading } = useContext(MyContext);
+	const { categoryName } = useParams();
 
 	// FILTERING SUB_CATEGORY
 	const subCategoryArrays = {};
@@ -35,25 +39,29 @@ function ProductsCategory() {
 		scrollToTop();
 	}, [allProducts, categoryName]);
 
+	// ----------------------------------------------------------
 	return (
 		<div>
 			<h1 className="underline underline-offset-8 underline-heading text-2xl font-bold my-3 text-center md:text-left capitalize">
 				{categoryName.replace(/_/g, " ")}
 			</h1>
-
-			{subCategoryTitles.map((item_subCategory, index) => (
-				<ContainerForCard
-					key={index}
-					containerTitle={item_subCategory}
-					filterProducts={item_subCategory}
-				>
-					{allProducts.map((item, index) => {
-						if (item.subCategory === item_subCategory) {
-							return <ProductCard item={item} key={index} />;
-						}
-					})}
-				</ContainerForCard>
-			))}
+			{loading ? (
+				<Loader />
+			) : (
+				subCategoryTitles.map((item_subCategory, index) => (
+					<ContainerForCard
+						key={index}
+						containerTitle={item_subCategory}
+						filterProducts={item_subCategory}
+					>
+						{allProducts.map((item, index) => {
+							if (item.subCategory === item_subCategory) {
+								return <ProductCard item={item} key={index} />;
+							}
+						})}
+					</ContainerForCard>
+				))
+			)}
 		</div>
 	);
 }

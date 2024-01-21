@@ -18,7 +18,6 @@ import {
 // FIREBASE
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebaseConfig/firebase";
-import { useDispatch } from "react-redux";
 import { emptyCartStore } from "../../../redux/cartSlice";
 // ---------------------------------------------------------------
 
@@ -26,7 +25,8 @@ function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 	// CONTEXT
 	const { setUserName, userName, admin, setAdmin } = useContext(MyContext);
 	const navigateTo = useNavigate();
-	const dispatch = useDispatch();
+
+	// ---------------------------------------------------------------
 
 	// HANDLE LOGOUT FUNCTION
 	const handleLogout = () => {
@@ -39,7 +39,6 @@ function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 				localStorage.removeItem("user");
 
 				navigateTo("/login");
-				dispatch(emptyCartStore());
 				console.log("%c ✔ Signed out successfully", "color:#bada55");
 			})
 			.catch((error) => {
@@ -48,7 +47,6 @@ function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 	};
 
 	// ---------------------------------------------------------------
-
 	return (
 		<>
 			{/*BG TRANSPARENT*/}
@@ -65,6 +63,7 @@ function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 			>
 				{/* SIDEBAR CONTENT*/}
 				<div className={`bg-white shadow-2xl `}>
+					{/*SIDEBAR HEADER*/}
 					<div className="bg-[#232F3E] text-white py-3 px-3 flex items-center  font-semibold text-lg sticky top-0 ">
 						<div className="flex flex-col gap-4 w-full">
 							<div className="flex items-center justify-between gap-4 ">
@@ -96,7 +95,7 @@ function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 						</div>
 					</div>
 					{/*SIDEBAR SECTION*/}
-					<div className="pl-3 overflow-y-scroll h-[90vh] ">
+					<div className="pl-3 overflow-y-scroll h-[90vh]  ">
 						<div className=" mx-3">
 							{admin ? (
 								<Link
@@ -114,7 +113,7 @@ function SideBar({ handleSideBar, sidebarToggle, setCurrentUser }) {
 						<div className="p-4">
 							<Link
 								to="/ProductsCategory/electronics_and_devices"
-								className="font-semibold text-lg mb-2"
+								className="font-semibold text-lg mb-2 "
 								onClick={handleSideBar}
 							>
 								Electronics & Devices

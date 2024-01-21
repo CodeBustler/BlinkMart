@@ -1,3 +1,4 @@
+import { toastLogout } from "../utilities/RequiredFunctions";
 // ROUTER
 import { Link, useNavigate } from "react-router-dom";
 // ICONS
@@ -13,10 +14,11 @@ import { toast } from "react-toastify";
 
 function NavbarForAdmin() {
 	const navigate = useNavigate();
-	const toastLogout = () => toast.error("Logout !");
-
 	const { userName, setUserName, admin, setAdmin } = useContext(MyContext);
 
+	// ---------------------------------------------------------------
+	// ********* HANDLE LOGOUT FROM ADMIN PANEL DASHBOARD ***********
+	// ---------------------------------------------------------------
 	const handleLogout = () => {
 		signOut(auth)
 			.then(() => {
@@ -25,13 +27,17 @@ function NavbarForAdmin() {
 				userName && toastLogout();
 				localStorage.removeItem("user");
 				navigate("/login");
-				console.log("Signed out successfully");
+				console.log(
+					"%c ✔ Signed out successfully From DASHBOARD",
+					"color:#bada55",
+				);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	};
 
+	// ---------------------------------------------------------------
 	return (
 		<nav className="bg-[#131921] flex items-center justify-between px-4 py-4 gap-3  text-white ">
 			<Link

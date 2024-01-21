@@ -50,8 +50,6 @@ const ProtectedRouteForAdmin = ({ children }) => {
 // ------------------------------------------------------
 // **************** ROUTES FOR ROUTER ****************
 // ------------------------------------------------------
-
-// ROUTES
 const routes = createBrowserRouter(
 	createRoutesFromElements(
 		<Route>
