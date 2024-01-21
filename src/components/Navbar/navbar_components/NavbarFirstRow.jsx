@@ -31,7 +31,7 @@ function NavbarFirstRow({
 	};
 	// ----------------------------------------------
 	return (
-		<nav className="bg-[#131921] flex items-center justify-between px-4 py-3 gap-3  text-white  ">
+		<nav className="bg-[#131921] flex items-center justify-between px-4 py-3 gap-3 text-white  ">
 			<div
 				className="font-semibold text-sm flex gap-2 md:hidden"
 				onClick={() => {
@@ -51,10 +51,10 @@ function NavbarFirstRow({
 			</Link>
 
 			{/* SEARCH BAR */}
-			<div className="flex items-stretch justify-between bg-white rounded w-[75%] md:w-[60%]  ">
+			<div className="flex items-stretch justify-between bg-white rounded w-[75%] md:w-[55%]  ">
 				<input
 					type="text"
-					placeholder="Search "
+					placeholder="Search BlinkMart.in "
 					className="bg-transparent outline-none px-4 py-2 text-black text-md w-[100%] "
 					onFocus={handleSideBarOnFocus}
 					onBlur={handleSideBarOnBlur}
@@ -69,7 +69,7 @@ function NavbarFirstRow({
 					searchBarFocus ? "hidden md:flex" : "block "
 				} `}
 			>
-				<li className="flex items-center gap-1 hidden  lg:flex ">
+				<li className="hidden lg:flex items-center gap-1  ">
 					<img
 						src={flag_icon}
 						alt="indian-flag"
@@ -77,6 +77,18 @@ function NavbarFirstRow({
 					/>
 					<span className="font-semibold ">EN</span>
 				</li>
+
+				{/*DISPLAY USERNAME */}
+				{userName ? (
+					<div className="hidden lg:flex items-start flex-col font-bold leading-none">
+						<small className="text-gray-300 font-semibold">
+							Hello,{" "}
+						</small>
+						<div className="uppercase pt-[2px]">{userName}</div>
+					</div>
+				) : (
+					""
+				)}
 
 				{/* Cart Icon */}
 				<NavLink
