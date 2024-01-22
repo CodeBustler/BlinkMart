@@ -19,6 +19,8 @@ import SignUp from "../components/Authentication/SignUp";
 import Login from "../components/Authentication/Login";
 import Cart from "../components/Cart/Cart";
 import CustomerService from "../Pages/CustomerService";
+import Orders from "../components/Orders/orders";
+import UserDetail from "../components/UserDetail/UserDetail";
 
 // ------------------------------------------------------
 // **************** PROTECT ROUTES ****************
@@ -76,6 +78,15 @@ const routes = createBrowserRouter(
 					element={<ProductsSubCategory />}
 				/>
 				<Route path="/customer_service" element={<CustomerService />} />
+				<Route path="/orders" element={<Orders />} />
+				<Route
+					path="/user_detail"
+					element={
+						<ProtectedRoute>
+							<UserDetail />
+						</ProtectedRoute>
+					}
+				/>
 			</Route>
 			<Route path="/*" element={<NoPage />} />
 			<Route

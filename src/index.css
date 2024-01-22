@@ -21,7 +21,7 @@
 	position: absolute;
 	top: -30px;
 	border: 20px solid;
-	transform: translateX(90%);
+	transform: translateX(300%);
 	z-index: 2;
 	border-color: #0000 #0000 #fff #0000;
 }

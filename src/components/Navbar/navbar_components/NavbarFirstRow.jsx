@@ -77,7 +77,7 @@ function NavbarFirstRow({
 							? `${currentUser[0]?.city || ""} ${
 									currentUser[0]?.areaPinCode || ""
 							  }`
-							: ""}
+							: "Loading..."}
 					</div>
 				</div>
 			) : (
@@ -128,22 +128,37 @@ function NavbarFirstRow({
 						</div>
 						{isHovered && (
 							<div
-								className="absolute transition top-14 -left-12 text-gray-800 rounded font-semibold logoutBTN bg-white shadow-2xl flex flex-col  z-20"
+								className="absolute transition top-12 -left-28 text-gray-800 rounded font-semibold logoutBTN bg-white shadow-2xl flex flex-col z-20 "
 								onMouseEnter={() => setIsHovered(true)}
 								onMouseLeave={() => setIsHovered(false)}
 							>
-								<Link className="px-5 mt-1 py-5 hover:bg-gray-100 flex items-center gap-3 z-30">
+								<Link
+									to="/user_detail"
+									className="px-5 mt-1 py-5 hover:bg-gray-100 flex items-center gap-3 z-30"
+								>
 									<VscAccount className="scale-125" />
 									Your Account
 								</Link>
-								<Link className="px-5  py-5 hover:bg-gray-100 flex items-center gap-3">
-									<FiBox className="scale-125" />
-									Your Orders
-								</Link>
-								<Link className="px-5 py-5  hover:bg-gray-100 flex items-center gap-3 ">
-									<LuShoppingCart className="scale-125" />
-									Your Cart Items
-								</Link>
+								{admin ? (
+									""
+								) : (
+									<>
+										<Link
+											to="/orders"
+											className="px-5  py-5 hover:bg-gray-100 flex items-center gap-3"
+										>
+											<FiBox className="scale-125" />
+											Your Orders
+										</Link>
+										<Link
+											to="/cart"
+											className="group px-5 py-5  hover:bg-gray-100 flex items-center gap-3 "
+										>
+											<LuShoppingCart className="scale-125" />
+											Your Cart Items
+										</Link>
+									</>
+								)}
 								<div
 									onClick={handleLogout}
 									className="rounded px-5 py-5 bg-yellow-400 flex items-center gap-3 "

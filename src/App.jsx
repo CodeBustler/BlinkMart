@@ -29,6 +29,7 @@ function App() {
 
   // FETCHING STORE CART DATA
   const cartItemsRX = useSelector((state) => state.cart);
+
   // ------------------------------------------------------
   // ***************** GET ALL PRODUCTS *****************
   // ------------------------------------------------------
