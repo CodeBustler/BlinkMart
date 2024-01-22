@@ -2,8 +2,8 @@
 import { Link, NavLink } from "react-router-dom";
 // ICONS
 import { AiOutlineClose } from "react-icons/ai";
-import { FaPhoneAlt } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+import { FaBoxOpen, FaPhoneAlt } from "react-icons/fa";
+import { MdAccountCircle, MdEmail } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import profile_avatar from "../../../assets/profile_avatar.png";
 import {
@@ -12,6 +12,7 @@ import {
 	IoLogoFacebook,
 	IoLogoYoutube,
 } from "react-icons/io";
+
 // ---------------------------------------------------------------
 
 function SideBar({
@@ -85,6 +86,25 @@ function SideBar({
 								""
 							)}
 						</div>
+						<div className="p-4">
+							<Link
+								to="/user_detail"
+								className=" mb-3 flex items-center gap-2"
+								onClick={handleSideBar}
+							>
+								<MdAccountCircle className="text-2xl text-gray-600" />
+								Your Account
+							</Link>
+							<Link
+								to="/orders"
+								className=" mb-1 flex items-center gap-2"
+								onClick={handleSideBar}
+							>
+								<FaBoxOpen className="text-2xl text-gray-600" />
+								Yours Orders
+							</Link>
+						</div>
+						<hr />
 						{/*Trending*/}
 						<div className="p-4">
 							<Link
@@ -299,6 +319,7 @@ function SideBar({
 							</Link>
 						</div>
 						<hr />
+
 						{/*Trending*/}
 						<div className="p-4">
 							<div className="flex items-center gap-5 ">
