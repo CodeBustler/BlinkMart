@@ -171,9 +171,21 @@ function Cart() {
 				</div>
 			) : (
 				<>
-					<h1 className="text-2xl font-bold  text-center md:text-left mb-5 underline underline-heading underline-offset-4">
-						Cart Items
-					</h1>
+					<div className="flex items-center  justify-between mb-5">
+						<h1 className="text-2xl font-bold  md:text-left underline underline-heading underline-offset-4">
+							Cart Items
+						</h1>
+						<button
+							className="flex items-center text-2xl font-semibold"
+							onClick={clearCart}
+						>
+							<span className="hidden md:block">Empty Cart</span>
+							<MdDeleteForever
+								className="text-red-500 text-4xl"
+								title="Empty Cart!"
+							/>
+						</button>
+					</div>
 					<div
 						className={`md:hidden text-xl text-center py-2 bg-yellow-400 rounded-lg sticky top-[60px] z-10 shadow-xl cursor-pointer ${
 							scrollY > 100 ? "block" : "hidden"
@@ -249,7 +261,7 @@ function Cart() {
 											<div className="flex items-center justify-between mt-5">
 												<div className=" flex items-center justify-center  shadow-xl rounded-lg text-lg bg-orange-400">
 													<FaMinus
-														className=" cursor-pointer w-[35px] px-2"
+														className=" cursor-pointer w-[35px] px-3 active:scale-150 transition"
 														onClick={() =>
 															handleDecreaseCount(
 																item,
@@ -260,7 +272,7 @@ function Cart() {
 														{item.quantity}
 													</div>
 													<FaPlus
-														className=" cursor-pointer w-[35px] px-3"
+														className=" cursor-pointer w-[35px] px-3 active:scale-150 transition"
 														onClick={() =>
 															handleIncreaseCount(
 																item,
@@ -269,7 +281,7 @@ function Cart() {
 													/>
 												</div>
 												<MdDeleteForever
-													className="text-4xl text-red-500 cursor-pointer hover:scale-125 transition"
+													className="text-4xl text-red-500 cursor-pointer hover:scale-125 active:scale-90 transition "
 													onClick={(e) =>
 														removeFromCart(
 															item.docId,
