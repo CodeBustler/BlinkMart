@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
-import NavbarForAdmin from "../Navbar/NavbarForAdmin";
-import { fireDB } from "../../firebaseConfig/firebase";
-import { IoMdSad } from "react-icons/io";
-import { toastProductAddedToDB } from "../utilities/RequiredFunctions";
+import { useContext, useState } from "react";
 import { MyContext } from "../../App";
+import { toastProductAddedToDB } from "../utilities/RequiredFunctions";
+import { IoMdSad } from "react-icons/io";
+import NavbarForAdmin from "../Navbar/NavbarForAdmin";
+// FIREBASE
+import { addDoc, collection } from "firebase/firestore";
+import { fireDB } from "../../firebaseConfig/firebase";
 
 // ------------------------------------------------------
 

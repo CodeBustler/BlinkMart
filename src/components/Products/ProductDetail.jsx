@@ -19,6 +19,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 import tickIcon from "../../assets/tick_icon.png";
+import { addDoc, collection } from "firebase/firestore";
+import { fireDB } from "../../firebaseConfig/firebase";
+
 // ---------------------------------------------------------
 
 function ProductDetail() {
@@ -26,10 +29,18 @@ function ProductDetail() {
 	const [mainImage, setMainImage] = useState("");
 	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
 	const { productId } = useParams(); //EXTRACT PRODUCT ID TO DISPLAY
+	const [isAddingToCart, setIsAddingToCart] = useState(false);
+
 	const dispatch = useDispatch();
 	const navigateTo = useNavigate();
-	const { allProducts, cartItemsRX, setItemInCart, handleCartAnimate } =
-		useContext(MyContext);
+	const {
+		allProducts,
+		setItemInCart,
+		handleCartAnimate,
+		userCartDetails,
+		userUID,
+		fetchUserCart,
+	} = useContext(MyContext);
 
 	// --------------------------------------------------------
 	// ****************** FILTERING PRODUCT ******************
@@ -56,43 +67,61 @@ function ProductDetail() {
 	const discountPercentage = calculateDiscountPercentage(displayProduct);
 
 	// --------------------------------------------------------
-	// ******************* CART RELATED  *******************
+	// **************** CARD BTN TEXT UPDATE  *****************
 	// --------------------------------------------------------
 	useEffect(() => {
 		// CHECKS ITEM IS ALREADY IN CART
-		const isItemInCart = cartItemsRX.some(
+		const isItemInCart = userCartDetails.some(
 			(cItem) => cItem.id === displayProduct.id,
 		);
 
 		// UPDATE CARD BUTTON TEXT BASED ON "isItemInCart"
 		setLocalItemInCart(isItemInCart ? "In Basket" : "Add To Cart");
-	}, [cartItemsRX, displayProduct.id]);
+	}, [userCartDetails, displayProduct.id]);
 
-	// ADDING CARD TO REDUXT CART STORE
-	const addCart = (displayProduct) => {
-		const user = localStorage.getItem("user");
-		if (user) {
-			// CHECK DUPLICATE ITEM IN CART (STORE
-			const isItemInCart = cartItemsRX.some(
-				(cItem) => cItem.id === displayProduct.id,
-			);
-			if (isItemInCart) {
-				// Use setItemInCart instead of setLocalItemInCart
-				setItemInCart("In Basket");
-			} else {
-				// ADDING TO CART_STORE
-				// Use setItemInCart instead of setLocalItemInCart
-				setLocalItemInCart("Adding");
-				dispatch(
-					addToCart(displayProduct, () =>
-						setLocalItemInCart("In Basket"),
-					),
+	// ------------------------------------------------------
+	// ******************** ADD TO CART *********************
+	// ------------------------------------------------------
+	const addCart = async (e) => {
+		e.preventDefault();
+		e.target.disabled = true;
+
+		// Prevent multiple clicks while processing
+		if (isAddingToCart) {
+			return;
+		}
+
+		try {
+			setIsAddingToCart(true);
+			e.target.disabled = true;
+
+			const user = localStorage.getItem("user");
+
+			if (user) {
+				const isItemInCart = userCartDetails.some(
+					(cItem) => cItem.id === displayProduct.id,
 				);
-				handleCartAnimate();
+
+				if (isItemInCart) {
+					setItemInCart("In Basket");
+				} else {
+					const docRef = await addDoc(
+						collection(fireDB, userUID),
+						displayProduct,
+					);
+					fetchUserCart();
+					console.log("Product added to user cart");
+					toastAddedToCart();
+					handleCartAnimate();
+				}
+			} else {
+				navigateTo("/login");
+				toastLoginToAddCart();
 			}
-		} else {
-			navigateTo("/login");
-			toastLoginToAddCart();
+		} catch (error) {
+			console.error("Error adding document: ", error);
+		} finally {
+			setIsAddingToCart(false);
 		}
 	};
 
@@ -225,7 +254,7 @@ function ProductDetail() {
 									? "bg-white  border-gray-400 "
 									: "bg-orange-400 active:bg-orange-300 border-transparent"
 							} `}
-							onClick={() => addCart(displayProduct)}
+							onClick={addCart}
 						>
 							{itemInCart === "In Basket" ? (
 								<div className="flex items-center justify-center gap-3">

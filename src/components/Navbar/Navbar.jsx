@@ -26,7 +26,7 @@ function Navbar() {
 		cartAnimate,
 		currentUser,
 		setCurrentUser,
-		cartItemsRX,
+		userCartDetails,
 	} = useContext(MyContext);
 	const navigateTo = useNavigate();
 
@@ -75,8 +75,8 @@ function Navbar() {
 				cartAnimate={cartAnimate}
 				handleCartIcon={handleCartIcon}
 				currentUser={currentUser}
-				cartItemsRX={cartItemsRX}
 				handleLogout={handleLogout}
+				userCartDetails={userCartDetails}
 			/>
 
 			{/*SECOND ROW*/}

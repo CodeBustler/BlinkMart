@@ -16,6 +16,7 @@ function App() {
   // PRODUCTS & LOADING
   const [loading, setLoading] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
+
   // USER RELATED
   const [userName, setUserName] = useState("");
   const [admin, setAdmin] = useState(false);
@@ -27,8 +28,8 @@ function App() {
   const [cartAnimate, setCartAnimate] = useState(false);
   const [itemInCart, setItemInCart] = useState("Add To Cart");
 
-  // FETCHING STORE CART DATA
-  const cartItemsRX = useSelector((state) => state.cart);
+  // UNIVERSAL CART FOR CURRENT USER
+  const [userCartDetails, setUserCartDetails] = useState([]);
 
   // ------------------------------------------------------
   // ***************** GET ALL PRODUCTS *****************
@@ -114,6 +115,33 @@ function App() {
   }, [userUID, userDB]);
 
   // ------------------------------------------------------
+  // ***************** GET USER_CART DATA ****************
+  // ------------------------------------------------------
+  const fetchUserCart = async () => {
+    if (userUID) {
+      try {
+        const userData = await getDocs(collection(fireDB, userUID));
+        const userCartProducts = [];
+
+        userData.forEach((doc) => {
+          userCartProducts.push({
+            ...doc.data(),
+            docId: doc.id,
+          });
+        });
+        // console.log(userData);
+        setLoading(false);
+        setUserCartDetails(userCartProducts); // All USER_CART
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchUserCart();
+  }, [userUID]);
+
+  // ------------------------------------------------------
   // ****************** OTHER FUNCTIONS ******************
   // ------------------------------------------------------
   // CART ICON_ANIMATION (FOR PRODUCT_CARD & NAVBAR)
@@ -124,16 +152,15 @@ function App() {
     }, 1500);
   };
 
-  // ------------------------------------------------------
   // console.log(allProducts);
+  // console.log(userCartDetails);
   // console.log(userName);
   // console.log(userUID);
   // console.log(admin);
   // console.log(userDB);
   // console.log(currentUser);
-  // console.log(cartItemsRX);
-  // ------------------------------------------------------
 
+  // ------------------------------------------------------
   return (
     <>
       <MyContext.Provider
@@ -153,7 +180,9 @@ function App() {
           fetchProducts,
           itemInCart, // CARD BTN TEXT
           setItemInCart, // CARD BTN TEXT
-          cartItemsRX, // CART STORE
+          userCartDetails,
+          setUserCartDetails,
+          fetchUserCart,
         }}
       >
         <RouterProvider router={routes} />

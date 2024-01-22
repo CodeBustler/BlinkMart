@@ -5,17 +5,17 @@ import { toast } from "react-toastify";
 // ------------------------------------------------------
 export const toastProductAddedToDB = () =>
 	toast.success("Product Added To Database !");
-
 export const toastLoginToAddCart = () =>
 	toast.info("Log in to add items to your cart");
+export const toastItemAlreadyInCart = () =>
+	toast.info("Item already in a cart ! ");
 
 export const toastAddedToCart = () => toast.success("Added To Cart !");
 export const toastLoginSuccess = () => toast.success("Login Success !");
 export const toastLogout = () => toast.error("Logout !");
 export const toastSignUpSuccess = () => toast.success("SignUp Success !");
 export const toastItemRemoved = () => toast.error("Item Removed ! ");
-export const toastItemAlreadyInCart = () =>
-	toast.info("Item already in a cart ! ");
+export const toastClearCart = () => toast.error("Cart cleared successfully ");
 
 // ------------------------------------------------------
 // ****************** OTHER FUNCTIONS ******************

@@ -16,50 +16,79 @@ import { MdStar, MdStarBorder } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { addDoc, collection } from "firebase/firestore";
+import { fireDB } from "../../firebaseConfig/firebase";
 // ------------------------------------------------------
 
 function ProductCard({ item }) {
-	const { handleCartAnimate, setItemInCart, cartItemsRX } =
-		useContext(MyContext);
+	const {
+		handleCartAnimate,
+		setItemInCart,
+		userUID,
+		fetchUserCart,
+		userCartDetails,
+	} = useContext(MyContext);
 	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
 	const navigateTo = useNavigate();
 	const dispatch = useDispatch();
-	// ------------------------------------------------------
+	const [isAddingToCart, setIsAddingToCart] = useState(false);
 
 	// ------------------------------------------------------
-	// ******************* CART RELATED *******************
+	// ******************* GET USER CART *******************
 	// ------------------------------------------------------
 	useEffect(() => {
 		// CHECKS ITEM IS ALREADY IN CART
-		const isItemInCart = cartItemsRX.some((cItem) => cItem.id === item.id);
+		const isItemInCart = userCartDetails.some(
+			(cItem) => cItem.id === item.id,
+		);
 
 		// UPDATE CARD BUTTON TEXT BASED ON "isItemInCart"
 		setLocalItemInCart(isItemInCart ? "In Basket" : "Add To Cart");
-	}, [cartItemsRX, item.id]);
+	}, [userCartDetails, item.id]);
 
-	//-------------------------------------------------------
-	// ADDING CARD TO REDUX CART STORE
-	const addCart = () => {
-		const user = localStorage.getItem("user");
-		if (user) {
-			// CHECK DUPLICATE ITEM IN CART (STORE
-			const isItemInCart = cartItemsRX.some(
-				(cItem) => cItem.id === item.id,
-			);
-			if (isItemInCart) {
-				setItemInCart("In Basket");
-			} else {
-				// ADDING TO CART_STORE
-				setLocalItemInCart("Adding");
-				dispatch(
-					addToCart(item, () => setLocalItemInCart("In Basket")),
-					toastAddedToCart(),
+	// ------------------------------------------------------
+	// ******************* ADD TO CART *******************
+	// ------------------------------------------------------
+	const addCart = async (e) => {
+		e.preventDefault();
+		e.target.disabled = true;
+
+		// Prevent multiple clicks while processing
+		if (isAddingToCart) {
+			return;
+		}
+
+		try {
+			setIsAddingToCart(true);
+			e.target.disabled = true;
+
+			const user = localStorage.getItem("user");
+
+			if (user) {
+				const isItemInCart = userCartDetails.some(
+					(cItem) => cItem.id === item.id,
 				);
-				handleCartAnimate();
+
+				if (isItemInCart) {
+					setItemInCart("In Basket");
+				} else {
+					const docRef = await addDoc(
+						collection(fireDB, userUID),
+						item,
+					);
+					fetchUserCart();
+					console.log("Product added to user cart");
+					toastAddedToCart();
+					handleCartAnimate();
+				}
+			} else {
+				navigateTo("/login");
+				toastLoginToAddCart();
 			}
-		} else {
-			navigateTo("/login");
-			toastLoginToAddCart();
+		} catch (error) {
+			console.error("Error adding document: ", error);
+		} finally {
+			setIsAddingToCart(false);
 		}
 	};
 
@@ -71,7 +100,6 @@ function ProductCard({ item }) {
 	const discountPercentage = calculateDiscountPercentage(item);
 
 	// -------------------------------------------------------
-
 	return (
 		<div className="group border border-gray-300 rounded-md p-5 transition bg-white flex flex-col justify-between flex-shrink-0 h-[330px] w-[95%] md:w-[240px] hover:border-gray-400 hover:shadow-xl transition relative ">
 			{/*FLOAD ICON DISCOUNT PERCENTAGE*/}
@@ -98,14 +126,13 @@ function ProductCard({ item }) {
 				<div className="font-bold hover:underline cursor-default mt-1">
 					{item.title}
 				</div>
-
 				<button
-					className={`bg-orange-400 border  w-full py-1 mt-2 font-semibold rounded transition  ${
+					className={`bg-orange-400 border active:bg-white active:border-gray-400  w-full py-1 mt-2 font-semibold rounded transition  ${
 						itemInCart === "In Basket"
 							? "bg-white  border-gray-400 "
 							: "bg-orange-400 border-transparent active:bg-orange-300"
 					}`}
-					onClick={addCart}
+					onClick={(e) => addCart(e)}
 				>
 					{itemInCart === "In Basket" ? (
 						<div className="flex items-center justify-center gap-3">

@@ -13,8 +13,7 @@ import ProductsTable from "./tableData/ProductsTable";
 import UsersTable from "./tableData/UsersTable";
 // ROUTER
 import { Link, useNavigate } from "react-router-dom";
-
-// ---------------------------------------------------------------
+// --------------------------------------------------------
 
 function Dashboard() {
 	const [selectedButton, setSelectedButton] = useState("products");
@@ -25,6 +24,9 @@ function Dashboard() {
 		!admin && navigate("/login");
 	});
 
+	// --------------------------------------------------------
+	// *********** CONDITIONAL RENDERING COMPONENTS ***********
+	// --------------------------------------------------------
 	const renderComponents = () => {
 		switch (selectedButton) {
 			case "products":
@@ -36,6 +38,7 @@ function Dashboard() {
 		}
 	};
 
+	// --------------------------------------------------------
 	return (
 		<>
 			<NavbarForAdmin />

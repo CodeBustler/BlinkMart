@@ -12,8 +12,6 @@ import flag_icon from "../../../assets/flag_icon.png";
 import { VscAccount } from "react-icons/vsc";
 import { FiBox } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
-
-import ReactLoading from "react-loading";
 // ---------------------------------------------------------------
 
 function NavbarFirstRow({
@@ -24,12 +22,13 @@ function NavbarFirstRow({
 	cartAnimate,
 	handleCartIcon,
 	currentUser,
-	cartItemsRX,
 	handleLogout,
+	userCartDetails,
 }) {
 	const [searchBarFocus, setSearchFocus] = useState(false);
 	const [logoutBTN, setLogoutBTN] = useState();
 	const [isHovered, setIsHovered] = useState(false);
+
 	// -------------------------------------------------------
 	// ************** HANDLING SEARCHBAR WIDTH ***************
 	// -------------------------------------------------------
@@ -66,7 +65,7 @@ function NavbarFirstRow({
 			{/* LOCATION */}
 			{admin ? (
 				""
-			) : userName ? (
+			) : (
 				<div className="group hidden lg:flex items-start flex-col font-bold leading-none whitespace-nowrap">
 					<small className="text-gray-300 font-semibold">
 						Deliver to {userName}
@@ -80,16 +79,14 @@ function NavbarFirstRow({
 							: "Loading..."}
 					</div>
 				</div>
-			) : (
-				""
 			)}
 
 			{/* SEARCH BAR */}
-			<div className="flex items-stretch justify-between bg-white rounded w-full ">
+			<div className="flex items-stretch justify-between bg-white rounded w-[80%] md:w-full ">
 				<input
 					type="text"
 					placeholder="Search BlinkMart.in"
-					className="flex-grow bg-transparent outline-none px-4 py-2 text-black text-md"
+					className="flex-grow bg-transparent outline-none px-4 py-2 text-black text-md w-[100%]"
 					onFocus={handleSideBarOnFocus}
 					onBlur={handleSideBarOnBlur}
 				/>
@@ -185,8 +182,8 @@ function NavbarFirstRow({
 						}  `}
 					/>
 					<span className="text-md md:text-lg font-bold text-orange-400">
-						{currentUser && cartItemsRX.length > 0
-							? cartItemsRX.length
+						{currentUser && userCartDetails.length > 0
+							? userCartDetails.length
 							: 0}
 					</span>
 				</NavLink>
