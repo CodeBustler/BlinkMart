@@ -37,6 +37,7 @@ function ProductCard({ item }) {
 		setLocalItemInCart(isItemInCart ? "In Basket" : "Add To Cart");
 	}, [cartItemsRX, item.id]);
 
+	//-------------------------------------------------------
 	// ADDING CARD TO REDUX CART STORE
 	const addCart = () => {
 		const user = localStorage.getItem("user");

@@ -61,43 +61,6 @@ function Cart() {
 		0,
 	);
 
-	// ADD USER CART
-	let matchingUser = {};
-	useEffect(() => {
-		const getUserCart = async () => {
-			try {
-				const userLocal = JSON.parse(localStorage.getItem("user"));
-				const targetUid = userLocal.user.uid;
-
-				console.log("Target UID:", targetUid);
-
-				matchingUser = userDB?.find((user) => user.uid === targetUid);
-
-				console.log(matchingUser);
-
-				if (!matchingUser) {
-					// If matchingUser is undefined, set it to an empty object
-					matchingUser = {};
-				}
-
-				if (matchingUser.id) {
-					const userRef = doc(fireDB, "users", matchingUser.id);
-					await updateDoc(userRef, {
-						cart: userCart,
-					});
-
-					console.log("User cart updated successfully!");
-				} else {
-					console.log("No matching user ID found.");
-				}
-			} catch (error) {
-				console.error("Error updating user cart:", error);
-			}
-		};
-
-		getUserCart();
-	}, [userDB, cartItemsRX]);
-
 	// SETUP USER CART IN LOCAL-STATE
 	useEffect(() => {
 		setUserCartDetails((prevUserCart) => ({
