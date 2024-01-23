@@ -1,23 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
-import {
-	collection,
-	deleteDoc,
-	doc,
-	getDocs,
-	updateDoc,
-} from "firebase/firestore";
-import { fireDB } from "../../firebaseConfig/firebase";
-import {
-	toastItemRemoved,
-	toastClearCart,
-} from "../Utilities/RequiredFunctions";
-import emptyCart from "../../assets/empty_cart.jpg";
-import { FaBagShopping } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 import { numberWithCommas, scrollToTop } from "../utilities/RequiredFunctions";
+import { toastClearCart } from "../Utilities/RequiredFunctions";
+import { toastItemRemoved } from "../Utilities/RequiredFunctions";
+// FIREBASE
+import { fireDB } from "../../firebaseConfig/firebase";
+import { collection, doc } from "firebase/firestore";
+import { deleteDoc, getDocs, updateDoc } from "firebase/firestore";
+// ROUTER
+import { Link } from "react-router-dom";
+// ICONS
+import { FaBagShopping } from "react-icons/fa6";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import emptyCart from "../../assets/empty_cart.jpg";
 
 // ---------------------------------------------------------------
 
@@ -27,23 +23,30 @@ function Cart() {
 	const [specialOff, setSpecialOff] = useState(100);
 	const [totalAmount, setTotalAmout] = useState(0);
 	const [scrollY, setScrollY] = useState(0);
+	const [isRemovigItem, setRemovingItem] = useState(false);
 
 	// ------------------------------------------------------
 	// ***************** DELETE CART ITEM *****************
 	// ------------------------------------------------------
 	const removeFromCart = async (productId) => {
-		console.log(productId);
-		console.log(userUID);
+		if (isRemovigItem) {
+			return;
+		}
+
 		try {
+			setRemovingItem(true);
 			await deleteDoc(doc(fireDB, userUID, productId));
 			await fetchUserCart(); // UPDATE CART STATE
 			toastItemRemoved(); // SUCCESS MESSAGE
+			scrollToTop();
 		} catch (error) {
 			if (error.code === "firestore/not-found") {
 				console.warn("Product not found in cart");
 			} else {
 				console.error("Error deleting document: ", error);
 			}
+		} finally {
+			setRemovingItem(false);
 		}
 	};
 
@@ -120,7 +123,6 @@ function Cart() {
 		(sum, item) => sum + item.quantity,
 		0,
 	);
-	console.log(totalQuantity);
 
 	// SUBTOTAL PRICE
 	const subTotalPrice = userCartDetails.reduce(
@@ -135,9 +137,8 @@ function Cart() {
 		setShippingCharge(shippingCharge);
 		setTotalAmout(subTotalPrice + shippingCharge - specialOff);
 	}, [totalAmount, subTotalPrice]);
-	// ------------------------------------------------------
 
-	// DISPLAY TOTAL AMOUNT (MOBILE)
+	// DISPLAY TOTAL AMOUNT STICKY(MOBILE )
 	useEffect(() => {
 		const handleScroll = () => setScrollY(window.scrollY);
 		window.addEventListener("scroll", handleScroll);
@@ -160,11 +161,11 @@ function Cart() {
 					/>
 					<p className="text-2xl  md:text-3xl font-semibold">
 						Your Cart is{" "}
-						<span className="text-orange-500 ">Empty !</span>
+						<span className="text-orange-400 ">Empty !</span>
 					</p>
 					<Link
 						to="/"
-						className="text-md md:text-lg font-semibold text-gray-900 bg-orange-500 px-8 py-3 rounded-3xl shadow-2xl hover:bg-orange-500 flex items-center gap-4"
+						className="text-md md:text-lg font-semibold text-gray-900 bg-orange-400 px-8 py-3 rounded-3xl shadow-2xl active:bg-orange-300 flex items-center gap-4"
 					>
 						<FaBagShopping /> Return to Shop
 					</Link>
@@ -175,16 +176,11 @@ function Cart() {
 						<h1 className="text-2xl font-bold  md:text-left underline underline-heading underline-offset-4">
 							Cart Items
 						</h1>
-						<button
-							className="flex items-center text-2xl font-semibold"
+						<MdDeleteForever
+							className="text-red-500 text-4xl cursor-pointer hover:scale-125 active:scale-110 transition"
+							title="Empty Cart!"
 							onClick={clearCart}
-						>
-							<span className="hidden md:block">Empty Cart</span>
-							<MdDeleteForever
-								className="text-red-500 text-4xl"
-								title="Empty Cart!"
-							/>
-						</button>
+						/>
 					</div>
 					<div
 						className={`md:hidden text-xl text-center py-2 bg-yellow-400 rounded-lg sticky top-[60px] z-10 shadow-xl cursor-pointer ${

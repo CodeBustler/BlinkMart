@@ -55,7 +55,7 @@ function App() {
     const updateUserNameAndAdmin = async (user) => {
       const env = await import.meta.env;
       const adminEmail = env.VITE_REACT_APP_ADMIN_EMAIL;
-
+      console.log(user);
       if (user) {
         setUserName(user.displayName);
         setUserUID(user.uid);
