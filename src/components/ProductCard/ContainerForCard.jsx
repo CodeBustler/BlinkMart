@@ -31,7 +31,7 @@ function ContainerForCard({ containerTitle, filterProducts, children }) {
 		<div className="flex flex-col gap-10 md:mx-8 mt-10 ">
 			{/*CONTAINER*/}
 			<div className="relative bg-gray-100 p-5 md:p-8 rounded-xl border">
-				<div className=" flex justify-between text-2xl mb-5 md:mb-0 font-semibold capitalize ">
+				<div className=" flex justify-between text-2xl mt-3 md:mt-0 mb-0 font-semibold capitalize ">
 					<h2>{containerTitle?.replace(/_/g, " ")}</h2>
 					<IoMdArrowDroprightCircle
 						className="sticky  md:block text-3xl text-orange-500 cursor-pointer hover:scale-150 transition "

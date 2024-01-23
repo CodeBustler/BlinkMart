@@ -195,7 +195,7 @@ function NavbarFirstRow({
 						}`}
 					>
 						<span className="flex gap-2">
-							<RiAdminFill className="text-2xl text-orange-400" />
+							<RiAdminFill className="text-2xl text-orange-400 mr-2 md:mr-0" />
 							<span className="hidden md:inline">Dashboard</span>
 						</span>
 					</NavLink>

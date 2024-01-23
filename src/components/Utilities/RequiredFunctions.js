@@ -16,6 +16,8 @@ export const toastLogout = () => toast.error("Logout !");
 export const toastSignUpSuccess = () => toast.success("SignUp Success !");
 export const toastItemRemoved = () => toast.error("Item Removed ! ");
 export const toastClearCart = () => toast.error("Cart cleared successfully ");
+export const toastProductDelete = () =>
+	toast.error("Product deleted from database ! ");
 
 // ------------------------------------------------------
 // ****************** OTHER FUNCTIONS ******************

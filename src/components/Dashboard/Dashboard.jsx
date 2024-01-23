@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Dashboard() {
 	const [selectedButton, setSelectedButton] = useState("products");
-	const { admin, allProducts } = useContext(MyContext);
+	const { admin, allProducts, userDB } = useContext(MyContext);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -32,7 +32,7 @@ function Dashboard() {
 			case "products":
 				return <ProductsTable />;
 			case "users":
-				return <UsersTable />;
+				return <UsersTable userDB={userDB} />;
 			default:
 				return null;
 		}
@@ -48,7 +48,7 @@ function Dashboard() {
 						Dashboard
 					</h1>
 					<div className="container mx-auto mt-7 ">
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-20 text-gray-800">
+						<div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-20 text-gray-800">
 							<div className="border rounded-2xl shadow-lg hover:shadow-2xl p-5 text-center flex items-center gap-4 flex-col cursor-pointer transition md:hover:-translate-y-2 ">
 								<BsFillBoxSeamFill className="text-5xl text-purple-400" />
 								<div className="font-bold text-2xl text-gray-600">
@@ -65,7 +65,7 @@ function Dashboard() {
 								<RiEBike2Fill className="text-5xl text-blue-400 " />
 								<div className="font-bold text-2xl text-gray-600">
 									<AnimatedNumber
-										target={851}
+										target={100}
 										duration={3000}
 									/>
 								</div>
@@ -77,7 +77,7 @@ function Dashboard() {
 								<PiUsersThreeFill className="text-5xl text-green-400 " />
 								<div className="font-bold text-2xl text-gray-600">
 									<AnimatedNumber
-										target={851}
+										target={userDB?.length}
 										duration={3000}
 									/>
 								</div>
@@ -94,21 +94,33 @@ function Dashboard() {
 									/>
 								</div>
 								<div className="font-semibold text-lg  text-gray-500">
-									Return Products
+									Return Items
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="flex items-center justify-center flex-wrap gap-10 mt-16 ">
+
+					<div
+						className="flex items-center justify-between md:justify-center flex-wrap gap-2 mt-16  bg-white py-3 shadow w-full mb-4
+					"
+					>
 						<Link
-							className="text-lg font-semibold border px-10 py-1 rounded text-purple-500 border-purple-500 flex items-center gap-3 active:bg-purple-500 active:text-white transition   "
+							className={`text-lg font-semibold border px-10 py-1 rounded text-purple-500 border-purple-500 flex items-center gap-3  transition ${
+								selectedButton === "products"
+									? "bg-purple-500 text-white"
+									: " "
+							}  `}
 							onClick={() => setSelectedButton("products")}
 						>
 							<FaListUl /> Products
 						</Link>
 
 						<Link
-							className="text-lg font-semibold border px-10 py-1 rounded text-green-500 border-green-500 flex items-center gap-3 active:bg-green-500 active:text-white transition   "
+							className={`text-lg font-semibold border px-10 py-1 rounded text-green-500 border-green-500 flex items-center gap-3 transition  ${
+								selectedButton === "products"
+									? ""
+									: "bg-green-500 text-white "
+							}  `}
 							onClick={() => setSelectedButton("users")}
 						>
 							<FaListUl /> Users

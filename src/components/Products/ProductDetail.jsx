@@ -21,6 +21,7 @@ import { addToCart } from "../../redux/cartSlice";
 import tickIcon from "../../assets/tick_icon.png";
 import { addDoc, collection } from "firebase/firestore";
 import { fireDB } from "../../firebaseConfig/firebase";
+import { scrollToTop } from "../utilities/RequiredFunctions";
 
 // ---------------------------------------------------------
 
@@ -124,6 +125,10 @@ function ProductDetail() {
 			setIsAddingToCart(false);
 		}
 	};
+
+	useEffect(() => {
+		scrollToTop();
+	}, []);
 
 	// ---------------------------------------------------------
 	return (

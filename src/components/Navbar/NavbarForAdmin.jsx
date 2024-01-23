@@ -38,13 +38,16 @@ function NavbarForAdmin() {
 
 	// ---------------------------------------------------------------
 	return (
-		<nav className="bg-[#131921] flex items-center justify-between px-4 py-4 gap-3  text-white ">
+		<nav className="bg-[#131921] flex items-center justify-between px-4 py-4 gap-3  text-white sticky top-0 z-30">
 			<Link
 				to="/"
 				className="font-bold text-2xl flex items-center gap-1  "
 			>
 				<RiShoppingCartFill className="text-3xl text-orange-400" />
-				<span className="flex">BlinkMart</span>
+				<span className="">BlinkMart</span>
+				<span className="hidden md:block ml-1 text-gray-500">
+					For Admin
+				</span>
 			</Link>
 			<div className="flex items-center gap-5">
 				<RiAdminFill className="text-2xl text-orange-400" />

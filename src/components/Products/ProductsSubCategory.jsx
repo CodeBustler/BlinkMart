@@ -34,7 +34,7 @@ function ProductsSubCategory() {
 				{loading ? (
 					<Loader />
 				) : (
-					<div className="flex flex-wrap justify-start gap-5 mt-8">
+					<div className="flex flex-wrap justify-center md:justify-start gap-5 mt-8">
 						{subCategoryItems.map((item, index) => (
 							<ProductCard key={index} item={item} />
 						))}

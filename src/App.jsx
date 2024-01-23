@@ -177,6 +177,7 @@ function App() {
           currentUser,
           setCurrentUser,
           userUID,
+          userDB,
           fetchProducts,
           itemInCart, // CARD BTN TEXT
           setItemInCart, // CARD BTN TEXT

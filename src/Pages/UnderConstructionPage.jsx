@@ -3,7 +3,7 @@ import underContructionImage from "../assets/under_contruction.jpg";
 
 const UnderConstructionPage = () => {
   return (
-    <div className="flex items-center justify-center flex-col pt-5">
+    <div className="flex items-center justify-center flex-col pt-3">
       <img
         src={underContructionImage}
         alt="Under Construction"
