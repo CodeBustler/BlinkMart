@@ -1,7 +1,12 @@
 import React from "react";
+import UnderConstructionPage from "../../Pages/UnderConstructionPage";
 
 function Orders() {
-	return <div>orders</div>;
+	return (
+		<div>
+			<UnderConstructionPage />
+		</div>
+	);
 }
 
 export default Orders;

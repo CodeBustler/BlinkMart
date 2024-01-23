@@ -25,3 +25,16 @@ html {
 	z-index: 2;
 	border-color: #0000 #0000 #fff #0000;
 }
+
+.image-animate {
+	animation: jump infinite 1s alternate;
+}
+
+@keyframes jump {
+	0% {
+		transform: translateY(5px);
+	}
+	100% {
+		transform: translateY(10px);
+	}
+}
