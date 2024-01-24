@@ -24,12 +24,17 @@ function App() {
   const [userUID, setUserUID] = useState("");
   const [currentUser, setCurrentUser] = useState([]);
 
+  // SEARCH KEYWORD
+  const [searchResult, setSearchResult] = useState([]);
+
   // CART RELATED (BTN TITLE & CART ANIMATION)
   const [cartAnimate, setCartAnimate] = useState(false);
   const [itemInCart, setItemInCart] = useState("Add To Cart");
 
   // UNIVERSAL CART FOR CURRENT USER
   const [userCartDetails, setUserCartDetails] = useState([]);
+
+  console.log(searchResult);
 
   // ------------------------------------------------------
   // ***************** GET ALL PRODUCTS *****************
@@ -38,9 +43,20 @@ function App() {
     setLoading(true);
     const data = await getDocs(collection(fireDB, "allProducts"));
     const productData = [];
+
     data.forEach((doc) => {
-      productData.push({ ...doc.data(), id: doc.id });
+      // CONVERTING TO LOWERCASE (OBJECT VALUES)
+      const lowerCaseData = {};
+      for (const [key, value] of Object.entries(doc.data())) {
+        lowerCaseData[key] =
+          !key.startsWith("img") && typeof value === "string"
+            ? value.toLowerCase()
+            : value;
+      }
+      // PUSHING EACH OBJECT TO ARRAY
+      productData.push({ ...lowerCaseData, id: doc.id });
     });
+
     setLoading(false);
     setAllProducts(productData); // ALL PRODUCTS
   };
@@ -182,6 +198,8 @@ function App() {
           userCartDetails,
           setUserCartDetails,
           fetchUserCart,
+          searchResult,
+          setSearchResult,
         }}
       >
         <RouterProvider router={routes} />

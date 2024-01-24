@@ -19,11 +19,6 @@ function UserDetail() {
 		}
 	}, []);
 
-	// UPDATED USERDATA
-	useEffect(() => {
-		console.log(userData?.user);
-	}, [userData]);
-
 	// CHECKS THE USERDATA BEFORE DESTUCTURING
 	const { email, displayName, createdAt, lastLoginAt } = userData?.user || {};
 

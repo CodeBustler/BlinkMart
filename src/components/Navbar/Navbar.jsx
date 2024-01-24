@@ -19,6 +19,7 @@ function Navbar() {
 	const [sidebarToggle, setSidebarToggle] = useState(true);
 	const {
 		// CONTEXT
+		allProducts,
 		admin,
 		setAdmin,
 		userName,
@@ -27,6 +28,8 @@ function Navbar() {
 		currentUser,
 		setCurrentUser,
 		userCartDetails,
+		searchResult,
+		setSearchResult,
 	} = useContext(MyContext);
 	const navigateTo = useNavigate();
 
@@ -69,6 +72,7 @@ function Navbar() {
 		<header className="sticky top-0 shadow-xl z-20">
 			{/*FIRST ROW*/}
 			<NavbarFirstRow
+				allProducts={allProducts}
 				handleSideBar={handleSideBar}
 				admin={admin}
 				userName={userName}
@@ -77,6 +81,8 @@ function Navbar() {
 				currentUser={currentUser}
 				handleLogout={handleLogout}
 				userCartDetails={userCartDetails}
+				searchResult={searchResult}
+				setSearchResult={setSearchResult}
 			/>
 
 			{/*SECOND ROW*/}

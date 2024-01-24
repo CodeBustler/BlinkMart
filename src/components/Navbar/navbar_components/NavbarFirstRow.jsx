@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // ROUTER
 import { Link, NavLink } from "react-router-dom";
 // ICONS
@@ -16,6 +16,7 @@ import { TbLogout } from "react-icons/tb";
 
 function NavbarFirstRow({
 	// PROPS
+	allProducts,
 	handleSideBar,
 	admin,
 	userName,
@@ -24,10 +25,38 @@ function NavbarFirstRow({
 	currentUser,
 	handleLogout,
 	userCartDetails,
+	searchResult,
+	setSearchResult,
 }) {
 	const [searchBarFocus, setSearchFocus] = useState(false);
 	const [logoutBTN, setLogoutBTN] = useState();
 	const [isHovered, setIsHovered] = useState(false);
+	const [searchKeyword, setSearchKeyword] = useState("");
+
+	// -------------------------------------------------------
+	// ************** HANDLING SEARCHBAR RESULT ***************
+	// -------------------------------------------------------
+	// console.log(searchResult);
+	// console.log(searchKeyword);
+
+	useEffect(() => {
+		if (searchKeyword.length > 0) {
+			console.log(searchKeyword.toLowerCase());
+
+			const query = searchKeyword.toLowerCase();
+
+			const filteredProducts = allProducts.filter(
+				(product) =>
+					product.title.includes(query) ||
+					product.category.includes(query) ||
+					product.subCategory.includes(query) ||
+					// product.description.includes(query) ||
+					product.brand.includes(query),
+			);
+
+			setSearchResult(filteredProducts);
+		}
+	}, [searchKeyword]);
 
 	// -------------------------------------------------------
 	// ************** HANDLING SEARCHBAR WIDTH ***************
@@ -87,6 +116,8 @@ function NavbarFirstRow({
 					type="text"
 					placeholder="Search BlinkMart.in"
 					className="flex-grow bg-transparent outline-none px-4 py-2 text-black text-md w-[100%]"
+					value={searchKeyword}
+					onChange={(e) => setSearchKeyword(e.target.value)}
 					onFocus={handleSideBarOnFocus}
 					onBlur={handleSideBarOnBlur}
 				/>

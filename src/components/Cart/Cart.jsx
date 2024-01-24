@@ -8,7 +8,7 @@ import { fireDB } from "../../firebaseConfig/firebase";
 import { collection, doc } from "firebase/firestore";
 import { deleteDoc, getDocs, updateDoc } from "firebase/firestore";
 // ROUTER
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // ICONS
 import { FaBagShopping } from "react-icons/fa6";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -24,7 +24,7 @@ function Cart() {
 	const [totalAmount, setTotalAmout] = useState(0);
 	const [scrollY, setScrollY] = useState(0);
 	const [isRemovigItem, setRemovingItem] = useState(false);
-
+	const navigateTo = useNavigate();
 	// ------------------------------------------------------
 	// ***************** DELETE CART ITEM *****************
 	// ------------------------------------------------------
@@ -206,7 +206,7 @@ function Cart() {
 											className="rounded-md cursor-pointer w-[60%] md:w-[150px] object-contain hover:scale-105 transition bg-white mt-5 md:mt-0"
 											title="Tap to know more..."
 											onClick={() => {
-												navigate(
+												navigateTo(
 													`/ProductDetail/${item.id}`,
 												);
 												scrollToTop();

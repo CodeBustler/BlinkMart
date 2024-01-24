@@ -13,6 +13,9 @@ import ProductsTable from "./tableData/ProductsTable";
 import UsersTable from "./tableData/UsersTable";
 // ROUTER
 import { Link, useNavigate } from "react-router-dom";
+import { scrollToTop } from "../utilities/RequiredFunctions";
+import { FaAnglesLeft } from "react-icons/fa6";
+
 // --------------------------------------------------------
 
 function Dashboard() {
@@ -134,6 +137,12 @@ function Dashboard() {
 			) : (
 				navigate("/login")
 			)}
+			<button
+				className="w-full bg-[#131A22]  py-2 text-center flex items-center gap-2 justify-center cursor-pointer text-gray-400 select-none "
+				onClick={scrollToTop}
+			>
+				<FaAnglesLeft className="rotate-90 " />
+			</button>
 		</>
 	);
 }
