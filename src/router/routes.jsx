@@ -22,6 +22,7 @@ import CustomerService from "../Pages/CustomerService";
 import Orders from "../components/Orders/orders";
 import UserDetail from "../components/UserDetail/UserDetail";
 import UpdateProduct from "../components/Dashboard/UpdateProduct";
+import SearchProducts from "../components/Products/SearchProducts";
 
 // ------------------------------------------------------
 // **************** PROTECT ROUTES ****************
@@ -88,6 +89,7 @@ const routes = createBrowserRouter(
 						</ProtectedRoute>
 					}
 				/>
+				<Route path="/searchResults" element={<SearchProducts />} />
 			</Route>
 			<Route path="/*" element={<NoPage />} />
 			<Route

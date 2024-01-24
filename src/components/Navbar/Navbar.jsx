@@ -30,6 +30,7 @@ function Navbar() {
 		userCartDetails,
 		searchResult,
 		setSearchResult,
+		setSearchError,
 	} = useContext(MyContext);
 	const navigateTo = useNavigate();
 
@@ -83,6 +84,7 @@ function Navbar() {
 				userCartDetails={userCartDetails}
 				searchResult={searchResult}
 				setSearchResult={setSearchResult}
+				setSearchError={setSearchError}
 			/>
 
 			{/*SECOND ROW*/}

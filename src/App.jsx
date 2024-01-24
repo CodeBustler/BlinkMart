@@ -24,8 +24,9 @@ function App() {
   const [userUID, setUserUID] = useState("");
   const [currentUser, setCurrentUser] = useState([]);
 
-  // SEARCH KEYWORD
+  // SEARCH BAR RELATED
   const [searchResult, setSearchResult] = useState([]);
+  const [searchError, setSearchError] = useState("Search for products");
 
   // CART RELATED (BTN TITLE & CART ANIMATION)
   const [cartAnimate, setCartAnimate] = useState(false);
@@ -200,6 +201,8 @@ function App() {
           fetchUserCart,
           searchResult,
           setSearchResult,
+          searchError,
+          setSearchError,
         }}
       >
         <RouterProvider router={routes} />

@@ -37,6 +37,7 @@ function UpdateProduct() {
 		description: editProduct?.description || "",
 		category: editProduct?.category || "",
 		subCategory: editProduct?.subCategory || "",
+		keywords: editProduct?.keywords || "",
 		date: new Date().toLocaleString("en-US", {
 			month: "short",
 			day: "2-digit",
@@ -66,6 +67,7 @@ function UpdateProduct() {
 			!product.ratingCount ||
 			!product.description ||
 			!product.category ||
+			!product.keywords ||
 			!product.subCategory
 		) {
 			setErrorMsg("Please fill all fields");
@@ -99,6 +101,7 @@ function UpdateProduct() {
 			description: "",
 			category: "",
 			subCategory: "",
+			keywords: "",
 		});
 
 		setErrorMsg("");
@@ -335,7 +338,7 @@ function UpdateProduct() {
 								</div>
 								<div className="mt-6">
 									<h2 className="font-semibold text-gray-600">
-										Product Rating
+										Product Rating | Price | Keywords
 									</h2>
 									<div className="flex gap-5">
 										<select
@@ -380,10 +383,7 @@ function UpdateProduct() {
 
 								{/*----------------------------------------------------------------*/}
 
-								<div className="mt-7">
-									<h2 className="font-semibold text-gray-600">
-										Product Price
-									</h2>
+								<div className="mt-0">
 									<div className="flex gap-5">
 										<input
 											type="number"
@@ -406,6 +406,21 @@ function UpdateProduct() {
 												setProduct((prev) => ({
 													...prev,
 													actualPrice:
+														event.target.value,
+												}))
+											}
+										/>
+									</div>
+									<div className="flex gap-5">
+										<input
+											type="text"
+											placeholder="Keywords"
+											className="border py-2 px-3 mt-3 rounded-lg  outline-blue-300 w-[100%]"
+											value={product.keywords}
+											onChange={(event) =>
+												setProduct((prev) => ({
+													...prev,
+													keywords:
 														event.target.value,
 												}))
 											}

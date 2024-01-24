@@ -29,6 +29,7 @@ function AddProduct() {
 		description: "",
 		category: "",
 		subCategory: "",
+		keywords: "",
 		date: new Date().toLocaleString("en-US", {
 			month: "short",
 			day: "2-digit",
@@ -57,6 +58,7 @@ function AddProduct() {
 			!product.ratingCount ||
 			!product.description ||
 			!product.category ||
+			!product.keywords ||
 			!product.subCategory
 		) {
 			setErrorMsg("Please fill all fields");
@@ -93,6 +95,7 @@ function AddProduct() {
 			description: "",
 			category: "",
 			subCategory: "",
+			keywords: "",
 		});
 
 		setErrorMsg("");
@@ -329,7 +332,7 @@ function AddProduct() {
 								</div>
 								<div className="mt-6">
 									<h2 className="font-semibold text-gray-600">
-										Product Rating
+										Product Rating | Price | Keywords
 									</h2>
 									<div className="flex gap-5">
 										<select
@@ -374,10 +377,7 @@ function AddProduct() {
 
 								{/*----------------------------------------------------------------*/}
 
-								<div className="mt-7">
-									<h2 className="font-semibold text-gray-600">
-										Product Price
-									</h2>
+								<div className="mt-">
 									<div className="flex gap-5">
 										<input
 											type="number"
@@ -405,6 +405,21 @@ function AddProduct() {
 											}
 										/>
 									</div>
+								</div>
+
+								<div className="flex gap-5">
+									<input
+										type="text"
+										placeholder="Keywords"
+										className="border py-2 px-3 mt-3 rounded-lg  outline-blue-300 w-[100%]"
+										value={product.keywords}
+										onChange={(event) =>
+											setProduct((prev) => ({
+												...prev,
+												keywords: event.target.value,
+											}))
+										}
+									/>
 								</div>
 							</div>
 						</div>

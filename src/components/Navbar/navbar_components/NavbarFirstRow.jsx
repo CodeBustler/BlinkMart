@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 // ROUTER
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 // ICONS
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RiAdminFill, RiShoppingCartFill } from "react-icons/ri";
 import { BsSearch } from "react-icons/bs";
 import { LuShoppingCart } from "react-icons/lu";
 import { LuMapPin } from "react-icons/lu";
-import { scrollToTop } from "../../Utilities/RequiredFunctions";
 import flag_icon from "../../../assets/flag_icon.png";
 import { VscAccount } from "react-icons/vsc";
 import { FiBox } from "react-icons/fi";
 import { TbLogout } from "react-icons/tb";
+import { scrollToTop } from "../../utilities/RequiredFunctions";
+
 // ---------------------------------------------------------------
 
 function NavbarFirstRow({
@@ -27,36 +28,46 @@ function NavbarFirstRow({
 	userCartDetails,
 	searchResult,
 	setSearchResult,
+	setSearchError,
 }) {
 	const [searchBarFocus, setSearchFocus] = useState(false);
 	const [logoutBTN, setLogoutBTN] = useState();
 	const [isHovered, setIsHovered] = useState(false);
 	const [searchKeyword, setSearchKeyword] = useState("");
+	const navigateTo = useNavigate();
 
 	// -------------------------------------------------------
 	// ************** HANDLING SEARCHBAR RESULT ***************
 	// -------------------------------------------------------
-	// console.log(searchResult);
-	// console.log(searchKeyword);
-
 	useEffect(() => {
-		if (searchKeyword.length > 0) {
-			console.log(searchKeyword.toLowerCase());
+		const query = searchKeyword.toLowerCase();
 
-			const query = searchKeyword.toLowerCase();
-
-			const filteredProducts = allProducts.filter(
-				(product) =>
-					product.title.includes(query) ||
-					product.category.includes(query) ||
-					product.subCategory.includes(query) ||
-					// product.description.includes(query) ||
-					product.brand.includes(query),
-			);
-
-			setSearchResult(filteredProducts);
+		if (query.length <= 0) {
+			setSearchResult([]);
+			navigateTo("/");
+			return;
 		}
-	}, [searchKeyword]);
+
+		if (query.length > 0) {
+			navigateTo("/searchResults");
+		}
+
+		const filteredProducts = allProducts.filter(
+			(product) =>
+				product.keywords.includes(query) ||
+				product.title.includes(query) ||
+				product.category.includes(query) ||
+				product.subCategory.includes(query) ||
+				product.price.includes(query) ||
+				product.brand.includes(query),
+		);
+
+		if (query.length > 0 && filteredProducts.length === 0) {
+			setSearchError("No Result found!");
+		}
+		setSearchResult(filteredProducts);
+		scrollToTop();
+	}, [searchKeyword, allProducts]);
 
 	// -------------------------------------------------------
 	// ************** HANDLING SEARCHBAR WIDTH ***************

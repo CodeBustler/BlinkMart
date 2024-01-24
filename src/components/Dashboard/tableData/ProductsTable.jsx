@@ -29,16 +29,21 @@ function ProductsTable() {
 		}
 
 		try {
-			const isConfirmed = window.confirm(
-				"Do you want to delete product from database ?",
+			// CHECK ADMIN PINCODE
+			const env = await import.meta.env;
+			let enteredPinNumber = Number(
+				prompt("Please enter ADMIN PIN number !"),
 			);
+			const adminPinCode = Number(env.VITE_REACT_APP_PIN_CODE);
 
-			if (isConfirmed) {
+			if (enteredPinNumber === adminPinCode) {
 				setRemovingItem(true);
 				await deleteDoc(doc(fireDB, "allProducts", docId));
 				await fetchProducts(); // UPDATE CART STATE
 				toastProductDelete(); // SUCCESS MESSAGE
 				scrollToTop();
+			} else {
+				alert("Invalid pin number");
 			}
 		} catch (error) {
 			console.log(error);

@@ -47,7 +47,7 @@ function ProductDetail() {
 	// FILTER SINGLE PRODUCT
 	useEffect(() => {
 		const filterProduct = allProducts.filter(
-			(item) => item.id == productId,
+			(item) => item.id === productId,
 		);
 		if (filterProduct.length > 0) {
 			setDisplayProduct(filterProduct[0]);
