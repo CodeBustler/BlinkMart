@@ -28,7 +28,7 @@ function NavbarFirstRow({
 	const [searchBarFocus, setSearchFocus] = useState(false);
 	const [logoutBTN, setLogoutBTN] = useState();
 	const [isHovered, setIsHovered] = useState(false);
-
+	console.log(userName);
 	// -------------------------------------------------------
 	// ************** HANDLING SEARCHBAR WIDTH ***************
 	// -------------------------------------------------------
@@ -63,7 +63,7 @@ function NavbarFirstRow({
 			</Link>
 
 			{/* LOCATION */}
-			{admin ? (
+			{userName === "" || userName === "Admin" ? (
 				""
 			) : (
 				<div className="group hidden lg:flex items-start flex-col font-bold leading-none whitespace-nowrap">
