@@ -12,10 +12,9 @@ import {
 import tickIcon from "../../assets/tick_icon.png";
 import noImage from "../../assets/no_image.png";
 import { MdStar, MdStarBorder } from "react-icons/md";
-// REDUX & ROUTER
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../redux/cartSlice";
+// ROUTER
 import { useNavigate } from "react-router-dom";
+// FIREBASE
 import { addDoc, collection } from "firebase/firestore";
 import { fireDB } from "../../firebaseConfig/firebase";
 // ------------------------------------------------------
@@ -29,9 +28,8 @@ function ProductCard({ item }) {
 		userCartDetails,
 	} = useContext(MyContext);
 	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
-	const navigateTo = useNavigate();
-	const dispatch = useDispatch();
 	const [isAddingToCart, setIsAddingToCart] = useState(false);
+	const navigateTo = useNavigate();
 
 	// ------------------------------------------------------
 	// ******************* GET USER CART *******************

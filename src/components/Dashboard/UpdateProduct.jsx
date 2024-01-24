@@ -2,46 +2,55 @@ import { useContext, useState, useEffect } from "react";
 import { MyContext } from "../../App";
 import {
 	scrollToTop,
-	toastProductAddedToDB,
-} from "../utilities/RequiredFunctions";
+	toastProductUpdated,
+} from "../Utilities/RequiredFunctions";
 import { IoMdSad } from "react-icons/io";
 import NavbarForAdmin from "../Navbar/NavbarForAdmin";
 // FIREBASE
-import { addDoc, collection } from "firebase/firestore";
+import { collection, doc, updateDoc } from "firebase/firestore";
 import { fireDB } from "../../firebaseConfig/firebase";
-
+import { useNavigate, useParams } from "react-router-dom";
 // ------------------------------------------------------
 
-function AddProduct() {
+function UpdateProduct() {
 	const { fetchProducts } = useContext(MyContext);
 	const [errorMsg, setErrorMsg] = useState("");
+	const { allProducts } = useContext(MyContext);
+	const { productId } = useParams();
+	const filterProductToUpdate = allProducts.filter(
+		(item) => item.id === productId,
+	);
+	const navigateTo = useNavigate();
+	const editProduct = filterProductToUpdate[0];
+
 	const [product, setProduct] = useState({
-		title: "",
-		brand: "",
-		img1: "",
-		img2: "",
-		img3: "",
-		img4: "",
-		price: "",
-		actualPrice: "",
-		rating: "",
-		ratingCount: "",
-		description: "",
-		category: "",
-		subCategory: "",
+		title: editProduct?.title || "",
+		brand: editProduct?.brand || "",
+		img1: editProduct?.img1 || "",
+		img2: editProduct?.img2 || "",
+		img3: editProduct?.img3 || "",
+		img4: editProduct?.img4 || "",
+		price: editProduct?.price || "",
+		actualPrice: editProduct?.actualPrice || "",
+		rating: editProduct?.rating || "",
+		ratingCount: editProduct?.ratingCount || "",
+		description: editProduct?.description || "",
+		category: editProduct?.category || "",
+		subCategory: editProduct?.subCategory || "",
 		date: new Date().toLocaleString("en-US", {
 			month: "short",
 			day: "2-digit",
 			year: "numeric",
 		}),
 	});
+
 	// ------------------------------------------------------
 	useEffect(() => {
 		scrollToTop();
 	}, []);
 
 	// ADD PRODUCT FUNCTION
-	const addProduct = async (e) => {
+	const updateProduct = async (e) => {
 		e.preventDefault();
 
 		if (
@@ -63,12 +72,9 @@ function AddProduct() {
 			return;
 		}
 		try {
-			const docRef = await addDoc(
-				collection(fireDB, "allProducts"),
-				product,
-			);
-			console.log("Product added to DB", docRef.id);
-			toastProductAddedToDB();
+			await updateDoc(doc(fireDB, "allProducts", productId), product);
+			console.log("Product updated");
+			toastProductUpdated();
 		} catch (e) {
 			console.error("Error adding document: ", e);
 		} finally {
@@ -163,7 +169,7 @@ function AddProduct() {
 			<div className="flex flex-col items-center ">
 				<form className="flex flex-col md:border px-4 pb-7 md:pt-3 md:px-7  md:mt-8 rounded-lg md:shadow-2xl gap-2 lg:w-[80%]">
 					<h1 className="font-semibold text-2xl my-4 text-gray-600">
-						Add Product
+						Update Product
 					</h1>
 					{/*CONTAINER*/}
 					<div className="container">
@@ -412,9 +418,9 @@ function AddProduct() {
 					<div className="flex  gap-5 mt-8 flex-col md:flex-row ">
 						<button
 							className="bg-yellow-400 p-2 rounded-lg outline-blue-300 hover:bg-yellow-500 active:bg-yellow-400 px-6  "
-							onClick={addProduct}
+							onClick={updateProduct}
 						>
-							Add Product
+							Update Product
 						</button>
 						<button
 							type="button"
@@ -441,4 +447,4 @@ function AddProduct() {
 	);
 }
 
-export default AddProduct;
+export default UpdateProduct;

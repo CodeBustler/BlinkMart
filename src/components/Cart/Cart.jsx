@@ -91,7 +91,6 @@ function Cart() {
 			await updateDoc(doc(fireDB, userUID, item.docId), {
 				quantity: newQuantity,
 			});
-			console.log(newQuantity);
 			await fetchUserCart();
 		} catch (error) {
 			console.error("Error updating document: ", error);
@@ -276,6 +275,14 @@ function Cart() {
 														}
 													/>
 												</div>
+												{/*<small className="text-xl text-gray-700">
+													{" "}
+													{item.quantity > 1
+														? "₹ " +
+														  item.price *
+																item.quantity
+														: ""}
+												</small>*/}
 												<MdDeleteForever
 													className="text-4xl text-red-500 cursor-pointer hover:scale-125 active:scale-90 transition "
 													onClick={(e) =>

@@ -21,15 +21,18 @@ function UsersTable({ userDB }) {
 								key={index}
 								className="border p-3 mb-4 flex items-center justify-between md:justify-start  gap-10"
 							>
-								<div className="flex items-center gap-3 md:min-w-[20%]">
+								<div className="flex items-center gap-5 md:min-w-[18%]">
 									<img
 										src={profile_avatar}
 										alt=""
-										className="w-[50px]"
+										className="w-[60px] md:w-[50px ]"
 									/>
 									<div>
 										<div className="font-semibold">
 											{user.name}
+										</div>
+										<div className="md:hidden">
+											{user.email}
 										</div>
 										<small
 											className={`${
@@ -54,11 +57,23 @@ function UsersTable({ userDB }) {
 									<small>Email</small>
 								</div>
 
-								<div className="hidden md:block">
+								<div className="hidden md:block md:min-w-[14%]">
 									<div className="font-semibold">
 										{user.city}
 									</div>
 									<small>City</small>
+								</div>
+								<div className="hidden md:block md:min-w-[12%]">
+									<div className="font-semibold">
+										{user.areaPinCode}
+									</div>
+									<small>ZipCode</small>
+								</div>
+								<div className="hidden lg:block md:min-w-[15%]">
+									<div className="font-semibold">
+										{user.id}
+									</div>
+									<small>Firebase User Id</small>
 								</div>
 							</div>
 						</>

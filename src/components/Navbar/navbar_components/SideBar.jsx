@@ -89,7 +89,7 @@ function SideBar({
 						<div className="p-4">
 							<Link
 								to="/user_detail"
-								className=" mb-3 flex items-center gap-2"
+								className=" mb-4 flex items-center gap-2"
 								onClick={handleSideBar}
 							>
 								<MdAccountCircle className="text-2xl text-gray-600" />

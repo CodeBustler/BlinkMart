@@ -28,7 +28,7 @@ function NavbarFirstRow({
 	const [searchBarFocus, setSearchFocus] = useState(false);
 	const [logoutBTN, setLogoutBTN] = useState();
 	const [isHovered, setIsHovered] = useState(false);
-	console.log(userName);
+
 	// -------------------------------------------------------
 	// ************** HANDLING SEARCHBAR WIDTH ***************
 	// -------------------------------------------------------

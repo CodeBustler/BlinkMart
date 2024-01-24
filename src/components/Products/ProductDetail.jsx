@@ -16,8 +16,6 @@ import {
 import noImage from "../../assets/no_image.png";
 // ROUTER
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/cartSlice";
 import tickIcon from "../../assets/tick_icon.png";
 import { addDoc, collection } from "firebase/firestore";
 import { fireDB } from "../../firebaseConfig/firebase";
@@ -31,9 +29,9 @@ function ProductDetail() {
 	const [itemInCart, setLocalItemInCart] = useState("Add To Cart");
 	const { productId } = useParams(); //EXTRACT PRODUCT ID TO DISPLAY
 	const [isAddingToCart, setIsAddingToCart] = useState(false);
-
-	const dispatch = useDispatch();
 	const navigateTo = useNavigate();
+
+	// CONTEXT
 	const {
 		allProducts,
 		setItemInCart,

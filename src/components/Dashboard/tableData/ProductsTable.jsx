@@ -29,11 +29,17 @@ function ProductsTable() {
 		}
 
 		try {
-			setRemovingItem(true);
-			await deleteDoc(doc(fireDB, "allProducts", docId));
-			await fetchProducts(); // UPDATE CART STATE
-			toastProductDelete(); // SUCCESS MESSAGE
-			scrollToTop();
+			const isConfirmed = window.confirm(
+				"Do you want to delete product from database ?",
+			);
+
+			if (isConfirmed) {
+				setRemovingItem(true);
+				await deleteDoc(doc(fireDB, "allProducts", docId));
+				await fetchProducts(); // UPDATE CART STATE
+				toastProductDelete(); // SUCCESS MESSAGE
+				scrollToTop();
+			}
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -62,15 +68,15 @@ function ProductsTable() {
 					// DISCOUNT PERCENTAGE
 					const discountPercentage =
 						calculateDiscountPercentage(product);
-					console.log(product);
+
 					return (
 						<div
 							key={index}
-							className=" flex  items-center justify-between border border-2 rounded-md mb-5 p-2 md:p-5 hover:shadow-lg hover:bg-gray-100 md:px-5"
+							className=" flex  items-center justify-between border border-2 rounded-md mb-5 p-3 md:p-5 hover:shadow-lg hover:bg-gray-100 md:px-5"
 						>
 							{/*PRODUCT NAME & IMAGE*/}
-							<div className="flex items-center gap-2 md:gap-5  md:min-w-[20%]">
-								<div className="w-20 h-20 object-contain ">
+							<div className="flex items-center gap-1 md:gap-5  md:min-w-[23%]">
+								<div className="w-12 h-12  md:w-20 md:h-20 object-contain ">
 									<img
 										src={[product.img1]}
 										alt="product_image"
@@ -94,7 +100,7 @@ function ProductsTable() {
 							</div>
 
 							{/*PRODUCT PRICE*/}
-							<div className="hidden md:block">
+							<div className="hidden md:block md:min-w-[15%]">
 								<div className="">
 									<span className="font-semibold">
 										Price :{" "}
@@ -113,23 +119,28 @@ function ProductsTable() {
 									</span>
 								</div>
 							</div>
-							<div className="font-bold text-green-500 hidden md:block">
+							<div className="font-bold text-green-500 hidden md:block ">
 								% {discountPercentage} Off
 							</div>
 
-							<div className=" text-gray-500 mt-8 md:mt-0 hidden md:block">
+							<div className=" text-gray-500 mt-8 md:mt-0 hidden md:block md:min-w-[8%]">
 								{product.price > 500
 									? "FREE Delivery By BlinkMart"
 									: "+ ₹20 Delivery Charges"}
 							</div>
 
-							<div className="flex items-center gap-2 md:gap-10  text-3xl">
+							<div className="flex items-center gap-2 md:gap-10 text-3xl ">
 								<FaEdit
 									className=" text-gray-400 cursor-pointer hover:scale-125 transition"
 									title="Update Product Detail"
+									onClick={() =>
+										navigateTo(
+											`/updateProduct/${product.id}`,
+										)
+									}
 								/>
 								<MdDeleteForever
-									className="text-red-500 cursor-pointer hover:scale-125 transition"
+									className="text-red-500 cursor-pointer hover:scale-125 transition md:text-4xl"
 									title="Delete Product From Database"
 									onClick={() => deleteFromDB(product.id)}
 								/>

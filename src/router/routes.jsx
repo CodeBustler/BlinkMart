@@ -21,6 +21,7 @@ import Cart from "../components/Cart/Cart";
 import CustomerService from "../Pages/CustomerService";
 import Orders from "../components/Orders/orders";
 import UserDetail from "../components/UserDetail/UserDetail";
+import UpdateProduct from "../components/Dashboard/UpdateProduct";
 
 // ------------------------------------------------------
 // **************** PROTECT ROUTES ****************
@@ -102,6 +103,14 @@ const routes = createBrowserRouter(
 				element={
 					<ProtectedRouteForAdmin>
 						<AddProduct />
+					</ProtectedRouteForAdmin>
+				}
+			/>
+			<Route
+				path="/updateProduct/:productId"
+				element={
+					<ProtectedRouteForAdmin>
+						<UpdateProduct />
 					</ProtectedRouteForAdmin>
 				}
 			/>

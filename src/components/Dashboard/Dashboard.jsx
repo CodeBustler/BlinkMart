@@ -21,8 +21,10 @@ function Dashboard() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		!admin && navigate("/login");
-	});
+		if (!admin) {
+			navigate("/login");
+		}
+	}, [admin, navigate]);
 
 	// --------------------------------------------------------
 	// *********** CONDITIONAL RENDERING COMPONENTS ***********

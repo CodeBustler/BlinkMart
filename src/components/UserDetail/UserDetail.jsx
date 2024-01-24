@@ -19,12 +19,12 @@ function UserDetail() {
 		}
 	}, []);
 
-	// Log the updated userData when it changes
+	// UPDATED USERDATA
 	useEffect(() => {
 		console.log(userData?.user);
 	}, [userData]);
 
-	// Check if userData and userData.user are defined before destructuring
+	// CHECKS THE USERDATA BEFORE DESTUCTURING
 	const { email, displayName, createdAt, lastLoginAt } = userData?.user || {};
 
 	// ACCOUNT CREATED_AT
@@ -51,7 +51,6 @@ function UserDetail() {
 		day: "numeric",
 	});
 
-	// console.log(lastLogin);
 	// -------------------------------------------------------------
 	return (
 		<>
