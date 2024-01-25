@@ -28,7 +28,7 @@ function SideBar({
 		<>
 			{/*BG TRANSPARENT*/}
 			<div
-				className={`w-[100%] h-[100vh] absolute top-0 text-lg text-orange-400  bg-black transition delay-1000 cursor-pointer  ${
+				className={`w-[100%] h-[100vh] absolute top-0 text-lg text-orange-400 bg-black transition delay-1000 cursor-pointer  ${
 					sidebarToggle ? "hidden" : "opacity-70 z-20 "
 				}`}
 			></div>
@@ -37,6 +37,7 @@ function SideBar({
 				className={`sideBar_customCSS fixed top-0 w-[100%] h-[100vh]  z-30  transition flex justify-between ${
 					sidebarToggle ? "-translate-x-full  " : "translate-x-0"
 				}`}
+				onClick={() => handleSideBar()}
 			>
 				{/* SIDEBAR CONTENT*/}
 				<div className={`bg-white shadow-2xl `}>

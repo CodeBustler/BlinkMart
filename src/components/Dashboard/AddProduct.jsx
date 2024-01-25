@@ -13,7 +13,7 @@ import { fireDB } from "../../firebaseConfig/firebase";
 // ------------------------------------------------------
 
 function AddProduct() {
-	const { fetchProducts } = useContext(MyContext);
+	const { fetchProducts, allProducts } = useContext(MyContext);
 	const [errorMsg, setErrorMsg] = useState("");
 	const [product, setProduct] = useState({
 		title: "",
@@ -30,6 +30,7 @@ function AddProduct() {
 		category: "",
 		subCategory: "",
 		keywords: "",
+		quantity: 1,
 		date: new Date().toLocaleString("en-US", {
 			month: "short",
 			day: "2-digit",
@@ -96,6 +97,7 @@ function AddProduct() {
 			category: "",
 			subCategory: "",
 			keywords: "",
+			quantity: 1,
 		});
 
 		setErrorMsg("");
@@ -159,6 +161,9 @@ function AddProduct() {
 			subCategory: selectedSubCategory,
 		}));
 	};
+
+	const allP = allProducts.every((product) => "quantity" in product);
+	console.log(allP);
 	// ------------------------------------------------------
 	return (
 		<>
