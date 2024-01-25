@@ -121,7 +121,7 @@ function ProductCard({ item }) {
 				<div className="font-bold text-xl text-gray-500 flex items-center justify-between">
 					₹ {numberWithCommas(item.price)}
 				</div>
-				<div className="font-bold hover:underline cursor-default mt-1">
+				<div className="font-bold hover:underline cursor-default mt-1 capitalize">
 					{item.title}
 				</div>
 				<button

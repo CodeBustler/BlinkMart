@@ -38,7 +38,7 @@ function NavbarForAdmin() {
 
 	// ---------------------------------------------------------------
 	return (
-		<nav className="bg-[#131921] flex items-center justify-between px-4 py-4 gap-3  text-white sticky top-0 z-30">
+		<nav className="bg-[#131921] flex items-center justify-between px-4 py-4 gap-3  text-white sticky top-0 z-20">
 			<Link
 				to="/"
 				className="font-bold text-2xl flex items-center gap-1  "

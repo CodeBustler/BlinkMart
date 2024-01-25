@@ -194,7 +194,7 @@ function ProductDetail() {
 						&nbsp;
 						{displayProduct?.subCategory?.replace(/_/g, " ") || ""}
 					</p>
-					<h2 className="font-bold text-2xl pt-2">
+					<h2 className="font-bold text-2xl pt-2 capitalize">
 						{displayProduct.title}
 					</h2>
 					<div className="flex items-center gap-3">

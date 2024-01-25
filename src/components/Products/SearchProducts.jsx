@@ -11,9 +11,11 @@ function SearchProducts() {
 		<>
 			{searchResult.length > 0 ? (
 				<div className="container mx-auto ">
-					<h1>Search</h1>
+					<small className="text-gray-400">
+						About {searchResult.length} results
+					</small>
 
-					<div className="flex flex-wrap   gap-5">
+					<div className="flex flex-wrap justify-center md:justify-start mt-3 gap-5">
 						{/*MAPPING PRODUCTS*/}
 						{searchResult.map((item, index) => (
 							<ProductCard key={index} item={item} />

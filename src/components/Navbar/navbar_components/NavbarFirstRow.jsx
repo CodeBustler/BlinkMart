@@ -39,45 +39,70 @@ function NavbarFirstRow({
 	// -------------------------------------------------------
 	// ************** HANDLING SEARCHBAR RESULT ***************
 	// -------------------------------------------------------
+
+	// DEBOUNCED SEARCH FUNCTION
+	let debounceTimer;
+	const debouncedSearch = (query) => {
+		clearTimeout(debounceTimer);
+
+		// SETTING TIMEOUT FOR DELAYED SEARCH
+		debounceTimer = setTimeout(() => {
+			const lowerCaseQuery = query.toLowerCase();
+
+			if (lowerCaseQuery.length <= 0) {
+				setSearchResult([]); // RESET RESULTS
+				navigateTo("/"); // NAVIGATE TO HOME IF QUERY IS EMPTY
+				return;
+			}
+
+			if (lowerCaseQuery.length > 0) {
+				// IF QUERY IS NOT EMPTY NAVIGATE TO SEARCH RESULTS PAGE
+				navigateTo("/searchResults");
+			}
+
+			// FILTER PRODUCTS BASED ON QUERY
+			const filteredProducts = allProducts.filter(
+				(product) =>
+					product.keywords.includes(lowerCaseQuery) ||
+					product.title.includes(lowerCaseQuery) ||
+					product.category.includes(lowerCaseQuery) ||
+					product.subCategory.includes(lowerCaseQuery) ||
+					product.price.includes(lowerCaseQuery) ||
+					product.brand.includes(lowerCaseQuery),
+			);
+
+			// SET ERROR MESSAGE IF NO RESULTS FOUND
+			if (lowerCaseQuery.length > 0 && filteredProducts.length === 0) {
+				setSearchError("No Result found!");
+			}
+
+			// SET SEARCH RESULTS AND SCROLL TO TOP
+			setSearchResult(filteredProducts);
+			scrollToTop();
+		}, 300); // DELAY TIMER
+	};
+
 	useEffect(() => {
-		const query = searchKeyword.toLowerCase();
+		// CALL DEBOUNCED SEARCH FUNCTION
+		debouncedSearch(searchKeyword);
 
-		if (query.length <= 0) {
-			setSearchResult([]);
-			navigateTo("/");
-			return;
-		}
-
-		if (query.length > 0) {
-			navigateTo("/searchResults");
-		}
-
-		const filteredProducts = allProducts.filter(
-			(product) =>
-				product.keywords.includes(query) ||
-				product.title.includes(query) ||
-				product.category.includes(query) ||
-				product.subCategory.includes(query) ||
-				product.price.includes(query) ||
-				product.brand.includes(query),
-		);
-
-		if (query.length > 0 && filteredProducts.length === 0) {
-			setSearchError("No Result found!");
-		}
-		setSearchResult(filteredProducts);
-		scrollToTop();
+		// CLEANUP FUNCTION TO CLEAR THE TIMEOUT WHEN
+		// - COMPONENT UNMOUNTS OR DEPENDENCIES CHANGE
+		return () => {
+			clearTimeout(debounceTimer);
+		};
 	}, [searchKeyword, allProducts]);
 
 	// -------------------------------------------------------
 	// ************** HANDLING SEARCHBAR WIDTH ***************
 	// -------------------------------------------------------
+
 	// ON FOCUS
-	const handleSideBarOnFocus = () => {
+	const handleSearchBarOnFocus = () => {
 		setSearchFocus(!searchBarFocus);
 	};
 	// ON BLUR
-	const handleSideBarOnBlur = () => {
+	const handleSearchBarOnBlur = () => {
 		setSearchFocus(!searchBarFocus);
 	};
 
@@ -129,8 +154,8 @@ function NavbarFirstRow({
 					className="flex-grow bg-transparent outline-none px-4 py-2 text-black text-md w-[100%]"
 					value={searchKeyword}
 					onChange={(e) => setSearchKeyword(e.target.value)}
-					onFocus={handleSideBarOnFocus}
-					onBlur={handleSideBarOnBlur}
+					onFocus={handleSearchBarOnFocus}
+					onBlur={handleSearchBarOnBlur}
 				/>
 				<div className="bg-orange-400 flex items-center rounded-br rounded-tr cursor-pointer">
 					<BsSearch className="text-black text-xl mx-3" />
