@@ -29,6 +29,8 @@ function HomePage() {
 	// ------------------------------------------------------
 	return (
 		<>
+			{/*BG BANNERS*/}
+			<div></div>
 			{loading ? (
 				<Loader />
 			) : (

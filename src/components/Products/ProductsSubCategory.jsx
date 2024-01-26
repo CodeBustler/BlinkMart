@@ -20,6 +20,7 @@ function ProductsSubCategory() {
 		const filterSubCategoryItems = allProducts.filter(
 			(item) => item.subCategory === subCategoryName,
 		);
+		filterSubCategoryItems.reverse();
 		setSubCategoryItems(filterSubCategoryItems);
 		scrollToTop();
 	}, [allProducts, subCategoryName]);

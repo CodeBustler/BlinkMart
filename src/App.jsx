@@ -35,7 +35,30 @@ function App() {
   // UNIVERSAL CART FOR CURRENT USER
   const [userCartDetails, setUserCartDetails] = useState([]);
 
-  console.log(searchResult);
+  // HERO SECTION
+  const [bannersData, setBannersData] = useState([]);
+
+  // ------------------------------------------------------
+  // ***************** GET HERO BANNERS *****************
+  // ------------------------------------------------------
+  const getHeroBanners = async () => {
+    setLoading(true);
+
+    try {
+      const snapshot = await getDocs(collection(fireDB, "heroBanners"));
+      const bannersData = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      setBannersData(bannersData);
+    } catch (error) {
+      console.error("Error fetching hero banners:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getHeroBanners();
+  }, []);
 
   // ------------------------------------------------------
   // ***************** GET ALL PRODUCTS *****************
@@ -203,6 +226,7 @@ function App() {
           setSearchResult,
           searchError,
           setSearchError,
+          bannersData,
         }}
       >
         <RouterProvider router={routes} />

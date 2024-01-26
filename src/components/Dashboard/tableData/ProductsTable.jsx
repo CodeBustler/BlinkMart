@@ -12,6 +12,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { FaPlusCircle } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
+import { IoImages } from "react-icons/io5";
 // FIREBASE
 import { deleteDoc, doc } from "firebase/firestore";
 import { fireDB } from "../../../firebaseConfig/firebase";
@@ -136,17 +137,26 @@ function ProductsTable({ setSearchBarFocus }) {
 								setSearchKeywordADMIN(e.target.value)
 							}
 							onFocus={() => setSearchBarFocus(true)}
-							onBlur={() => setSearchBarFocus(false)}
+							// onBlur={() => setSearchBarFocus(false)}
 						/>
 						<IoIosSearch className="text-4xl text-gray-300 my-1 mr-3 " />
 					</div>
-					<Link
-						to="/addProduct"
-						className="w-10 h-10 rounded-full shadow-2xl hover:scale-110 transition flex items-center justify-center "
-						title="Add new product"
-					>
-						<FaPlusCircle className="scale-150 text-2xl text-purple-500" />
-					</Link>
+					<div className="flex  items-center gap-2">
+						<Link
+							to="/addProduct"
+							className="w-10 h-10 rounded-full shadow-2xl hover:scale-110 transition flex items-center justify-center "
+							title="Add new product"
+						>
+							<FaPlusCircle className="scale-150 text-2xl text-purple-500" />
+						</Link>
+						<Link
+							to="/AddHeroBanners"
+							className="relative group w-10 h-10 rounded-full shadow-2xl hover:scale-110 transition flex items-center justify-center "
+							title="Update Banners"
+						>
+							<IoImages className="scale-150 text-2xl text-purple-500" />
+						</Link>
+					</div>
 				</div>
 			</div>
 			<small className="text-gray-500 py-1 bg-white px-3">
