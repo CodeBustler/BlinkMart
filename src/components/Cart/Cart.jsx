@@ -152,7 +152,7 @@ function Cart() {
 	return (
 		<>
 			{userCartDetails.length === 0 ? (
-				<div className="flex items-center flex-col gap-10 md:gap-14 justify-start mt-10 min-h-[90vh]">
+				<div className="flex items-center flex-col gap-10 md:gap-14 justify-start mt-10 min-h-[90vh] p-4">
 					<img
 						src={emptyCart}
 						alt=""
@@ -171,8 +171,8 @@ function Cart() {
 				</div>
 			) : (
 				<>
-					<div className="flex items-center  justify-between mb-5">
-						<h1 className="text-2xl font-bold  md:text-left underline underline-heading underline-offset-4">
+					<div className="flex items-center  justify-between mb-5 p-5">
+						<h1 className="text-2xl font-bold  md:text-left underline underline-heading underline-offset-4 ">
 							Cart Items
 						</h1>
 						<MdDeleteForever
@@ -214,7 +214,7 @@ function Cart() {
 										/>
 										<div className="flex flex-col justify-between ">
 											<div className="">
-												<div className="font-semibold text-xl mb-1">
+												<div className="font-semibold text-xl mb-1 capitalize">
 													{item.title}
 												</div>
 												<small className="capitalize text-gray-400 px-3  pb-[3px] pt-[2px] bg-white rounded-xl ">

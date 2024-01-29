@@ -49,7 +49,7 @@ function ProductsCategory() {
 
 	// ----------------------------------------------------------
 	return (
-		<div>
+		<div className="p-4">
 			<h1 className="underline underline-offset-8 underline-heading text-2xl font-bold my-3 text-center md:text-left capitalize">
 				{categoryName.replace(/_/g, " ")}
 			</h1>

@@ -131,7 +131,7 @@ function ProductDetail() {
 	// ---------------------------------------------------------
 	return (
 		<>
-			<div className="grid grid-cols-1 md:grid-cols-2 place-items-center md:place-items-start  gap-10 md:gap-0 ">
+			<div className="grid grid-cols-1 md:grid-cols-2 place-items-center md:place-items-start  gap-10 md:gap-0 p-4">
 				{/*LEFT CONTAINER*/}
 				<div className="flex flex-col-reverse md:flex-row items-center md:items-start  justify-center lg:justify-end gap-2 md:w-[90%] w-full ">
 					{/*IMG THUMNAILS*/}
@@ -309,7 +309,7 @@ function ProductDetail() {
 				</div>
 			</div>
 
-			<div className="mt-10">
+			<div className="mt-10 p-4">
 				<ContainerForCard
 					containerTitle={"Related Products"}
 					filterProducts={filterSubCategory[0]?.subCategory}

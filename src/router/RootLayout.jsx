@@ -10,7 +10,7 @@ function RootLayout() {
 			{/* NAVIGATION BAR */}
 			<Navbar />
 
-			<main className="p-4 min-h-[55vh]">
+			<main className=" min-h-[55vh]">
 				{/* RENDER NESTED COMPONENTS */}
 				<Outlet />
 			</main>
