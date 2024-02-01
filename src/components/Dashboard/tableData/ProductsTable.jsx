@@ -149,13 +149,6 @@ function ProductsTable({ setSearchBarFocus }) {
 						>
 							<FaPlusCircle className="scale-150 text-2xl text-purple-500" />
 						</Link>
-						<Link
-							to="/AddHeroBanners"
-							className="relative group w-10 h-10 rounded-full shadow-2xl hover:scale-110 transition flex items-center justify-center "
-							title="Update Banners"
-						>
-							<IoImages className="scale-150 text-2xl text-purple-500" />
-						</Link>
 					</div>
 				</div>
 			</div>
@@ -184,15 +177,10 @@ function ProductsTable({ setSearchBarFocus }) {
 										alt="product_image"
 										className="w-full h-full object-contain hover:scale-110 transition cursor-pointer"
 										title="Tap to know more..."
-										onClick={() =>
-											navigateTo(
-												`/ProductDetail/${product.id}`,
-											)
-										}
 									/>
 								</div>
 								<div className="">
-									<div className="font-semibold">
+									<div className="font-semibold capitalize">
 										{product.title}
 									</div>
 									<div className="capitalize text-sm mt-1 text-gray-600">

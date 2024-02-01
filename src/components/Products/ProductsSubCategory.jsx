@@ -28,7 +28,7 @@ function ProductsSubCategory() {
 	// ------------------------------------------------------
 	return (
 		<>
-			<div className="container mx-auto p-4">
+			<div className="container mx-auto mt-6">
 				<h1 className="underline underline-offset-8 underline-heading text-2xl font-bold my-3 text-center md:text-left capitalize">
 					{subCategoryName.replace(/_/g, " ")}
 				</h1>
@@ -39,8 +39,8 @@ function ProductsSubCategory() {
 						<div
 							className={`flex flex-wrap mt-10 gap-5 ${
 								subCategoryItems.length < 4
-									? "justify-start"
-									: "justify-center"
+									? "justify-center md:justify-start"
+									: "justify-center md:justify-start"
 							} `}
 						>
 							{subCategoryItems.map((item, index) => (

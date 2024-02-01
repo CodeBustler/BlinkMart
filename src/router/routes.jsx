@@ -23,7 +23,6 @@ import Orders from "../components/Orders/orders";
 import UserDetail from "../components/UserDetail/UserDetail";
 import UpdateProduct from "../components/Dashboard/UpdateProduct";
 import SearchProducts from "../components/Products/SearchProducts";
-import AddHeroBanners from "../components/Dashboard/AddHeroBanners";
 // ------------------------------------------------------
 // **************** PROTECT ROUTES ****************
 // ------------------------------------------------------
@@ -116,14 +115,7 @@ const routes = createBrowserRouter(
 					</ProtectedRouteForAdmin>
 				}
 			/>
-			<Route
-				path="/AddHeroBanners"
-				element={
-					<ProtectedRouteForAdmin>
-						<AddHeroBanners />
-					</ProtectedRouteForAdmin>
-				}
-			/>
+
 			<Route path="/signup" element={<SignUp />} />
 			<Route path="/login" element={<Login />} />
 		</Route>,

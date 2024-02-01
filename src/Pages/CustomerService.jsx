@@ -11,7 +11,7 @@ import { IoLogoYoutube } from "react-icons/io5";
 function CustomerService() {
 	return (
 		<section>
-			<div className="container mx-auto my-3 ">
+			<div className="container mx-auto my-3 p-4 ">
 				<h2 className="text-2xl font-bold">
 					Hello, What can we help you with?
 				</h2>

@@ -10,8 +10,8 @@ function SearchProducts() {
 	return (
 		<>
 			{searchResult.length > 0 ? (
-				<div className="container mx-auto ">
-					<small className="text-gray-400">
+				<div className="container mx-auto mt-5 ">
+					<small className="text-gray-400 ">
 						About {searchResult.length} results
 					</small>
 

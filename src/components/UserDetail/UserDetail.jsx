@@ -50,7 +50,7 @@ function UserDetail() {
 	return (
 		<>
 			{/*CONTAINER*/}
-			<div className="flex flex-col md:flex-row items-center justify-center gap-7 md:gap-36 md:mx-52 mt-5">
+			<div className="flex flex-col md:flex-row items-center justify-center gap-7 md:gap-36 md:mx-52 mt-10">
 				<div className="flex items-center gap-5 flex-col">
 					<img
 						src={profile_avatar}

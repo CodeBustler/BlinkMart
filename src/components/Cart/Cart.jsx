@@ -152,7 +152,7 @@ function Cart() {
 	return (
 		<>
 			{userCartDetails.length === 0 ? (
-				<div className="flex items-center flex-col gap-10 md:gap-14 justify-start mt-10 min-h-[90vh] p-4">
+				<div className="flex items-center flex-col gap-10 md:gap-14 justify-start mt-10 min-h-[90vh] ">
 					<img
 						src={emptyCart}
 						alt=""
@@ -171,8 +171,8 @@ function Cart() {
 				</div>
 			) : (
 				<>
-					<div className="flex items-center  justify-between mb-5 p-5">
-						<h1 className="text-2xl font-bold  md:text-left underline underline-heading underline-offset-4 ">
+					<div className="flex items-center  justify-between mb-5 p-4 ">
+						<h1 className="underline underline-offset-8 underline-heading text-2xl font-bold my-3 text-center md:text-left capitalize">
 							Cart Items
 						</h1>
 						<MdDeleteForever
@@ -193,7 +193,7 @@ function Cart() {
 						</span>
 					</div>
 					<section className="">
-						<div className="flex flex-col-reverse  md:flex-row items-center md:items-start justify-center p-1 md:p-5 ">
+						<div className="flex flex-col-reverse  md:flex-row items-center md:items-start justify-center p-1 px-5 ">
 							<div className="w-full md:w-2/3 ">
 								{userCartDetails.map((item, index) => (
 									<div

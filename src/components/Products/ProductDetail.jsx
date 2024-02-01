@@ -49,10 +49,13 @@ function ProductDetail() {
 		const filterProduct = allProducts.filter(
 			(item) => item.id === productId,
 		);
+
+		console.log(filterProduct.length);
 		if (filterProduct.length > 0) {
 			setDisplayProduct(filterProduct[0]);
 			setMainImage(filterProduct[0].img1);
 		} else {
+			console.log("Fail");
 			navigateTo("/");
 		}
 	}, [productId, displayProduct.id]);
@@ -121,6 +124,7 @@ function ProductDetail() {
 			console.error("Error adding document: ", error);
 		} finally {
 			setIsAddingToCart(false);
+			e.target.disabled = false;
 		}
 	};
 
@@ -188,7 +192,7 @@ function ProductDetail() {
 				</div>
 
 				{/*RIGHT CONTAINER*/}
-				<div className="px-6 max-w-[600px] ">
+				<div className=" max-w-[600px] ">
 					<p className="text-md pt-3 text-gray-400 capitalize">
 						{displayProduct?.category?.replace(/_/g, " ") || ""} /
 						&nbsp;
