@@ -28,7 +28,7 @@ function ProductsSubCategory() {
 	// ------------------------------------------------------
 	return (
 		<>
-			<div className="container mx-auto mt-6">
+			<div className="container mx-auto mt-6 p-3 md:p-0">
 				<h1 className="underline underline-offset-8 underline-heading text-2xl font-bold my-3 text-center md:text-left capitalize">
 					{subCategoryName.replace(/_/g, " ")}
 				</h1>

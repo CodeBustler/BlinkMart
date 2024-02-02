@@ -18,22 +18,28 @@ function HomePage() {
 		(product) => product.subCategory === "tablets",
 	);
 
+	const smartwatches = allProducts.filter(
+		(product) => product.subCategory === "smart_watches",
+	);
+
+	const mensShirts = allProducts.filter(
+		(product) => product.subCategory === "mens_shirts",
+	);
 	return (
 		<div className="bg-gray-200">
 			<ImageSlider />
 			<div className="container mx-auto relative -top-28 p-4">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 					<CategoryContainer title={"Mobiles"} category={mobiles} />
-					<CategoryContainer title={"Laptops"} category={laptops} />
-					<CategoryContainer title={"Tablets"} category={tablets} />
-					<CategoryContainer title={"Mens Shirts"} category={"d"} />
 					<CategoryContainer
-						title={"Women's Fashion"}
-						category={"d"}
+						title={"Smart Watches"}
+						category={smartwatches}
 					/>
+					<CategoryContainer title={"Tablets"} category={tablets} />
+					<CategoryContainer title={"Laptops"} category={laptops} />
 					<CategoryContainer
-						title={"Women's Fashion"}
-						category={"d"}
+						title={"Men's Shirts & T-Shirts"}
+						category={mensShirts}
 					/>
 				</div>
 			</div>
